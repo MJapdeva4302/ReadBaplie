@@ -1,0 +1,12 @@
+C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\bin\Debug\net8.0\ReadEDIFACT.deps.json
+C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\bin\Debug\net8.0\ReadEDIFACT.dll
+C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\bin\Debug\net8.0\ReadEDIFACT.pdb
+C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\obj\Debug\net8.0\ReadEDIFACT.csproj.AssemblyReference.cache
+C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\obj\Debug\net8.0\ReadEDIFACT.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\obj\Debug\net8.0\ReadEDIFACT.AssemblyInfoInputs.cache
+C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\obj\Debug\net8.0\ReadEDIFACT.AssemblyInfo.cs
+C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\obj\Debug\net8.0\ReadEDIFACT.csproj.CoreCompileInputs.cache
+C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\obj\Debug\net8.0\ReadEDIFACT.dll
+C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\obj\Debug\net8.0\refint\ReadEDIFACT.dll
+C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\obj\Debug\net8.0\ReadEDIFACT.pdb
+C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\obj\Debug\net8.0\ref\ReadEDIFACT.dll
