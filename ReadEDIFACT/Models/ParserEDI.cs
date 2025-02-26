@@ -36,6 +36,59 @@ namespace ReadEDIFACT.Models
             DataElementSeparator = definition.DataElementSeparator;
         }
 
+        // Método para validar el tipo de mensaje (BAPLIE)
+        public List<string> ValidateMessageType()
+        {
+            var errors = new List<string>();
+
+            // Buscar el segmento UNH
+            var unhSegment = Subject.Split(SegmentSeparator)
+                                   .FirstOrDefault(line => line.StartsWith("UNH"));
+
+            if (unhSegment == null)
+            {
+                errors.Add("No se encontró el segmento UNH en el archivo EDI.");
+                return errors;
+            }
+
+            // Extraer el Message Identifier (BAPLIE, MOVINS, etc.)
+            var elements = unhSegment.Split(ElementSeparator);
+            if (elements.Length < 2)
+            {
+                errors.Add("El segmento UNH no tiene suficientes elementos.");
+                return errors;
+            }
+
+            var messageIdentifier = elements[1]; // Ejemplo: "BAPLIE:D:95B:UN:SMDG20"
+            if (!messageIdentifier.StartsWith("BAPLIE"))
+            {
+                errors.Add($"El archivo no es un BAPLIE. Tipo de mensaje encontrado: {messageIdentifier}");
+            }
+
+            return errors;
+        }
+
+        // Método para validar la estructura completa del archivo EDI
+        public List<string> ValidateFullEDI()
+        {
+            var errors = new List<string>();
+
+            // 1. Validar el tipo de mensaje (BAPLIE)
+            var messageTypeErrors = ValidateMessageType();
+            errors.AddRange(messageTypeErrors);
+
+            if (errors.Any())
+            {
+                return errors; // Si hay errores en el tipo de mensaje, no continuar
+            }
+
+            // 2. Validar la estructura del archivo
+            var structureErrors = Validate();
+            errors.AddRange(structureErrors);
+
+            return errors;
+        }
+
         public List<string> Validate()
         {
             var errors = new List<string>();
@@ -192,10 +245,7 @@ namespace ReadEDIFACT.Models
         private List<string> ValidateDataElement(DataElement dataElement, string value, int lineIndex)
         {
             var errors = new List<string>();
-            // var data = $"VALUE: {value}  ---  Precision: {dataElement.Precision}  ---  DataType:  {dataElement.DataType}";
-            // File.WriteAllText(@"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\Output.txt", data);
-            // Console.WriteLine($"VALUE: {value}  ---  Precision: {dataElement.Precision}  ---  DataType:  {dataElement.DataType}");
-            
+
             if (string.IsNullOrEmpty(value))
             {
                 if (dataElement.Usage == RuleUsage.Mandatory)
@@ -207,14 +257,11 @@ namespace ReadEDIFACT.Models
 
             if (!IsValidLength(value, dataElement.Precision, dataElement.DataType))
             {
-                // Console.WriteLine($"VALUE: {value}  ---  Precision: {dataElement.Precision}  ---  DataType:  {dataElement.DataType}");
                 errors.Add($"El valor '{value}' no tiene la longitud válida para el elemento '{dataElement.Name}' (Línea {lineIndex + 1}).");
             }
 
-
             if (!IsValidDataType(value, dataElement.DataType))
             {
-                // Console.WriteLine($"VALUE: {value}  ---  DataType:  {dataElement.DataType}");
                 errors.Add($"El valor '{value}' no es válido para el elemento '{dataElement.Name}' (Línea {lineIndex + 1}).");
             }
 
@@ -223,20 +270,16 @@ namespace ReadEDIFACT.Models
 
         private bool IsValidLength(string value, object precision, DataType dataType)
         {
-
             if (dataType == DataType.Decimal)
             {
-
                 int digitLength = value.Replace(".", "").Replace("-", "").Length;
 
                 if (precision is int length)
                 {
-                    // Console.WriteLine($"{digitLength} ---- {length}");
                     return digitLength == length;
                 }
                 else if (precision is int[] range && range.Length == 2)
                 {
-
                     int minLength = range[0];
                     int maxLength = range[1];
                     return digitLength >= minLength && digitLength <= maxLength;
@@ -244,7 +287,6 @@ namespace ReadEDIFACT.Models
             }
             else
             {
-
                 if (precision is int length)
                 {
                     return value.Length == length;
@@ -271,7 +313,6 @@ namespace ReadEDIFACT.Models
                 case DataType.Numeric:
                     return value.All(char.IsDigit);
                 case DataType.Decimal:
-
                     bool hasDecimalPoint = false;
                     bool hasNegativeSign = false;
 
@@ -281,7 +322,6 @@ namespace ReadEDIFACT.Models
 
                         if (c == '-')
                         {
-
                             if (i != 0 || hasNegativeSign)
                             {
                                 return false;
@@ -290,7 +330,6 @@ namespace ReadEDIFACT.Models
                         }
                         else if (c == '.')
                         {
-
                             if (hasDecimalPoint)
                             {
                                 return false;
@@ -315,12 +354,10 @@ namespace ReadEDIFACT.Models
             {
                 if (segment is SegmentData segmentData && segmentData.SegmentID == segmentId)
                 {
-                    //Console.WriteLine($"FindSegmentDefinition 2:  {segment}");
                     return segmentData;
                 }
                 else if (segment is SegmentGroup segmentGroup)
                 {
-                    //Console.WriteLine($"FindSegmentDefinition 2: {segment}  --- {segmentGroup}");
                     var nestedSegment = FindSegmentDefinition(segmentId, segmentGroup.Segments);
                     if (nestedSegment != null)
                     {
@@ -429,8 +466,8 @@ namespace ReadEDIFACT.Models
 
         public void SaveJsonToFile(string filePath)
         {
-            string json = ToJson(); 
-            File.WriteAllText(filePath, json); 
+            string json = ToJson();
+            File.WriteAllText(filePath, json);
         }
     }
 }

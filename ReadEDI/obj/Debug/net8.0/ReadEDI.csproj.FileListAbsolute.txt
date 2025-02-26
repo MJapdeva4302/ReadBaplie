@@ -11,6 +11,7 @@ C:\Users\mbermudez\Documents\ReadBaplie\ReadEDI\obj\Debug\net8.0\ReadEDI.Generat
 C:\Users\mbermudez\Documents\ReadBaplie\ReadEDI\obj\Debug\net8.0\ReadEDI.AssemblyInfoInputs.cache
 C:\Users\mbermudez\Documents\ReadBaplie\ReadEDI\obj\Debug\net8.0\ReadEDI.AssemblyInfo.cs
 C:\Users\mbermudez\Documents\ReadBaplie\ReadEDI\obj\Debug\net8.0\ReadEDI.csproj.CoreCompileInputs.cache
+C:\Users\mbermudez\Documents\ReadBaplie\ReadEDI\obj\Debug\net8.0\ReadEDI.sourcelink.json
 C:\Users\mbermudez\Documents\ReadBaplie\ReadEDI\obj\Debug\net8.0\ReadEDI.csproj.Up2Date
 C:\Users\mbermudez\Documents\ReadBaplie\ReadEDI\obj\Debug\net8.0\ReadEDI.dll
 C:\Users\mbermudez\Documents\ReadBaplie\ReadEDI\obj\Debug\net8.0\refint\ReadEDI.dll
