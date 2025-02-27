@@ -37,7 +37,7 @@ namespace ReadEDIFACT.Models
         }
 
         // Método para validar el tipo de mensaje (BAPLIE)
-        public List<string> ValidateMessageType()
+        public List<string> ValidateMessageType(string name)
         {
             var errors = new List<string>();
 
@@ -51,30 +51,66 @@ namespace ReadEDIFACT.Models
                 return errors;
             }
 
-            // Extraer el Message Identifier (BAPLIE, MOVINS, etc.)
-            var elements = unhSegment.Split(ElementSeparator);
-            if (elements.Length < 2)
+            // Depuración: Imprimir el segmento UNH completo
+            Console.WriteLine($"Segmento UNH completo: {unhSegment}");
+
+            // Extraer los elementos del segmento UNH
+            var elements = unhSegment.Split(ElementSeparator); // ElementSeparator es '+'
+            if (elements.Length < 3) // Cambia a 3 porque necesitamos al menos 3 elementos
             {
                 errors.Add("El segmento UNH no tiene suficientes elementos.");
                 return errors;
             }
 
-            var messageIdentifier = elements[1]; // Ejemplo: "BAPLIE:D:95B:UN:SMDG20"
-            if (!messageIdentifier.StartsWith("BAPLIE"))
+            // Imprimir los elementos del segmento UNH
+            // Console.WriteLine($"Elementos del segmento UNH:");
+            // for (int i = 0; i < elements.Length; i++)
+            // {
+            //     Console.WriteLine($"Elemento {i}: {elements[i]}");
+            // }
+
+            
+            var messageIdentifier = elements[2]; 
+
+            
+            Console.WriteLine($"Message Identifier: {messageIdentifier}");
+
+            
+            var messageIdentifierParts = messageIdentifier.Split(DataElementSeparator); 
+            if (messageIdentifierParts.Length < 1)
             {
-                errors.Add($"El archivo no es un BAPLIE. Tipo de mensaje encontrado: {messageIdentifier}");
+                errors.Add("El Message Identifier no tiene el formato esperado.");
+                return errors;
+            }
+
+            // Imprimir las partes del Message Identifier
+            // Console.WriteLine($"Partes del Message Identifier:");
+            // for (int i = 0; i < messageIdentifierParts.Length; i++)
+            // {
+            //     Console.WriteLine($"Parte {i}: {messageIdentifierParts[i]}");
+            // }
+
+            // EXTRAE LA PRIMERA PARTE PARA COMPARAR SI ES EL MISMO NAME QUE ESTA DEFINIDO EN MI FILEDEFINITION
+            var messageTypeIdentifier = messageIdentifierParts[0]; 
+
+            Console.WriteLine($"Message Type Identifier: {messageTypeIdentifier}");
+
+            // COMPARAR CON EL NAME DEL FILEDEFINITION CON EL QUE TIENE EL ARCHIVO EDI
+            if (messageTypeIdentifier != name)
+            {
+                errors.Add($"El archivo no es un {name}. Tipo de mensaje encontrado: {messageTypeIdentifier}");
             }
 
             return errors;
         }
 
-        // Método para validar la estructura completa del archivo EDI
-        public List<string> ValidateFullEDI()
+        
+        public List<string> ValidateFullEDI(string name)
         {
             var errors = new List<string>();
 
             // 1. Validar el tipo de mensaje (BAPLIE)
-            var messageTypeErrors = ValidateMessageType();
+            var messageTypeErrors = ValidateMessageType(name);
             errors.AddRange(messageTypeErrors);
 
             if (errors.Any())
