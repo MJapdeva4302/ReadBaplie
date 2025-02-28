@@ -69,14 +69,14 @@ namespace ReadEDIFACT.Models
             //     Console.WriteLine($"Elemento {i}: {elements[i]}");
             // }
 
-            
-            var messageIdentifier = elements[2]; 
 
-            
+            var messageIdentifier = elements[2];
+
+
             Console.WriteLine($"Message Identifier: {messageIdentifier}");
 
-            
-            var messageIdentifierParts = messageIdentifier.Split(DataElementSeparator); 
+
+            var messageIdentifierParts = messageIdentifier.Split(DataElementSeparator);
             if (messageIdentifierParts.Length < 1)
             {
                 errors.Add("El Message Identifier no tiene el formato esperado.");
@@ -91,7 +91,7 @@ namespace ReadEDIFACT.Models
             // }
 
             // EXTRAE LA PRIMERA PARTE PARA COMPARAR SI ES EL MISMO NAME QUE ESTA DEFINIDO EN MI FILEDEFINITION
-            var messageTypeIdentifier = messageIdentifierParts[0]; 
+            var messageTypeIdentifier = messageIdentifierParts[0];
 
             Console.WriteLine($"Message Type Identifier: {messageTypeIdentifier}");
 
@@ -104,7 +104,7 @@ namespace ReadEDIFACT.Models
             return errors;
         }
 
-        
+
         public List<string> ValidateFullEDI(string name)
         {
             var errors = new List<string>();
@@ -128,16 +128,18 @@ namespace ReadEDIFACT.Models
         public List<string> Validate()
         {
             var errors = new List<string>();
-            var lines = Subject.Split(SegmentSeparator);
+            var lines = Subject.Split(SegmentSeparator); // Divide el archivo EDI en segmentos
 
             for (int lineIndex = 0; lineIndex < lines.Length; lineIndex++)
             {
                 var line = lines[lineIndex];
                 if (string.IsNullOrWhiteSpace(line)) continue;
 
-                var elements = line.Split(ElementSeparator);
-                var segmentId = elements[0];
-                var segmentDefinition = FindSegmentDefinition(segmentId, Definition.Segments);
+                var elements = line.Split(ElementSeparator); // Divide el segmento en elementos
+                var segmentId = elements[0]; // Obtiene el SegmentID (primer elemento)
+
+                // Busca la definición del segmento en las reglas de validación
+                var segmentDefinition = FindSegmentDefinition(segmentId, elements, Definition.Segments);
 
                 if (segmentDefinition == null)
                 {
@@ -145,6 +147,7 @@ namespace ReadEDIFACT.Models
                     continue;
                 }
 
+                // Valida el segmento según su tipo (SegmentData o SegmentGroup)
                 if (segmentDefinition is SegmentData segmentData)
                 {
                     var segmentErrors = ValidateSegmentData(segmentData, elements, lineIndex);
@@ -175,7 +178,7 @@ namespace ReadEDIFACT.Models
                 var segmentId = elements[0];
                 segment["SegmentID"] = segmentId;
 
-                var segmentDefinition = FindSegmentDefinition(segmentId, Definition.Segments);
+                var segmentDefinition = FindSegmentDefinition(segmentId, elements, Definition.Segments);
                 if (segmentDefinition == null)
                 {
                     // Ignorar segmentos no definidos
@@ -224,6 +227,15 @@ namespace ReadEDIFACT.Models
                 {
                     // Ignorar EmptyElement (no se valida)
                     elementIndex++;
+                }
+            }
+
+            // Validar si hay más elementos en el segmento que no están definidos en las reglas
+            if (elementIndex < elements.Length)
+            {
+                for (int i = elementIndex; i < elements.Length; i++)
+                {
+                    errors.Add($"El elemento en la posición {i + 1} del segmento '{segmentData.SegmentID}' en la línea {lineIndex + 1} no está definido en las reglas de validación.");
                 }
             }
 
@@ -286,7 +298,7 @@ namespace ReadEDIFACT.Models
             {
                 if (dataElement.Usage == RuleUsage.Mandatory)
                 {
-                    errors.Add($"El elemento '{dataElement.Name}' es obligatorio y no se proporcionó (Línea {lineIndex + 1}).");
+                    errors.Add($"El elemento '{dataElement.Name}' es obligatorio y no se proporcionó (Línea {lineIndex + 1}). Desription: {dataElement.Description} --- {dataElement.Precision} --- {dataElement.DataType}");
                 }
                 return errors;
             }
@@ -302,6 +314,81 @@ namespace ReadEDIFACT.Models
             }
 
             return errors;
+        }
+
+        private bool IsSegmentStructureValid(SegmentData segmentData, string[] ediElements)
+        {
+            // El primer elemento es el SegmentID, así que empezamos desde el segundo elemento
+            int ediElementIndex = 1;
+            int ruleElementIndex = 0;
+
+            // Recorremos los elementos definidos en las reglas de validación
+            while (ruleElementIndex < segmentData.DataElements.Count() && ediElementIndex < ediElements.Length)
+            {
+                var ruleElement = segmentData.DataElements.ElementAt(ruleElementIndex);
+
+                if (ruleElement is DataElement dataElement)
+                {
+                    // Si el elemento en las reglas es un DataElement, verificamos si el valor en el EDI es válido
+                    if (dataElement.Usage == RuleUsage.Mandatory && string.IsNullOrEmpty(ediElements[ediElementIndex]))
+                    {
+                        // Si el elemento es obligatorio y está vacío en el EDI, la estructura no es válida
+                        return false;
+                    }
+
+                    // Avanzamos al siguiente elemento en el EDI y en las reglas
+                    ediElementIndex++;
+                    ruleElementIndex++;
+                }
+                else if (ruleElement is CompositeElement compositeElement)
+                {
+                    // Si el elemento en las reglas es un CompositeElement, validamos sus subelementos
+                    var compositeValues = ediElements[ediElementIndex].Split(DataElementSeparator);
+                    int compositeValueIndex = 0;
+
+                    foreach (var subElement in compositeElement.DataElements)
+                    {
+                        if (subElement is DataElement subDataElement)
+                        {
+                            if (subDataElement.Usage == RuleUsage.Mandatory &&
+                                (compositeValueIndex >= compositeValues.Length || string.IsNullOrEmpty(compositeValues[compositeValueIndex])))
+                            {
+                                // Si el subelemento es obligatorio y está vacío, la estructura no es válida
+                                return false;
+                            }
+
+                            compositeValueIndex++;
+                        }
+                    }
+
+                    // Avanzamos al siguiente elemento en el EDI y en las reglas
+                    ediElementIndex++;
+                    ruleElementIndex++;
+                }
+                else if (ruleElement is EmptyElement)
+                {
+                    // Si el elemento en las reglas es un EmptyElement, simplemente avanzamos al siguiente elemento en el EDI
+                    ediElementIndex++;
+                    ruleElementIndex++;
+                }
+            }
+
+            // Verificamos si todos los elementos obligatorios en las reglas fueron cubiertos por el EDI
+            while (ruleElementIndex < segmentData.DataElements.Count())
+            {
+                var ruleElement = segmentData.DataElements.ElementAt(ruleElementIndex);
+
+                if (ruleElement is DataElement dataElement && dataElement.Usage == RuleUsage.Mandatory)
+                {
+                    // Si hay un elemento obligatorio en las reglas que no fue cubierto por el EDI, la estructura no es válida
+                    return false;
+                }
+
+                ruleElementIndex++;
+            }
+
+            // Si llegamos aquí, la estructura del segmento es válida
+            return true;
         }
 
         private bool IsValidLength(string value, object precision, DataType dataType)
@@ -384,25 +471,30 @@ namespace ReadEDIFACT.Models
             }
         }
 
-        private Segment FindSegmentDefinition(string segmentId, IEnumerable<Segment> segments)
+        private Segment FindSegmentDefinition(string segmentId, string[] ediElements, IEnumerable<Segment> segments)
         {
             foreach (var segment in segments)
             {
                 if (segment is SegmentData segmentData && segmentData.SegmentID == segmentId)
                 {
-                    return segmentData;
+                    // Verificar si la estructura del segmento coincide con el EDI
+                    if (IsSegmentStructureValid(segmentData, ediElements))
+                    {
+                        return segmentData; // Retorna el segmento si coincide el SegmentID y la estructura
+                    }
                 }
                 else if (segment is SegmentGroup segmentGroup)
                 {
-                    var nestedSegment = FindSegmentDefinition(segmentId, segmentGroup.Segments);
+                    // Busca recursivamente en los segmentos del grupo
+                    var nestedSegment = FindSegmentDefinition(segmentId, ediElements, segmentGroup.Segments);
                     if (nestedSegment != null)
                     {
-                        return nestedSegment;
+                        return nestedSegment; // Retorna el segmento si se encuentra en el grupo
                     }
                 }
             }
 
-            return null;
+            return null; // Si no se encuentra el segmento
         }
 
         private void ProcessSegmentData(Dictionary<string, object> segment, string[] elements, SegmentData segmentData)

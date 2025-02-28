@@ -1473,7 +1473,7 @@ definitionBAPLIE.Segments = new Segment[]
 
 // ESTRCTURA DE VALIDCION DE UN MOVINS
 
-FileDefinition definitionMOVINS = new FileDefinition("MOVINS", new Version(2, 1));
+FileDefinition definitionMOVINS = new FileDefinition("MOVINS", new Version(2, 1, 1));
 
 definitionMOVINS.SegmentSeparator = '\'';
 definitionMOVINS.ElementSeparator = '+';
@@ -1511,7 +1511,7 @@ definitionMOVINS.Segments = new Segment[]
                                     Name = "Sintax Version Number",
                                     Notes = @"Always ""1"".",
                                     Usage = RuleUsage.Mandatory,
-                                    DataType = DataType.Alphabetic,
+                                    DataType = DataType.Numeric,
                                     Precision = 1
                                 }
                             }
@@ -1871,7 +1871,7 @@ definitionMOVINS.Segments = new Segment[]
                             SegmentID = "LOC",
                             Name = "PLACE/LOCATION IDENTIFICATION (grp1)",
                             Usage = RuleUsage.Mandatory,
-                            Position = 99,
+                            MaxUse = 99,
                             DataElements = new Element[]
                             {
                                 new DataElement()
@@ -1982,7 +1982,7 @@ definitionMOVINS.Segments = new Segment[]
                             SegmentID = "DTM",
                             Name = "DATE/TIME/PERIOD (grp1)",
                             Usage = RuleUsage.Mandatory,
-                            Position = 99,
+                            MaxUse = 99,
                             DataElements = new Element[]
                             {
 
@@ -2025,7 +2025,7 @@ definitionMOVINS.Segments = new Segment[]
                         new SegmentData(){
                             SegmentID = "RFF",
                             Name = "REFERENCE (grp1)",
-                            Position = 1,
+                            MaxUse = 1,
                             DataElements = new Element[]
                             {
 
@@ -2060,7 +2060,7 @@ definitionMOVINS.Segments = new Segment[]
                         new SegmentData(){
                             SegmentID = "FTX",
                             Name = "FREE TEXT (grp1)",
-                            Position = 1,
+                            MaxUse = 1,
                             DataElements = new Element[]
                             {
 
@@ -2097,7 +2097,7 @@ definitionMOVINS.Segments = new Segment[]
                         new SegmentData(){
                             SegmentID = "HAN",
                             Name = "Handling instruction (grp2)",
-                            Position = 1,
+                            MaxUse = 1,
                             DataElements = new Element[]
                             {
                                 new DataElement()
@@ -2200,8 +2200,8 @@ definitionMOVINS.Segments = new Segment[]
                                 {
                                     Name = string.Empty,
                                     Description = string.Empty,
-                                    Usage = RuleUsage.NotUsed,
-                                    DataType = DataType.Other,
+                                    Usage = 0,
+                                    DataType = 0,
                                     Precision = new []{ 0, 0 }
                                 },
 
@@ -2526,40 +2526,75 @@ definitionMOVINS.Segments = new Segment[]
                             }
                         }, // ACA FINALIZA EL SEGMENTO LOC DEL GRUPO 3
 
-                        // new SegmentData(){
-                        //     SegmentID = "RFF",
-                        //     Name = "REFERENCE (grp3)",
-                        //     Position = 1,
-                        //     DataElements = new Element[]
-                        //     {
+                        new SegmentData(){
+                            SegmentID = "RFF (1)",
+                            Name = "REFERENCE (grp3)",
+                            Position = 1,
+                            DataElements = new Element[]
+                            {
 
-                        //         new CompositeElement()
-                        //         {
-                        //             Name = "Reference",
-                        //             DataElements = new DataElement[]
-                        //             {
+                                new CompositeElement()
+                                {
+                                    Name = "Reference",
+                                    DataElements = new DataElement[]
+                                    {
 
-                        //                 new DataElement()
-                        //                 {
-                        //                     Name = "Reference Qualifier: Allowed qualifiers",
-                        //                     Description = @"""BM""	=	B/L-number, as dummy, in case non of the fol¬lowing codes are appli¬cable. ""ET"" 	=	Excess Transportation Number to be used for leading Stowage positi¬on, in case of Breakbulk or odd-sized-cargo. ""BN""	=	Booking reference number. ""CN""	=	Carrier's reference number. ""CV""	=	Container operator's reference number. ""BST""	=	Block stow to be used in case the carrier wants to indicate that blocks of containers must be delivered via train or into barge. ""ZZZ""	=	Mutually agreed.",
-                        //                     Usage = RuleUsage.Mandatory,
-                        //                     DataType = DataType.Alphanumeric,
-                        //                     Precision = new[] { 1, 3 }
-                        //                 },
+                                        new DataElement()
+                                        {
+                                            Name = "Reference Qualifier: Allowed qualifiers",
+                                            Description = @"""BM""	=	B/L-number, as dummy, in case non of the fol¬lowing codes are appli¬cable. ""ET"" 	=	Excess Transportation Number to be used for leading Stowage positi¬on, in case of Breakbulk or odd-sized-cargo. ""BN""	=	Booking reference number. ""CN""	=	Carrier's reference number. ""CV""	=	Container operator's reference number. ""BST""	=	Block stow to be used in case the carrier wants to indicate that blocks of containers must be delivered via train or into barge. ""ZZZ""	=	Mutually agreed.",
+                                            Usage = RuleUsage.Mandatory,
+                                            DataType = DataType.Alphanumeric,
+                                            Precision = new[] { 1, 3 }
+                                        },
 
-                        //                 new DataElement()
-                        //                 {
-                        //                     Name = "Reference Number: For Qualifiers",
-                        //                     Description = @"""BM"" 	=	always ""1"". ""ZZZ""	=	always ""1"". ""ET""	=:	Leading stowage location, containing relevant data for this con¬signment. ""BN""	=	Booking reference number assigned by carrier or agent. ""CN""	=	Carrier's reference number. ""CV""	=	Container operator's reference number. ""BST""	=	Mode of transport assigned by the carrier. 1  	= Feeder 2  	= Rail 8	= Barge",
-                        //                     Usage = RuleUsage.Required,
-                        //                     DataType = DataType.Alphanumeric,
-                        //                     Precision = new[] { 1, 35 }
-                        //                 }
-                        //             }
-                        //         }
-                        //     }
-                        // }, // ACA FINALIZA EL SEGMENTO RFF (grp3)
+                                        new DataElement()
+                                        {
+                                            Name = "Reference Number: For Qualifiers",
+                                            Description = @"""BM"" 	=	always ""1"". ""ZZZ""	=	always ""1"". ""ET""	=:	Leading stowage location, containing relevant data for this con¬signment. ""BN""	=	Booking reference number assigned by carrier or agent. ""CN""	=	Carrier's reference number. ""CV""	=	Container operator's reference number. ""BST""	=	Mode of transport assigned by the carrier. 1  	= Feeder 2  	= Rail 8	= Barge",
+                                            Usage = RuleUsage.Required,
+                                            DataType = DataType.Alphanumeric,
+                                            Precision = new[] { 1, 35 }
+                                        }
+                                    }
+                                }
+                            }
+                        }, // ACA FINALIZA EL SEGMENTO RFF (1) (grp3)
+
+                        new SegmentData(){
+                            SegmentID = "RFF (2)",
+                            Name = "REFERENCE (grp3)",
+                            Position = 1,
+                            DataElements = new Element[]
+                            {
+
+                                new CompositeElement()
+                                {
+                                    Name = "Reference",
+                                    DataElements = new DataElement[]
+                                    {
+
+                                        new DataElement()
+                                        {
+                                            Name = "Reference Qualifier: Allowed qualifiers",
+                                            Description = @"""DSI""	=	Destination Stowage location ISO to be used as reference for  Shift/Restow. To indicate the destination: Bay, Row,Tier or Cell. ""DSF""	=	Destination Stowge location Feeder. ""DSR""	=	Destination Stowge location RoRo. ""DSZ""	=	Destination Stowge location Bilateral.",
+                                            Usage = RuleUsage.Mandatory,
+                                            DataType = DataType.Alphanumeric,
+                                            Precision = new[] { 1, 3 }
+                                        },
+
+                                        new DataElement()
+                                        {
+                                            Name = "Reference Number: For Qualifiers",
+                                            Description = @"""DSI"" =	Cell position BBBRRTT or Bay position BBB**** or Row position BBBRR** or Tier position BBB**TT ""DSF""	=	Cell position H/T/R or Bay  position H/*/* or		Row	position H/*/R or Tier position H/T/*  ""DSR""		PAD number	""DSZ""	=	To be agreed bilateral.",
+                                            Usage = RuleUsage.Required,
+                                            DataType = DataType.Alphanumeric,
+                                            Precision = new[] { 1, 35 }
+                                        }
+                                    }
+                                }
+                            }
+                        }, // ACA FINALIZA EL SEGMENTO RFF (2) (grp3)
 
                         }
                     }, // ACA FINALIZA EL GRUPO 3
@@ -2587,7 +2622,7 @@ definitionMOVINS.Segments = new Segment[]
                                 {
                                     Name = @"Equipment Identification Number",
                                     Description = @"1. The container number: Format: One continuous string with the identification, prefixand number. Examples: SCXU 2387653 must be transmitted as ""SCXU2387653"", EU 876 must be transmitted as ""EU876"". The number will be treated as a character string. E.g. alphanumeric check-digits can be transmitted here. If this segment is used the unique equipment identification number must always be transmitted, although this element is not mandatory! 2. Break-bulk: The break-bulk reference number. The assigned break-bulk reference numbers must be agreed between partners. 3. Otherwise (Ro/Ro): The equipment identification number.",
-                                    Usage = RuleUsage.Required,
+                                    Usage = RuleUsage.Dependent,
                                     DataType = DataType.Alphanumeric,
                                     Precision = new []{ 1, 17 }
                                 },
@@ -2604,8 +2639,23 @@ definitionMOVINS.Segments = new Segment[]
                                     Precision = new []{ 1, 4 }
                                 },
 
-                                new EmptyElement(),
-                                new EmptyElement(),
+                                new DataElement()
+                                {
+                                    Name = string.Empty,
+                                    Description = string.Empty,
+                                    Usage = 0,
+                                    DataType = 0,
+                                    Precision = new []{ 0, 0}
+                                },
+
+                                new DataElement()
+                                {
+                                    Name = string.Empty,
+                                    Description = string.Empty,
+                                    Usage = 0,
+                                    DataType = 0,
+                                    Precision = new []{ 0, 0}
+                                },
 
                                 new DataElement()
                                 {
@@ -2694,7 +2744,14 @@ definitionMOVINS.Segments = new Segment[]
                                     Precision = new []{ 1, 17}
                                 },
 
-                                new EmptyElement(),
+                                new DataElement()
+                                {
+                                    Name = string.Empty,
+                                    Description = string.Empty,
+                                    Usage = 0,
+                                    DataType = 0,
+                                    Precision = new []{ 0, 0}
+                                },
 
                                 new DataElement()
                                 {
@@ -2718,9 +2775,16 @@ definitionMOVINS.Segments = new Segment[]
                             }
                         }, // ACA FINALIZA EL SEGMENTO NAD DEL GRUPO 4
 
+                        }
+                    }, // ACA FINALIZA EL GRUPO 4
+
+                    new SegmentGroup(){
+                        GroupRepeat = 999,
+                        Segments = new Segment[]
+                        {
                             new SegmentData(){
                                 SegmentID = "DGS",
-                                Name = "DANGEROUS GOODS (grp4)",
+                                Name = "DANGEROUS GOODS (grp5)",
                                 DataElements = new Element[]
                                 {
                                    new DataElement()
@@ -2782,7 +2846,7 @@ definitionMOVINS.Segments = new Segment[]
                                     Description = @"Allowed qualifiers: ""CEL"" (degrees Celsius) = Preferred ""FAH"" (degrees Fahrenheit)",
                                     Usage = RuleUsage.Optional,
                                     DataType = DataType.Decimal,
-                                    Precision = 3
+                                    Precision = new []{1,3}
                                 }
                             }
                             },
@@ -2793,7 +2857,7 @@ definitionMOVINS.Segments = new Segment[]
                                 Description = @"The packing group code of the hazardous goods.",
                                 Usage = RuleUsage.Optional,
                                 DataType = DataType.Alphanumeric,
-                                Precision = 3
+                                Precision = new []{1,3}
                             },
 
                             new DataElement()
@@ -2802,7 +2866,7 @@ definitionMOVINS.Segments = new Segment[]
                                 Description = @"Emergency schedule number.",
                                 Usage = RuleUsage.Optional,
                                 DataType = DataType.Alphanumeric,
-                                Precision = 6
+                                Precision = new []{1,6}
                             },
 
                             new DataElement()
@@ -2811,7 +2875,7 @@ definitionMOVINS.Segments = new Segment[]
                                 Description = @"Medical First Aid Guide number",
                                 Usage = RuleUsage.Optional,
                                 DataType = DataType.Alphanumeric,
-                                Precision = 4
+                                Precision = new []{1,4}
                             },
 
                             new EmptyElement(),
@@ -2825,7 +2889,7 @@ definitionMOVINS.Segments = new Segment[]
                                     Description = @"Hazard Identification number, upper part",
                                     Usage = RuleUsage.Optional,
                                     DataType = DataType.Alphanumeric,
-                                    Precision = 4
+                                    Precision = new []{1,4}
                                 },
 
                                 new DataElement()
@@ -2834,7 +2898,7 @@ definitionMOVINS.Segments = new Segment[]
                                     Description = @"Substance Identification number, lower part",
                                     Usage = RuleUsage.Optional,
                                     DataType = DataType.Alphanumeric,
-                                    Precision = 4
+                                    Precision = new []{1,4}
                                 }
                             }
                             },
@@ -2848,7 +2912,7 @@ definitionMOVINS.Segments = new Segment[]
                                     Description = @"See below for possible use of this data element",
                                     Usage = RuleUsage.Optional,
                                     DataType = DataType.Alphanumeric,
-                                    Precision = 4
+                                    Precision = new []{1,4}
                                 },
 
                                 new DataElement()
@@ -2857,7 +2921,7 @@ definitionMOVINS.Segments = new Segment[]
                                     Description = @"Dangerous Goods Label Marking (2)",
                                     Usage = RuleUsage.Optional,
                                     DataType = DataType.Alphanumeric,
-                                    Precision = 4
+                                    Precision = new []{1,4}
                                 },
 
                                 new DataElement()
@@ -2866,7 +2930,7 @@ definitionMOVINS.Segments = new Segment[]
                                     Description = @"Dangerous Goods Label Marking (3)",
                                     Usage = RuleUsage.Optional,
                                     DataType = DataType.Alphanumeric,
-                                    Precision = 4
+                                    Precision = new []{1,4}
                                 }
                             }
                             }
@@ -2875,6 +2939,68 @@ definitionMOVINS.Segments = new Segment[]
                         }, // ACA FINALIZA EL SEGMENTO DGS DEL GRUPO 4
 
                             new SegmentData(){
+                                SegmentID = "FTX",
+                                Name = "FREE TEXT (grp5)",
+                                DataElements = new Element[]
+                                {
+                                   new DataElement()
+                                {
+                                    Name = "Text Subject Qualifier.",
+                                    Description = @"""AAC"" = Dangerous goods additional information ""AAD"" = Dangerous goods, technical name, proper shipping name.",
+                                    Usage = RuleUsage.Mandatory,
+                                    DataType = DataType.Alphanumeric,
+                                    Precision = new []{ 1, 3}
+                                },
+
+                                new EmptyElement(),
+
+                                new DataElement()
+                                {
+                                    Name = "Free text, coded. Allowed code",
+                                    Description = @"“TLQ” = Goods Hazard Limited Quantities Indicator. To be used only in combination with e4551: Text Subject Qualifier: “AAD”.",
+                                    Usage = RuleUsage.Optional,
+                                    DataType = DataType.Alphanumeric,
+                                    Precision = new [] {1, 3}
+                                },
+
+                                new CompositeElement(){
+                                    Name = "Free text: (grp4)",
+                                    DataElements = new Element[]{
+                                new DataElement()
+                                {
+                                    Name = "Free text",
+                                    Description = @"Description of hazard mate¬rial in plain language.	One element of maximum 70 characters to be given only for the (1)	description. Transmit the text ""NIL"", if no description is available and one or both of the follo¬wing data elements must be transmitted.",
+                                    Usage = RuleUsage.Optional,
+                                    DataType = DataType.Alphanumeric,
+                                    Precision = new []{1,70}
+                                },
+
+                                new DataElement()
+                                {
+                                    Name = @"Free text",
+                                    Description = @"The net weight in kilos of the hazardous material to be	transmit¬ted here",
+                                    Usage = RuleUsage.Optional,
+                                    DataType = DataType.Alphanumeric,
+                                    Precision = new []{1,70}
+                                },
+
+                                new DataElement()
+                                {
+                                    Name = @"Free text",
+                                    Description = @"The DG-reference number as allocated by the central	planner, if known.",
+                                    Usage = RuleUsage.Optional,
+                                    DataType = DataType.Alphanumeric,
+                                    Precision = new []{1,70}
+                                }
+                            }
+                            }
+
+                                }
+                            }, // ACA FINALIZA EL SEGMENTO FTX DEL GRUPO 5
+                        }
+                        },
+                        
+                    new SegmentData(){
                             SegmentID = "UNT",
                             Name = "MESSAGE TRAILER",
                             DataElements = new Element[]
@@ -2898,7 +3024,7 @@ definitionMOVINS.Segments = new Segment[]
                                 }
 
                             }
-                        }, // ACA FINALIZA EL SEGMENTO UNT DEL GRUPO 4
+                        }, // ACA FINALIZA EL SEGMENTO UNT
 
                         new SegmentData(){
                             SegmentID = "UNZ",
@@ -2924,10 +3050,7 @@ definitionMOVINS.Segments = new Segment[]
                                 }
 
                             }
-                        } // ACA FINALIZA EL SEGMENTO UNZ DEL GRUPO 4
-
-                        }
-                    } // ACA FINALIZA EL GRUPO 4
+                        } // ACA FINALIZA EL SEGMENTO UNZ
 
 };
 
@@ -2936,16 +3059,16 @@ definitionMOVINS.Segments = new Segment[]
 // Console.WriteLine(definition);
 
 // Lee el archivo EDI
-// string filePath = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\BAPLIE_Export.EDI";
-string filePath = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\MOVINS DMR V09.edi";
+string filePathBAPLIE = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\BAPLIE_Export.EDI";
+string filePathMOVINS = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\MOVINS DMR V09.edi";
 // string filePath = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\DEPARTURE BAPLIE FINAL - DEL MONTE ROSE - 25360187.edi";
 // string filePath = @"C:\Users\mbermudez\OneDrive - JAPDEVA\Proyecto PortLogistics\EDI BAPLEY\Ejemplos\BAPLIE\CRMOB DEP DMG V42.edi";
 
-// string outputFilePath = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\MOVINS DMR V09.json";
+string outputFilePathMOVINS = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\MOVINS DMR V09.json";
 // string outputFilePath = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\DEPARTURE BAPLIE FINAL - DEL MONTE ROSE - 25360187.json";
-string outputFilePath = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\BAPLIE_Export.json";
+string outputFilePathBAPLIE = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\BAPLIE_Export.json";
 
-using (var reader = new StreamReader(filePath))
+using (var reader = new StreamReader(filePathBAPLIE))
 {
     try
     {
@@ -2965,8 +3088,8 @@ using (var reader = new StreamReader(filePath))
         else
         {
             // Guarda el JSON en un archivo
-            parser.SaveJsonToFile(outputFilePath);
-            Console.WriteLine("Archivo JSON guardado en: " + outputFilePath);
+            parser.SaveJsonToFile(outputFilePathBAPLIE);
+            Console.WriteLine("Archivo JSON guardado en: " + outputFilePathBAPLIE);
         }
     }
     catch (Exception ex)
@@ -2978,6 +3101,41 @@ using (var reader = new StreamReader(filePath))
 using (var sw = new StreamWriter(string.Format(@"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\{0}Output.txt", definitionBAPLIE.Name)))
 {
     sw.Write(definitionBAPLIE);
+}
+
+using (var reader = new StreamReader(filePathMOVINS))
+{
+    try
+    {
+        var parser = new ParserEDI(reader, definitionMOVINS);
+
+        // Validar el archivo EDI
+        var validationErrors = parser.ValidateFullEDI(definitionMOVINS.Name);
+        // Console.WriteLine($"validationErrors: {validationErrors}");
+        if (validationErrors.Any())
+        {
+            Console.WriteLine("Errores de validación:");
+            foreach (var error in validationErrors)
+            {
+                Console.WriteLine(error);
+            }
+        }
+        else
+        {
+            // Guarda el JSON en un archivo
+            parser.SaveJsonToFile(outputFilePathMOVINS);
+            Console.WriteLine("Archivo JSON guardado en: " + outputFilePathMOVINS);
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Error al procesar el archivo EDI: {ex.Message}");
+    }
+}
+
+using (var sw = new StreamWriter(string.Format(@"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\{0}Output.txt", definitionMOVINS.Name)))
+{
+    sw.Write(definitionMOVINS);
 }
 
 // Console.WriteLine();
