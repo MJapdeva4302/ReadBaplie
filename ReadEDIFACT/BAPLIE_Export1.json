@@ -8,7 +8,7 @@
     "Sender Identification": "SEACOS",
     "Recipient Identification": "PUBLIC",
     "Datetime Preparation": {
-      "Date of preparation": "2024-10-13",
+      "Date of preparation": "241013",
       "Time of preparation": "1441"
     },
     "Interchange control reference": "31039624",
@@ -57,6 +57,7 @@
   },
   {
     "SegmentID": "LOC",
+    "Notes": "1",
     "Place/Location Qualifier": "5",
     "Place/Location Identification:": {
       "Location Identification": "CRMOB",
@@ -66,6 +67,7 @@
   },
   {
     "SegmentID": "LOC",
+    "Notes": "1",
     "Place/Location Qualifier": "61",
     "Place/Location Identification:": {
       "Location Identification": "GTSTC",
@@ -87,6 +89,7 @@
   },
   {
     "SegmentID": "LOC",
+    "Notes": "1",
     "Place/Location Qualifier": "147",
     "Place/Location Identification:": {
       "Location Identification": "0381182",
@@ -96,6 +99,7 @@
   },
   {
     "SegmentID": "FTX",
+    "Notes": "2",
     "Text Subject Qualifier": "CLR",
     "Text reference": "",
     "Description/Instructions/Remarks": {
@@ -104,6 +108,7 @@
   },
   {
     "SegmentID": "FTX",
+    "Notes": "2",
     "Text Subject Qualifier": "AAA",
     "Text reference": "",
     "Description/Instructions/Remarks": {
@@ -112,6 +117,7 @@
   },
   {
     "SegmentID": "MEA",
+    "Notes": "2",
     "Measurement Application Qualifier": "WT",
     "Measure Unit": {
       "Measure Unit Qualifier": "KGM",
@@ -120,6 +126,7 @@
   },
   {
     "SegmentID": "LOC",
+    "Notes": "1",
     "Place/Location Qualifier": "9",
     "Place/Location Identification:": {
       "Location Identification": "CRMOB",
@@ -129,6 +136,7 @@
   },
   {
     "SegmentID": "LOC",
+    "Notes": "1",
     "Place/Location Qualifier": "11",
     "Place/Location Identification:": {
       "Location Identification": "GTSTC",
@@ -138,6 +146,7 @@
   },
   {
     "SegmentID": "LOC",
+    "Notes": "1",
     "Place/Location Qualifier": "83",
     "Place/Location Identification:": {
       "Location Identification": "GTSTC",
@@ -147,6 +156,7 @@
   },
   {
     "SegmentID": "RFF",
+    "Notes": "1",
     "Reference": {
       "Reference Qualifier": "BM",
       "Reference Number": "1"
@@ -154,13 +164,15 @@
   },
   {
     "SegmentID": "EQD",
+    "Notes": "3",
     "Equipment Qualifier": "CN",
-    "Equipment Identification Number": "TEMU8304176",
-    "Equipment Size and Type Identification": "4510",
+    "Equipment Identification Number": "SEKU9196095",
+    "Equipment Size and Type Identification": "4532",
     "Full/Empty Indicator, coded. Allowed codes": "5"
   },
   {
     "SegmentID": "NAD",
+    "Notes": "3",
     "Party Qualifier": "CA",
     "Party Id Identification (grp3)": {
       "Party Id Identification": "DEL",
@@ -170,89 +182,17 @@
   },
   {
     "SegmentID": "LOC",
+    "Notes": "1",
     "Place/Location Qualifier": "147",
     "Place/Location Identification:": {
-      "Location Identification": "0260306",
+      "Location Identification": "0020884",
       "Code list qualifier. Allowed qualifiers:": "",
       "Code list responsible agency, coded. Allowed codes": "5"
     }
   },
   {
     "SegmentID": "FTX",
-    "Text Subject Qualifier": "AAA",
-    "Text reference": "",
-    "Description/Instructions/Remarks": {
-      "Free Text": "USED C"
-    }
-  },
-  {
-    "SegmentID": "FTX",
-    "Text Subject Qualifier": "HAN",
-    "Text reference": "",
-    "Description/Instructions/Remarks": {
-      "Free Text": "BN28676"
-    }
-  },
-  {
-    "SegmentID": "MEA",
-    "Measurement Application Qualifier": "WT",
-    "Measure Unit": {
-      "Measure Unit Qualifier": "KGM",
-      "Measurement Value": "23861"
-    }
-  },
-  {
-    "SegmentID": "LOC",
-    "Place/Location Qualifier": "9",
-    "Place/Location Identification:": {
-      "Location Identification": "USGLC",
-      "Code list qualifier. Allowed qualifiers:": "139",
-      "Code list responsible agency, coded. Allowed codes": "6"
-    }
-  },
-  {
-    "SegmentID": "LOC",
-    "Place/Location Qualifier": "11",
-    "Place/Location Identification:": {
-      "Location Identification": "GTSTC",
-      "Code list qualifier. Allowed qualifiers:": "139",
-      "Code list responsible agency, coded. Allowed codes": "6"
-    }
-  },
-  {
-    "SegmentID": "RFF",
-    "Reference": {
-      "Reference Qualifier": "BM",
-      "Reference Number": "1"
-    }
-  },
-  {
-    "SegmentID": "EQD",
-    "Equipment Qualifier": "CN",
-    "Equipment Identification Number": "TEMU7503281",
-    "Equipment Size and Type Identification": "4510",
-    "Full/Empty Indicator, coded. Allowed codes": "5"
-  },
-  {
-    "SegmentID": "NAD",
-    "Party Qualifier": "CA",
-    "Party Id Identification (grp3)": {
-      "Party Id Identification": "DEL",
-      "Code List Qualifier": "172",
-      "Code List Responsible Agency, coded. Allowed codes": "20"
-    }
-  },
-  {
-    "SegmentID": "LOC",
-    "Place/Location Qualifier": "147",
-    "Place/Location Identification:": {
-      "Location Identification": "0260308",
-      "Code list qualifier. Allowed qualifiers:": "",
-      "Code list responsible agency, coded. Allowed codes": "5"
-    }
-  },
-  {
-    "SegmentID": "FTX",
+    "Notes": "2",
     "Text Subject Qualifier": "CLR",
     "Text reference": "",
     "Description/Instructions/Remarks": {
@@ -261,14 +201,16 @@
   },
   {
     "SegmentID": "FTX",
+    "Notes": "2",
     "Text Subject Qualifier": "AAA",
     "Text reference": "",
     "Description/Instructions/Remarks": {
-      "Free Text": "FAK"
+      "Free Text": "AUTO"
     }
   },
   {
     "SegmentID": "FTX",
+    "Notes": "2",
     "Text Subject Qualifier": "CLR",
     "Text reference": "",
     "Description/Instructions/Remarks": {
@@ -276,23 +218,17 @@
     }
   },
   {
-    "SegmentID": "FTX",
-    "Text Subject Qualifier": "HAN",
-    "Text reference": "",
-    "Description/Instructions/Remarks": {
-      "Free Text": "BN36980"
-    }
-  },
-  {
     "SegmentID": "MEA",
+    "Notes": "2",
     "Measurement Application Qualifier": "WT",
     "Measure Unit": {
       "Measure Unit Qualifier": "KGM",
-      "Measurement Value": "19114"
+      "Measurement Value": "9289"
     }
   },
   {
     "SegmentID": "LOC",
+    "Notes": "1",
     "Place/Location Qualifier": "9",
     "Place/Location Identification:": {
       "Location Identification": "USGLC",
@@ -302,6 +238,7 @@
   },
   {
     "SegmentID": "LOC",
+    "Notes": "1",
     "Place/Location Qualifier": "11",
     "Place/Location Identification:": {
       "Location Identification": "GTSTC",
@@ -311,6 +248,7 @@
   },
   {
     "SegmentID": "RFF",
+    "Notes": "1",
     "Reference": {
       "Reference Qualifier": "BM",
       "Reference Number": "1"
@@ -318,6 +256,99 @@
   },
   {
     "SegmentID": "EQD",
+    "Notes": "3",
+    "Equipment Qualifier": "CN",
+    "Equipment Identification Number": "TEMU9592082",
+    "Equipment Size and Type Identification": "4532",
+    "Full/Empty Indicator, coded. Allowed codes": "5"
+  },
+  {
+    "SegmentID": "NAD",
+    "Notes": "3",
+    "Party Qualifier": "CA",
+    "Party Id Identification (grp3)": {
+      "Party Id Identification": "DEL",
+      "Code List Qualifier": "172",
+      "Code List Responsible Agency, coded. Allowed codes": "20"
+    }
+  },
+  {
+    "SegmentID": "LOC",
+    "Notes": "1",
+    "Place/Location Qualifier": "147",
+    "Place/Location Identification:": {
+      "Location Identification": "0020886",
+      "Code list qualifier. Allowed qualifiers:": "",
+      "Code list responsible agency, coded. Allowed codes": "5"
+    }
+  },
+  {
+    "SegmentID": "FTX",
+    "Notes": "2",
+    "Text Subject Qualifier": "CLR",
+    "Text reference": "",
+    "Description/Instructions/Remarks": {
+      "Free Text": "DR"
+    }
+  },
+  {
+    "SegmentID": "FTX",
+    "Notes": "2",
+    "Text Subject Qualifier": "AAA",
+    "Text reference": "",
+    "Description/Instructions/Remarks": {
+      "Free Text": "AUTO"
+    }
+  },
+  {
+    "SegmentID": "FTX",
+    "Notes": "2",
+    "Text Subject Qualifier": "CLR",
+    "Text reference": "",
+    "Description/Instructions/Remarks": {
+      "Free Text": "*NOR*"
+    }
+  },
+  {
+    "SegmentID": "MEA",
+    "Notes": "2",
+    "Measurement Application Qualifier": "WT",
+    "Measure Unit": {
+      "Measure Unit Qualifier": "KGM",
+      "Measurement Value": "9095"
+    }
+  },
+  {
+    "SegmentID": "LOC",
+    "Notes": "1",
+    "Place/Location Qualifier": "9",
+    "Place/Location Identification:": {
+      "Location Identification": "USGLC",
+      "Code list qualifier. Allowed qualifiers:": "139",
+      "Code list responsible agency, coded. Allowed codes": "6"
+    }
+  },
+  {
+    "SegmentID": "LOC",
+    "Notes": "1",
+    "Place/Location Qualifier": "11",
+    "Place/Location Identification:": {
+      "Location Identification": "GTSTC",
+      "Code list qualifier. Allowed qualifiers:": "139",
+      "Code list responsible agency, coded. Allowed codes": "6"
+    }
+  },
+  {
+    "SegmentID": "RFF",
+    "Notes": "1",
+    "Reference": {
+      "Reference Qualifier": "BM",
+      "Reference Number": "1"
+    }
+  },
+  {
+    "SegmentID": "EQD",
+    "Notes": "3",
     "Equipment Qualifier": "CN",
     "Equipment Identification Number": "TEMU9496900",
     "Equipment Size and Type Identification": "4532",
@@ -325,6 +356,7 @@
   },
   {
     "SegmentID": "NAD",
+    "Notes": "3",
     "Party Qualifier": "CA",
     "Party Id Identification (grp3)": {
       "Party Id Identification": "DEL",
@@ -334,6 +366,7 @@
   },
   {
     "SegmentID": "UNT",
+    "Notes": "4",
     "Number of segments in the message": "6877",
     "Message reference number": "SEACOSA9624"
   },

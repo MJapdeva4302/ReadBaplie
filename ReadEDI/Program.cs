@@ -277,6 +277,7 @@ definitionBAPLIE.Segments = new Segment[]
                         {
                             SegmentID = "TDT",
                             Name = "DETAILS OF TRANSPORT",
+                            Notes = "1",
                             Usage = RuleUsage.Mandatory,
                             DataElements = new Element[]
                             {
@@ -395,12 +396,13 @@ definitionBAPLIE.Segments = new Segment[]
 
                                 },
                             }
-                        },// ACA FINALIZA EL SEGMENTO TDT
+                        },// ACA FINALIZA EL SEGMENTO TDT DEL GRUPO 1
 
                         new SegmentData()
                         {
                             SegmentID = "LOC",
                             Name = "PLACE/LOCATION IDENTIFICATION (grp1)",
+                            Notes = "1",
                             Usage = RuleUsage.Mandatory,
                             DataElements = new Element[]
                             {
@@ -505,12 +507,13 @@ definitionBAPLIE.Segments = new Segment[]
                                     }
                                 }
                             }
-                        },// ACA FINALIZA EL SEGMENTO LOC
+                        },// ACA FINALIZA EL SEGMENTO LOC DEL GRUPO 1
 
                         new SegmentData(){
 
                             SegmentID = "DTM",
                             Name = "DATE/TIME/PERIOD (grp1)",
+                            Notes = "1",
                             Usage = RuleUsage.Mandatory,
                             Position = 99,
                             DataElements = new Element[]
@@ -555,6 +558,7 @@ definitionBAPLIE.Segments = new Segment[]
                         new SegmentData(){
                             SegmentID = "RFF",
                             Name = "REFERENCE (grp1)",
+                            Notes = "1",
                             Position = 1,
                             DataElements = new Element[]
                             {
@@ -597,6 +601,7 @@ definitionBAPLIE.Segments = new Segment[]
                         new SegmentData(){
                             SegmentID = "LOC",
                             Name = "PLACE/LOCATION IDENTIFICATION (grp2)",
+                            Notes = "2",
                             Position = 1,
                             DataElements = new Element[]
                             {
@@ -648,6 +653,7 @@ definitionBAPLIE.Segments = new Segment[]
                         new SegmentData(){
                             SegmentID = "GID",
                             Name = "GOODS ITEM DETAILS (grp2)",
+                            Notes = "2",
                             Position = 2,
                             DataElements = new Element[]
                             {
@@ -683,6 +689,7 @@ definitionBAPLIE.Segments = new Segment[]
                         new SegmentData(){
                             SegmentID = "GDS",
                             Name = "NATURE OF CARGO (grp2)",
+                            Notes = "2",
                             DataElements = new Element[]{
                                 new DataElement(){
                                     Name = "Nature of cargo",
@@ -697,7 +704,7 @@ definitionBAPLIE.Segments = new Segment[]
                         new SegmentData(){
                             SegmentID = "FTX",
                             Name = "FREE TEXT (grp2)",
-
+                            Notes = "2",
                             DataElements = new Element[]{
                                 new DataElement(){
                                     Name = "Text Subject Qualifier",
@@ -767,6 +774,7 @@ definitionBAPLIE.Segments = new Segment[]
                         new SegmentData(){
                             SegmentID = "MEA",
                             Name = "MEASUREMENTS (grp2)",
+                            Notes = "2",
                             DataElements = new Element[]{
                                 new DataElement(){
                                     Name = "Measurement Application Qualifier",
@@ -807,6 +815,7 @@ definitionBAPLIE.Segments = new Segment[]
                         {
                             SegmentID = "DIM",
                             Name = "DIMENSIONS (grp2)",
+                            Notes = "2",
                             DataElements = new Element[]
                             {
                                 new DataElement()
@@ -865,6 +874,7 @@ definitionBAPLIE.Segments = new Segment[]
                         {
                             SegmentID = "TMP",
                             Name = "TEMPERATURE (grp2)",
+                            Notes = "2",
                             DataElements = new Element[]
                             {
                                 new DataElement()
@@ -904,6 +914,7 @@ definitionBAPLIE.Segments = new Segment[]
                         {
                             SegmentID = "RNG",
                             Name = "RANGE DETAILS (grp2)",
+                            Notes = "2",
                             DataElements = new Element[]
                             {
                                 new DataElement()
@@ -952,6 +963,7 @@ definitionBAPLIE.Segments = new Segment[]
                         new SegmentData(){
                             SegmentID = "LOC",
                             Name = "PLACE/LOCATION IDENTIFICATION (grp2)",
+                            Notes = "2",
                             DataElements = new Element[]
                             {
                                 new DataElement()
@@ -1033,6 +1045,7 @@ definitionBAPLIE.Segments = new Segment[]
                         new SegmentData(){
                             SegmentID = "RFF",
                             Name = "REFERENCE (grp2)",
+                            Notes = "2",
                             DataElements = new Element[]
                             {
                                 new CompositeElement(){
@@ -1071,6 +1084,7 @@ definitionBAPLIE.Segments = new Segment[]
                             new SegmentData(){
                                 SegmentID = "EQD",
                                 Name = "EQUIPMENT DETAILS (grp3)",
+                                Notes = "3",
                                 DataElements = new Element[]
                                 {
                                    new DataElement()
@@ -1128,6 +1142,7 @@ definitionBAPLIE.Segments = new Segment[]
                             new SegmentData(){
                                 SegmentID = "EQA",
                                 Name = "EQUIPMENT ATTACHED (grp3)",
+                                Notes = "3",
                                 DataElements = new Element[]
                                 {
                                    new DataElement()
@@ -1154,6 +1169,7 @@ definitionBAPLIE.Segments = new Segment[]
                             new SegmentData(){
                             SegmentID = "NAD",
                             Name = "NAME AND ADDRESS (grp3)",
+                            Notes = "3",
                             DataElements = new Element[]
                             {
                                 new DataElement()
@@ -1209,6 +1225,7 @@ definitionBAPLIE.Segments = new Segment[]
                             new SegmentData(){
                                 SegmentID = "DGS",
                                 Name = "DANGEROUS GOODS (grp4)",
+                                Notes = "4",
                                 DataElements = new Element[]
                                 {
                                    new DataElement()
@@ -1365,6 +1382,7 @@ definitionBAPLIE.Segments = new Segment[]
                             new SegmentData(){
                                 SegmentID = "FTX",
                                 Name = "FREE TEXT (grp4)",
+                                Notes = "4",
                                 DataElements = new Element[]
                                 {
                                    new DataElement()
@@ -1414,9 +1432,13 @@ definitionBAPLIE.Segments = new Segment[]
                                 }
                             }, // ACA FINALIZA EL SEGMENTO FTX DEL GRUPO 4
 
-                            new SegmentData(){
+                        }
+                    }, // ACA FINALIZA EL GRUPO 4
+
+                    new SegmentData(){
                             SegmentID = "UNT",
                             Name = "MESSAGE TRAILER",
+                            Notes = "4",
                             DataElements = new Element[]
                             {
                                 new DataElement()
@@ -1438,7 +1460,7 @@ definitionBAPLIE.Segments = new Segment[]
                                 }
 
                             }
-                        }, // ACA FINALIZA EL SEGMENTO UNT DEL GRUPO 4
+                        }, // ACA FINALIZA EL SEGMENTO UNT
 
                         new SegmentData(){
                             SegmentID = "UNZ",
@@ -1464,10 +1486,7 @@ definitionBAPLIE.Segments = new Segment[]
                                 }
 
                             }
-                        } // ACA FINALIZA EL SEGMENTO UNZ DEL GRUPO 4
-
-                        }
-                    } // ACA FINALIZA EL GRUPO 4
+                        } // ACA FINALIZA EL SEGMENTO UNZ
 
 };
 
@@ -3059,67 +3078,67 @@ definitionMOVINS.Segments = new Segment[]
 // Console.WriteLine(definition);
 
 // Lee el archivo EDI
-// string filePathBAPLIE = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\BAPLIE_Export.EDI";
+string filePathBAPLIE = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\BAPLIE_Export.EDI";
 // string filePathMOVINS = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\MOVINS DMR V09.edi";
 // string filePath = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\DEPARTURE BAPLIE FINAL - DEL MONTE ROSE - 25360187.edi";
 // string filePath = @"C:\Users\mbermudez\OneDrive - JAPDEVA\Proyecto PortLogistics\EDI BAPLEY\Ejemplos\BAPLIE\CRMOB DEP DMG V42.edi";
 
 // string outputFilePathMOVINS = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\MOVINS DMR V09.json";
 // string outputFilePath = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\DEPARTURE BAPLIE FINAL - DEL MONTE ROSE - 25360187.json";
-string outputFilePathBAPLIE = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\BAPLIE_Export.json";
-try
-{
-    var parser = new ParserEDI("", definitionBAPLIE);
-    // Leer el contenido del archivo JSON
-            string jsonContent = File.ReadAllText(outputFilePathBAPLIE);
-            Console.WriteLine("Contenido del JSON:");
-            Console.WriteLine(jsonContent);
+string outputFilePathBAPLIE = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\BAPLIE_Export2.json";
+// try
+// {
+//     var parser = new ParserEDI("", definitionBAPLIE);
+//     // Leer el contenido del archivo JSON
+//             string jsonContent = File.ReadAllText(outputFilePathBAPLIE);
+//             Console.WriteLine("Contenido del JSON:");
+//             Console.WriteLine(jsonContent);
 
-            // Generar el archivo EDI a partir del JSON
-            string ediContent = parser.GenerateEDIFromJson(jsonContent);
-            Console.WriteLine($"EDI GENERADO:: {ediContent}");
-}
-catch (System.Exception)
-{
+//             // Generar el archivo EDI a partir del JSON
+//             string ediContent = parser.GenerateEDIFromJson(jsonContent);
+//             Console.WriteLine($"EDI GENERADO:: {ediContent}");
+// }
+// catch (System.Exception)
+// {
     
-    throw;
+//     throw;
+// }
+
+using (var reader = new StreamReader(filePathBAPLIE))
+{
+    try
+    {
+        var parser = new ParserEDI(reader, definitionBAPLIE);
+
+        // Validar el archivo EDI
+        var validationErrors = parser.ValidateFullEDI(definitionBAPLIE.Name);
+        // Console.WriteLine($"validationErrors: {validationErrors}");
+        if (validationErrors.Any())
+        {
+            Console.WriteLine("Errores de validación:");
+            foreach (var error in validationErrors)
+            {
+                Console.WriteLine(error);
+            }
+        }
+        else
+        {
+            // Guarda el JSON en un archivo
+            parser.SaveJsonToFile(outputFilePathBAPLIE);
+            Console.WriteLine("Archivo JSON guardado en: " + outputFilePathBAPLIE);
+            
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Error al procesar el archivo EDI: {ex.Message}");
+    }
 }
 
-// using (var reader = new StreamReader(filePathBAPLIE))
-// {
-//     try
-//     {
-//         var parser = new ParserEDI(reader, definitionBAPLIE);
-
-//         // Validar el archivo EDI
-//         var validationErrors = parser.ValidateFullEDI(definitionBAPLIE.Name);
-//         // Console.WriteLine($"validationErrors: {validationErrors}");
-//         if (validationErrors.Any())
-//         {
-//             Console.WriteLine("Errores de validación:");
-//             foreach (var error in validationErrors)
-//             {
-//                 Console.WriteLine(error);
-//             }
-//         }
-//         else
-//         {
-//             // Guarda el JSON en un archivo
-//             parser.SaveJsonToFile(outputFilePathBAPLIE);
-//             Console.WriteLine("Archivo JSON guardado en: " + outputFilePathBAPLIE);
-            
-//         }
-//     }
-//     catch (Exception ex)
-//     {
-//         Console.WriteLine($"Error al procesar el archivo EDI: {ex.Message}");
-//     }
-// }
-
-// using (var sw = new StreamWriter(string.Format(@"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\{0}Output.txt", definitionBAPLIE.Name)))
-// {
-//     sw.Write(definitionBAPLIE);
-// }
+using (var sw = new StreamWriter(string.Format(@"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\{0}Output.txt", definitionBAPLIE.Name)))
+{
+    sw.Write(definitionBAPLIE);
+}
 
 // using (var reader = new StreamReader(filePathMOVINS))
 // {

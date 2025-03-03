@@ -129,22 +129,25 @@ namespace ReadEDIFACT.Models
         public List<string> Validate()
         {
             var errors = new List<string>();
-            var lines = Subject.Split(SegmentSeparator); // Divide el archivo EDI en segmentos
+            // Divide el archivo EDI en segmentos
+            var lines = Subject.Split(SegmentSeparator);
 
             for (int lineIndex = 0; lineIndex < lines.Length; lineIndex++)
             {
                 var line = lines[lineIndex];
                 if (string.IsNullOrWhiteSpace(line)) continue;
 
-                var elements = line.Split(ElementSeparator); // Divide el segmento en elementos
-                var segmentId = elements[0]; // Obtiene el SegmentID (primer elemento)
+                // Divide el segmento en elementos
+                var elements = line.Split(ElementSeparator);
+                //Obtiene el primer elemento que en este caso es el segmentID
+                var segmentId = elements[0];
 
                 // Busca la definición del segmento en las reglas de validación
                 var segmentDefinition = FindSegmentDefinition(segmentId, elements, Definition.Segments);
 
                 if (segmentDefinition == null)
                 {
-                    // Ignorar segmentos no definidos
+                    // Que continue si no hay segmentos definidos
                     continue;
                 }
 
@@ -164,6 +167,7 @@ namespace ReadEDIFACT.Models
             return errors;
         }
 
+        // Metodo que me devuelve uma lista del archivo edi ya procesada para pasarla despues a json
         public List<Dictionary<string, object>> Parse()
         {
             var ediData = new List<Dictionary<string, object>>();
@@ -182,7 +186,7 @@ namespace ReadEDIFACT.Models
                 var segmentDefinition = FindSegmentDefinition(segmentId, elements, Definition.Segments);
                 if (segmentDefinition == null)
                 {
-                    // Ignorar segmentos no definidos
+                    // Que continue si no hay segmentos definidos
                     continue;
                 }
 
@@ -204,7 +208,10 @@ namespace ReadEDIFACT.Models
         private List<string> ValidateSegmentData(SegmentData segmentData, string[] elements, int lineIndex)
         {
             var errors = new List<string>();
-
+            // if (!string.IsNullOrEmpty(segmentData.Notes))
+            // {
+            //     elements["Notes"] = segmentData.Notes;
+            // }
             int elementIndex = 1; // Empezar desde el segundo elemento (el primero es el SegmentID)
             for (int i = 0; i < segmentData.DataElements.Count(); i++)
             {
@@ -500,52 +507,56 @@ namespace ReadEDIFACT.Models
 
         private void ProcessSegmentData(Dictionary<string, object> segment, string[] elements, SegmentData segmentData)
         {
-            for (int i = 1; i < elements.Length; i++)
+            // Agregar Notes si está definido
+            if (!string.IsNullOrEmpty(segmentData.Notes))
             {
-                var elementDefinition = segmentData.DataElements.ElementAtOrDefault(i - 1);
-                if (elementDefinition == null) continue;
+                segment["Notes"] = segmentData.Notes;
+            }
 
+            // Índice para recorrer los elementos del segmento EDI
+            int elementIndex = 1; // Empezar desde el segundo elemento (el primero es el SegmentID)
+
+            // Recorrer las reglas de validación de los elementos del segmento
+            foreach (var elementDefinition in segmentData.DataElements)
+            {
                 if (elementDefinition is CompositeElement compositeElement)
                 {
+                    // Procesar CompositeElement
                     var compositeData = new Dictionary<string, object>();
-                    var subElements = elements[i].Split(DataElementSeparator);
+                    string compositeValue = elementIndex < elements.Length ? elements[elementIndex] : "";
 
-                    for (int j = 0; j < subElements.Length; j++)
+                    if (!string.IsNullOrEmpty(compositeValue))
                     {
-                        var subElement = compositeElement.DataElements.ElementAtOrDefault(j);
-                        if (subElement == null) continue;
+                        var subElements = compositeValue.Split(DataElementSeparator);
 
-                        if (subElement is DataElement subElementDefinition)
+                        for (int j = 0; j < subElements.Length; j++)
                         {
-                            string value = subElements[j];
+                            var subElement = compositeElement.DataElements.ElementAtOrDefault(j);
+                            if (subElement == null) continue;
 
-                            // Parsear fechas y horas si el nombre del campo lo indica
-                            if (subElementDefinition.Name == "Date of preparation" ||
-                                subElementDefinition.Name == "Time of preparation")
+                            if (subElement is DataElement subElementDefinition)
                             {
-                                string format = GetDateTimeFormat(subElementDefinition.Name); // Obtener el formato
-                                value = DateTimeParser.ParseDateTime(value, format);
+                                string value = subElements[j];
+                                compositeData[subElementDefinition.Name] = value;
                             }
-
-                            compositeData[subElementDefinition.Name] = value;
                         }
                     }
 
                     segment[elementDefinition.Name] = compositeData;
+                    elementIndex++;
                 }
                 else if (elementDefinition is DataElement dataElement)
                 {
-                    string value = elements[i];
-
-                    // Parsear fechas y horas si el nombre del campo lo indica
-                    if (dataElement.Name == "Date of preparation" ||
-                        dataElement.Name == "Time of preparation")
-                    {
-                        string format = GetDateTimeFormat(dataElement.Name); // Obtener el formato
-                        value = DateTimeParser.ParseDateTime(value, format);
-                    }
-
+                    // Procesar DataElement
+                    string value = elementIndex < elements.Length ? elements[elementIndex] : "";
                     segment[dataElement.Name] = value;
+                    elementIndex++;
+                }
+                else if (elementDefinition is EmptyElement)
+                {
+                    // Manejar EmptyElement: agregar campo vacío al JSON
+                    segment[$"Empty{elementIndex}"] = "";
+                    elementIndex++;
                 }
             }
         }
@@ -573,7 +584,7 @@ namespace ReadEDIFACT.Models
             segment[segmentGroup.Name] = groupData;
         }
 
-        private string GetDateTimeFormat(string elementName)
+        /*private string GetDateTimeFormat(string elementName)
         {
             // Define el formato según el nombre del campo
             switch (elementName)
@@ -585,7 +596,7 @@ namespace ReadEDIFACT.Models
                 default:
                     return ""; // Sin formato específico
             }
-        }
+        }*/
 
         public string ToJson()
         {
@@ -616,19 +627,27 @@ namespace ReadEDIFACT.Models
                 // Lista para almacenar los segmentos EDI generados
                 var ediSegments = new List<string>();
 
-                // Recorrer cada segmento en las reglas definidas
-                foreach (var segmentRule in Definition.Segments)
+                // Recorrer cada segmento en el JSON
+                foreach (var segmentJson in jsonArray)
                 {
-                    if (segmentRule is SegmentData segmentData)
+                    var segmentID = segmentJson["SegmentID"]?.ToString();
+                    if (string.IsNullOrEmpty(segmentID))
                     {
-                        // Buscar el segmento correspondiente en el JSON
-                        var segmentJson = jsonArray.FirstOrDefault(s => s["SegmentID"]?.ToString() == segmentData.SegmentID);
-                        if (segmentJson != null)
-                        {
-                            // Generar el segmento EDI
-                            var ediSegment = GenerateSegment(segmentData, segmentJson);
-                            ediSegments.Add(ediSegment);
-                        }
+                        throw new ArgumentException("El SegmentID no puede estar vacío en el JSON.");
+                    }
+
+                    // Buscar la regla correspondiente al segmento en FileDefinition
+                    var segmentRule = FindMatchingSegmentRule(segmentID, segmentJson, Definition.Segments);
+                    Console.WriteLine($"GenerateEDIFromJson {segmentRule}");
+                    if (segmentRule != null)
+                    {
+                        // Generar el segmento EDI
+                        var ediSegment = GenerateSegment(segmentRule, segmentJson);
+                        ediSegments.Add(ediSegment);
+                    }
+                    else
+                    {
+                        throw new Exception($"No se encontró una regla para el segmento {segmentID}.");
                     }
                 }
 
@@ -641,15 +660,122 @@ namespace ReadEDIFACT.Models
             }
         }
 
-        private string GenerateSegment(SegmentData segmentRule, JToken segmentJson)
+        private Segment FindMatchingSegmentRule(string segmentID, JToken segmentJson, IEnumerable<Segment> segments)
+        {
+            Console.WriteLine($"FindMatchingSegmentRule 1: Buscando regla para {segmentID}");
+
+            foreach (var segment in segments)
+            {
+                if (segment is SegmentData segmentData && segmentData.SegmentID == segmentID)
+                {
+                    Console.WriteLine($"FindMatchingSegmentRule 2: Regla encontrada para {segmentID}");
+
+                    // Verificar si la estructura del JSON coincide con las reglas del segmento
+                    if (MatchesSegmentStructure(segmentData, segmentJson))
+                    {
+                        Console.WriteLine($"FindMatchingSegmentRule 3: Estructura válida para {segmentID}");
+                        return segmentData;
+                    }
+                    else
+                    {
+                        Console.WriteLine($"FindMatchingSegmentRule 3: Estructura no válida para {segmentID}");
+                    }
+                }
+                else if (segment is SegmentGroup segmentGroup)
+                {
+                    // Si el segmento pertenece a un grupo, buscar en los segmentos del grupo
+                    var foundSegment = FindMatchingSegmentRule(segmentID, segmentJson, segmentGroup.Segments);
+                    if (foundSegment != null)
+                    {
+                        return foundSegment;
+                    }
+                }
+            }
+
+            Console.WriteLine($"FindMatchingSegmentRule 4: No se encontró una regla para el segmento {segmentID}");
+            return null; // Si no se encuentra el segmento
+        }
+
+        /*private string NormalizeName(string name)
+        {
+            // Eliminar espacios, dos puntos y otros caracteres especiales
+            return name.Replace(" ", "").Replace(":", "").Replace(".", "").Replace("-", "").ToLower();
+        }*/
+
+        private bool MatchesSegmentStructure(SegmentData segmentData, JToken segmentJson)
+        {
+            Console.WriteLine($"MatchesSegmentStructure 1:  {segmentData.Name} --- {segmentJson}");
+
+            // Verificar si todos los elementos definidos en las reglas están presentes en el JSON
+            foreach (var elementRule in segmentData.DataElements)
+            {
+                if (elementRule is DataElement dataElement)
+                {
+                    string normalizedFieldName = dataElement.Name;
+                    // Console.WriteLine($"MatchesSegmentStructure 2:  {dataElement.Name} --- {segmentJson[normalizedFieldName]}");
+
+                    // Verificar si el campo está presente en el JSON
+                    if (segmentJson[normalizedFieldName] == null)
+                    {
+                        // Console.WriteLine($"Campo faltante: {dataElement.Name} (Normalized: {normalizedFieldName})");
+                        return false;
+                    }
+                }
+                else if (elementRule is CompositeElement compositeElement)
+                {
+                    string normalizedCompositeName = compositeElement.Name;
+                    // Console.WriteLine($"MatchesSegmentStructure 2:  {compositeElement.Name} (Normalized: {normalizedCompositeName}) --- {segmentJson[normalizedCompositeName]}");
+
+                    // Verificar si el campo compuesto está presente en el JSON
+                    if (segmentJson[normalizedCompositeName] == null)
+                    {
+                        // Console.WriteLine($"Campo compuesto faltante: {compositeElement.Name} (Normalized: {normalizedCompositeName})");
+                        return false;
+                    }
+
+                    // Verificar los subelementos del campo compuesto
+                    foreach (var subElementRule in compositeElement.DataElements)
+                    {
+                        string normalizedSubElementName = subElementRule.Name;
+                        // Console.WriteLine($"MatchesSegmentStructure 3:  {subElementRule.Name} (Normalized: {normalizedSubElementName}) --- {segmentJson[normalizedCompositeName]?[normalizedSubElementName]}");
+
+                        if (segmentJson[normalizedCompositeName]?[normalizedSubElementName] == null)
+                        {
+                            // Console.WriteLine($"Subelemento faltante: {subElementRule.Name} (Normalized: {normalizedSubElementName}) en {compositeElement.Name}");
+                            return false;
+                        }
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        private string GenerateSegment(Segment segmentRule, JToken segmentJson)
+        {
+            if (segmentRule is SegmentData segmentData)
+            {
+                return GenerateSegmentData(segmentData, segmentJson);
+            }
+            else if (segmentRule is SegmentGroup segmentGroup)
+            {
+                return GenerateSegmentGroup(segmentGroup, segmentJson);
+            }
+            else
+            {
+                throw new Exception($"Tipo de segmento no soportado: {segmentRule.GetType().Name}");
+            }
+        }
+
+        private string GenerateSegmentData(SegmentData segmentData, JToken segmentJson)
         {
             var elements = new List<string>();
 
             // Añadir el ID del segmento como primer elemento
-            elements.Add(segmentRule.SegmentID);
+            elements.Add(segmentData.SegmentID);
 
             // Recorrer los elementos definidos en las reglas del segmento
-            foreach (var elementRule in segmentRule.DataElements)
+            foreach (var elementRule in segmentData.DataElements)
             {
                 if (elementRule is DataElement dataElement)
                 {
@@ -672,6 +798,27 @@ namespace ReadEDIFACT.Models
 
             // Unir los elementos con el separador de elementos
             return string.Join(Definition.ElementSeparator.ToString(), elements);
+        }
+
+        private string GenerateSegmentGroup(SegmentGroup segmentGroup, JToken segmentJson)
+        {
+            var groupSegments = new List<string>();
+
+            // Recorrer los segmentos dentro del grupo
+            foreach (var segment in segmentGroup.Segments)
+            {
+                var segmentID = segment.SegmentID;
+                var segmentRule = FindMatchingSegmentRule(segmentID, segmentJson, new[] { segment });
+                if (segmentRule != null)
+                {
+                    // Generar el segmento EDI dentro del grupo
+                    var ediSegment = GenerateSegment(segmentRule, segmentJson);
+                    groupSegments.Add(ediSegment);
+                }
+            }
+
+            // Unir los segmentos del grupo con el separador de segmentos
+            return string.Join(Definition.SegmentSeparator.ToString(), groupSegments);
         }
 
         private string GenerateCompositeElement(CompositeElement compositeRule, JToken segmentJson)

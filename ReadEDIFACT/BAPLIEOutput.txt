@@ -207,11 +207,11 @@ Segments:
 |---- Free text 2: (grp4) (Optional) Type: Alphanumeric(1..70)
 |---- Free text 3: (grp4) (Optional) Type: Alphanumeric(1..70)
 |-- FTX
-|-- UNT:MESSAGE TRAILER (0)
-|--- Number of segments in the message (Mandatory) Type: Numeric(1..6)
-|--- Message reference number (Mandatory) Type: Alphanumeric(1..14)
-|-- UNT
-|-- UNZ:INTERCHANGE TRAILER (0)
-|--- Interchange Control Count (Mandatory) Type: Numeric(1..6)
-|--- Interchange Control Reference (Mandatory) Type: Alphanumeric(1..14)
-|-- UNZ
+|- UNT:MESSAGE TRAILER (0)
+|-- Number of segments in the message (Mandatory) Type: Numeric(1..6)
+|-- Message reference number (Mandatory) Type: Alphanumeric(1..14)
+|- UNT
+|- UNZ:INTERCHANGE TRAILER (0)
+|-- Interchange Control Count (Mandatory) Type: Numeric(1..6)
+|-- Interchange Control Reference (Mandatory) Type: Alphanumeric(1..14)
+|- UNZ
