@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace ReadEDIFACT.Models
 {
@@ -52,7 +53,7 @@ namespace ReadEDIFACT.Models
             }
 
             // Depuración: Imprimir el segmento UNH completo
-            Console.WriteLine($"Segmento UNH completo: {unhSegment}");
+            // Console.WriteLine($"Segmento UNH completo: {unhSegment}");
 
             // Extraer los elementos del segmento UNH
             var elements = unhSegment.Split(ElementSeparator); // ElementSeparator es '+'
@@ -73,7 +74,7 @@ namespace ReadEDIFACT.Models
             var messageIdentifier = elements[2];
 
 
-            Console.WriteLine($"Message Identifier: {messageIdentifier}");
+            // Console.WriteLine($"Message Identifier: {messageIdentifier}");
 
 
             var messageIdentifierParts = messageIdentifier.Split(DataElementSeparator);
@@ -93,7 +94,7 @@ namespace ReadEDIFACT.Models
             // EXTRAE LA PRIMERA PARTE PARA COMPARAR SI ES EL MISMO NAME QUE ESTA DEFINIDO EN MI FILEDEFINITION
             var messageTypeIdentifier = messageIdentifierParts[0];
 
-            Console.WriteLine($"Message Type Identifier: {messageTypeIdentifier}");
+            // Console.WriteLine($"Message Type Identifier: {messageTypeIdentifier}");
 
             // COMPARAR CON EL NAME DEL FILEDEFINITION CON EL QUE TIENE EL ARCHIVO EDI
             if (messageTypeIdentifier != name)
@@ -596,6 +597,100 @@ namespace ReadEDIFACT.Models
         {
             string json = ToJson();
             File.WriteAllText(filePath, json);
+        }
+
+        // ACA VAMOS A IMPLEMENTAR LOS METODOS PARA PASAR DE JSON A EDI
+        public string GenerateEDIFromJson(string jsonContent)
+        {
+            try
+            {
+                // Verificar si el JSON está vacío o es nulo
+                if (string.IsNullOrWhiteSpace(jsonContent))
+                {
+                    throw new ArgumentException("El contenido del JSON no puede estar vacío.");
+                }
+
+                // Parsear el JSON
+                JArray jsonArray = JArray.Parse(jsonContent);
+
+                // Lista para almacenar los segmentos EDI generados
+                var ediSegments = new List<string>();
+
+                // Recorrer cada segmento en las reglas definidas
+                foreach (var segmentRule in Definition.Segments)
+                {
+                    if (segmentRule is SegmentData segmentData)
+                    {
+                        // Buscar el segmento correspondiente en el JSON
+                        var segmentJson = jsonArray.FirstOrDefault(s => s["SegmentID"]?.ToString() == segmentData.SegmentID);
+                        if (segmentJson != null)
+                        {
+                            // Generar el segmento EDI
+                            var ediSegment = GenerateSegment(segmentData, segmentJson);
+                            ediSegments.Add(ediSegment);
+                        }
+                    }
+                }
+
+                // Unir todos los segmentos con el separador de segmentos
+                return string.Join(Definition.SegmentSeparator.ToString(), ediSegments) + Definition.SegmentSeparator;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al generar el archivo EDI a partir del JSON.", ex);
+            }
+        }
+
+        private string GenerateSegment(SegmentData segmentRule, JToken segmentJson)
+        {
+            var elements = new List<string>();
+
+            // Añadir el ID del segmento como primer elemento
+            elements.Add(segmentRule.SegmentID);
+
+            // Recorrer los elementos definidos en las reglas del segmento
+            foreach (var elementRule in segmentRule.DataElements)
+            {
+                if (elementRule is DataElement dataElement)
+                {
+                    // Buscar el valor del elemento en el JSON
+                    var elementValue = segmentJson[dataElement.Name]?.ToString();
+                    elements.Add(elementValue ?? ""); // Si no existe, agregar vacío
+                }
+                else if (elementRule is CompositeElement compositeElement)
+                {
+                    // Generar el elemento compuesto
+                    var compositeValue = GenerateCompositeElement(compositeElement, segmentJson);
+                    elements.Add(compositeValue);
+                }
+                else if (elementRule is EmptyElement)
+                {
+                    // Agregar un "+" para los EmptyElement
+                    elements.Add("");
+                }
+            }
+
+            // Unir los elementos con el separador de elementos
+            return string.Join(Definition.ElementSeparator.ToString(), elements);
+        }
+
+        private string GenerateCompositeElement(CompositeElement compositeRule, JToken segmentJson)
+        {
+            var subElements = new List<string>();
+
+            // Recorrer los subelementos definidos en las reglas del elemento compuesto
+            foreach (var subElementRule in compositeRule.DataElements)
+            {
+                if (subElementRule is DataElement dataElement)
+                {
+                    // Buscar el valor del subelemento en el JSON
+                    var subElementValue = segmentJson[compositeRule.Name]?[dataElement.Name]?.ToString();
+                    subElements.Add(subElementValue ?? ""); // Si no existe, agregar vacío
+                }
+            }
+
+            // Unir los subelementos con el separador de subelementos
+            return string.Join(Definition.DataElementSeparator.ToString(), subElements);
         }
     }
 }
