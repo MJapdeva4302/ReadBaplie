@@ -787,7 +787,17 @@ namespace ReadEDIFACT.Models
                 {
                     // Generar el elemento compuesto
                     var compositeValue = GenerateCompositeElement(compositeElement, segmentJson);
-                    elements.Add(compositeValue);
+
+                    // Solo agregar el elemento compuesto si no está vacío
+                    if (!string.IsNullOrEmpty(compositeValue))
+                    {
+                        elements.Add(compositeValue);
+                    }
+                    else
+                    {
+                        // Si el elemento compuesto está vacío, agregar una cadena vacía
+                        elements.Add("");
+                    }
                 }
                 else if (elementRule is EmptyElement)
                 {
@@ -825,15 +835,30 @@ namespace ReadEDIFACT.Models
         {
             var subElements = new List<string>();
 
+            // Verificar si el elemento compuesto existe en el JSON
+            var compositeJson = segmentJson[compositeRule.Name];
+            if (compositeJson == null)
+            {
+                return ""; // Si no existe, retornar vacío
+            }
+
             // Recorrer los subelementos definidos en las reglas del elemento compuesto
             foreach (var subElementRule in compositeRule.DataElements)
             {
                 if (subElementRule is DataElement dataElement)
                 {
                     // Buscar el valor del subelemento en el JSON
-                    var subElementValue = segmentJson[compositeRule.Name]?[dataElement.Name]?.ToString();
-                    subElements.Add(subElementValue ?? ""); // Si no existe, agregar vacío
+                    var subElementValue = compositeJson[dataElement.Name]?.ToString();
+
+                    // Agregar el subelemento, incluso si está vacío
+                    subElements.Add(subElementValue ?? "");
                 }
+            }
+
+            // Si no hay subelementos, retornar vacío
+            if (subElements.Count == 0)
+            {
+                return "";
             }
 
             // Unir los subelementos con el separador de subelementos
