@@ -3152,10 +3152,10 @@ using (var reader = new StreamReader(filePathMOVINS))
 {
     try
     {
-        var parser = new ParserEDI(reader, definitionBAPLIE);
+        var parser = new ParserEDI(reader, definitionMOVINS);
 
         // Validar el archivo EDI
-        var validationErrors = parser.ValidateFullEDI(definitionBAPLIE.Name);
+        var validationErrors = parser.ValidateFullEDI(definitionMOVINS.Name);
         // Console.WriteLine($"validationErrors: {validationErrors}");
         if (validationErrors.Any())
         {
@@ -3168,10 +3168,10 @@ using (var reader = new StreamReader(filePathMOVINS))
         else
         {
             // Guarda el JSON en un archivo
-            parser.SaveJsonToFile(outputFilePathBAPLIE);
-            Console.WriteLine("Archivo JSON guardado en: " + outputFilePathBAPLIE);
+            parser.SaveJsonToFile(outputFilePathMOVINS);
+            Console.WriteLine("Archivo JSON guardado en: " + outputFilePathMOVINS);
             // Leer el contenido del archivo JSON
-            string jsonContent = File.ReadAllText(outputFilePathBAPLIE);
+            string jsonContent = File.ReadAllText(outputFilePathMOVINS);
             Console.WriteLine("Contenido del JSON:");
             Console.WriteLine(jsonContent);
 
@@ -3187,7 +3187,7 @@ using (var reader = new StreamReader(filePathMOVINS))
     }
 }
 
-using (var sw = new StreamWriter(string.Format(@"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\{0}Output.txt", definitionBAPLIE.Name)))
+using (var sw = new StreamWriter(string.Format(@"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\{0}Output.txt", definitionMOVINS.Name)))
 {
     sw.Write(definitionMOVINS);
 }
