@@ -1,6 +1,6 @@
 File Definition
 
-BAPLIE, Version: 2.2.1 
+MOVINS, Version: 2.1.1 
 Segment Separator: ' 
 Element Separator: + 
 Data Element Separator: : 
@@ -35,7 +35,7 @@ Segments:
 |- UNH
 |- BGM:Beginning of Message (Mandatory)
 |-- Empty element
-|-- Message Name (Required) Type: Alphanumeric(1..35)
+|-- Document/Message Number (Required) Type: Alphanumeric(1..35)
 |-- Message Function (Required) Type: Alphanumeric(1..3)
 |- BGM
 |- DTM:Date - Time - Period (Mandatory)
@@ -59,13 +59,13 @@ Segments:
 |---- Id of Means of Transport Identification. Vessel code: (Required) Type: Alphanumeric(1..9)
 |---- Code List Qualifier: Allowed qualifiers: (Required) Type: Alphanumeric(1..3)
 |---- Code list responsible agency, coded. Allowed code: (Required) Type: Alphanumeric(1..3)
-|---- Name of Means of Transport Identification. Vessel name (Required) Type: Alphanumeric(1..35)
+|---- Id. of means of transport (Required) Type: Alphanumeric(1..17)
 |---- Nationality of Means of Transport (Optional) Type: Alphanumeric(1..3)
 |-- TDT
 |-- LOC:PLACE/LOCATION IDENTIFICATION (grp1) (Mandatory)
 |--- Place/Location Qualifier (Mandatory) Type: Alphanumeric(1..3)
 |--- Composite element: Place/Location Identification:
-|---- Location Identification (Required) Type: Alphanumeric(1..25)
+|---- Location Identification (Required) Type: Alphanumeric(1..17)
 |---- Code list qualifier. Allowed qualifiers: (Required) Type: Alphanumeric(1..3)
 |---- Code list responsible agency, coded. Allowed codes (Required) Type: Alphanumeric(1..3)
 |--- Composite element: location one identification
@@ -87,54 +87,14 @@ Segments:
 |---- Reference Qualifier (Mandatory) Type: Alphanumeric(1..3)
 |---- Reference Number (Required) Type: Alphanumeric(1..35)
 |-- RFF
-|-- LOC:PLACE/LOCATION IDENTIFICATION (grp2) (0)
-|--- Place/Location Qualifier (Mandatory) Type: Alphanumeric(1..3)
-|--- Composite element: Place/Location Identification:
-|---- Location Identification (Required) Type: Alphanumeric(1..25)
-|----  (Required) Type: Alphanumeric(0..0)
-|---- Code list responsible agency, coded. Allowed codes (Required) Type: Alphanumeric(1..3)
-|-- LOC
-|-- GID:GOODS ITEM DETAILS (grp2) (0)
+|-- FTX:FREE TEXT (grp1) (0)
+|--- Text Subject Qualifier: Allowed qualifiers: (Mandatory) Type: Alphanumeric(1..17)
 |--- Empty element
-|--- Composite element: The number of packages
-|---- Number of packages (Optional) Type: Numeric(8)
-|---- Type of packages identification (Optional) Type: Alphanumeric(1..17)
-|-- GID
-|-- GDS:NATURE OF CARGO (grp2) (0)
-|--- Nature of cargo (Mandatory) Type: Alphanumeric(1..3)
-|-- GDS
-|-- FTX:FREE TEXT (grp2) (0)
-|--- Text Subject Qualifier (Mandatory) Type: Alphanumeric(1..3)
-|--- Empty element
-|--- Text reference (Optional) Type: Alphanumeric(1..3)
-|--- Composite element: Description/Instructions/Remarks
-|---- Free Text (Mandatory) Type: Alphanumeric(1..70)
-|---- Free Text 1 (Optional) Type: Alphanumeric(1..70)
-|---- Free Text 2 (Optional) Type: Alphanumeric(1..70)
-|---- Free Text 3 (Optional) Type: Alphanumeric(1..70)
-|---- Free Text 4 (Optional) Type: Alphanumeric(1..70)
+|--- Free Text: (Mandatory) Type: Alphanumeric(1..70)
 |-- FTX
-|-- MEA:MEASUREMENTS (grp2) (0)
-|--- Measurement Application Qualifier (Mandatory) Type: Alphanumeric(1..3)
-|--- Empty element
-|--- Composite element: Measure Unit
-|---- Measure Unit Qualifier (Mandatory) Type: Alphanumeric(1..3)
-|---- Measurement Value (Required) Type: Numeric(1..18)
-|-- MEA
-|-- DIM:DIMENSIONS (grp2) (0)
-|--- Dimension Qualifier (Mandatory) Type: Alphanumeric(1..3)
-|--- Composite element: Measure Unit
-|---- Measure Unit Qualifier (Mandatory) Type: Alphanumeric(1..3)
-|---- Length Dimension (Dependent) Type: Numeric(15)
-|---- Width Dimension (Dependent) Type: Numeric(15)
-|---- Height Dimension (Dependent) Type: Numeric(15)
-|-- DIM
-|-- TMP:TEMPERATURE (grp2) (0)
-|--- Temperature Qualifier (Mandatory) Type: Alphanumeric(1..3)
-|--- Composite element: Temperature Setting
-|---- Temperature Setting (Required) Type: Decimal(3)
-|---- Measure Unit Qualifier (Required) Type: Alphanumeric(1..3)
-|-- TMP
+|-- HAN:Handling instruction (grp2) (0)
+|--- Place/Location Qualifier (Mandatory) Type: Alphanumeric(1..3)
+|-- HAN
 |-- RNG:RANGE DETAILS (grp2) (0)
 |--- Range Type Qualifier (Mandatory) Type: Alphanumeric(1..3)
 |--- Composite element: Unit Qualifier
@@ -142,42 +102,96 @@ Segments:
 |---- Range Minimum (Required) Type: Numeric(18)
 |---- Range Maximum (Required) Type: Numeric(18)
 |-- RNG
-|-- LOC:PLACE/LOCATION IDENTIFICATION (grp2) (0)
+|-- LOC:PLACE/LOCATION IDENTIFICATION (grp3) (0)
 |--- Place/Location Qualifier (Mandatory) Type: Alphanumeric(1..3)
-|--- Composite element: Namecode of the place/port, as qualified
+|--- Composite element: Place/Location Identification:
+|---- Place/Location Identification (Required) Type: Alphanumeric(1..25)
+|----  (0) Type: Alphabetic(0..0)
+|---- Code list responsible agency, coded. Allowed codes (Required) Type: Alphanumeric(1..3)
+|-- LOC
+|-- GID:GOODS ITEM DETAILS (grp3) (0)
+|--- Empty element
+|--- Composite element: The number of packages
+|---- Number of packages (Optional) Type: Numeric(1..8)
+|---- Type of packages identification (Optional) Type: Alphanumeric(1..7)
+|-- GID
+|-- GDS:GOODS DESCRIPTION (grp3) (0)
+|--- Nature of cargo (Mandatory) Type: Alphanumeric(1..3)
+|-- GDS
+|-- FTX:FREE TEXT (grp3) (0)
+|--- Text Subject Qualifier. (Mandatory) Type: Alphanumeric(1..3)
+|--- Empty element
+|--- Empty element
+|--- Free text (Mandatory) Type: Alphanumeric(1..70)
+|-- FTX
+|-- MEA:MEASUREMENTS (grp3) (0)
+|--- Measurement Application Qualifier (Mandatory) Type: Alphanumeric(1..3)
+|--- Empty element
+|--- Composite element: Measure Unit
+|---- Measure Unit Qualifier (Mandatory) Type: Alphanumeric(1..3)
+|---- Measurement Value (Dependent) Type: Numeric(1..18)
+|---- Range Minimum (Required) Type: Numeric(18)
+|---- Range Maximum (Dependent) Type: Numeric(18)
+|-- MEA
+|-- DIM:DIMENSIONS (grp3) (0)
+|--- Dimension Qualifier (Mandatory) Type: Alphanumeric(1..3)
+|--- Composite element: Measure Unit
+|---- Measure Unit Qualifier (Mandatory) Type: Alphanumeric(1..3)
+|---- Length Dimension (Dependent) Type: Numeric(15)
+|---- Width Dimension (Dependent) Type: Numeric(15)
+|---- Height Dimension (Dependent) Type: Numeric(15)
+|-- DIM
+|-- TMP:TEMPERATURE (grp3) (0)
+|--- Temperature Qualifier (Mandatory) Type: Alphanumeric(1..3)
+|--- Composite element: Temperature Setting Actual
+|---- Temperature Setting (Required) Type: Decimal(3)
+|---- Measure Unit Qualifier (Required) Type: Alphanumeric(1..3)
+|-- TMP
+|-- LOC:PLACE/LOCATION IDENTIFICATION (grp3) (0)
+|--- Place/Location Qualifier (Mandatory) Type: Alphanumeric(1..3)
+|--- Composite element: Place/Location Identification:
 |---- Place/Location Identification (Required) Type: Alphanumeric(1..25)
 |---- Code list qualifier. Allowed qualifiers (Optional) Type: Alphanumeric(1..3)
 |---- Code list responsible agency, coded. Allowed codes (Optional) Type: Alphanumeric(1..3)
-|--- Composite element: Related place/location one identification (grp2)
-|---- Related place/location one identification (Required) Type: Alphanumeric(1..25)
-|---- Code list qualifier. Allowed qualifier (Optional) Type: Alphanumeric(1..3)
-|---- Code list responsible agency, coded. Allowed codes (Optional) Type: Alphanumeric(1..3)
+|--- Composite element: Related place/location one identification. (grp3)
+|---- Related place/location one identification. (Required) Type: Alphanumeric(1..25)
+|---- Code list qualifier. Allowed qualifiers (Optional) Type: Alphanumeric(1..3)
 |-- LOC
-|-- RFF:REFERENCE (grp2) (0)
-|--- Composite element: Reference Qualifier: Allowed qualifiers: (grp2)
-|---- Reference Qualifier: Allowed qualifiers: (Mandatory) Type: Alphanumeric(1..3)
-|---- Reference Number: For Qualifiers "BM", "BN" or "ZZZ": (Required) Type: Alphanumeric(1..35)
-|-- RFF
-|-- EQD:EQUIPMENT DETAILS (grp3) (0)
+|-- RFF (1):REFERENCE (grp3) (0)
+|--- Composite element: Reference
+|---- Reference Qualifier: Allowed qualifiers (Mandatory) Type: Alphanumeric(1..3)
+|---- Reference Number: For Qualifiers (Required) Type: Alphanumeric(1..35)
+|-- RFF (1)
+|-- RFF (2):REFERENCE (grp3) (0)
+|--- Composite element: Reference
+|---- Reference Qualifier: Allowed qualifiers (Mandatory) Type: Alphanumeric(1..3)
+|---- Reference Number: For Qualifiers (Required) Type: Alphanumeric(1..35)
+|-- RFF (2)
+|-- EQD:EQUIPMENT DETAILS (grp4) (0)
 |--- Equipment Qualifier (Mandatory) Type: Alphanumeric(1..3)
-|--- Equipment Identification Number (Required) Type: Alphanumeric(1..17)
-|--- Equipment Size and Type Identification (Dependent) Type: Alphanumeric(1..4)
+|--- Equipment Identification Number (Dependent) Type: Alphanumeric(1..17)
+|--- Composite element: Equipment Size and Type Identification: ISO size-type (grp4)
+|---- Equipment Size and Type Identification (Dependent) Type: Alphanumeric(1..4)
+|----  (0) Type: Alphabetic(0..0)
+|----  (0) Type: Alphabetic(0..0)
+|---- Equipment Size and Type: (Dependent) Type: Alphanumeric(1..35)
 |--- Empty element
-|--- Empty element
-|--- Full/Empty Indicator, coded. Allowed codes (Dependent) Type: Alphanumeric(1..3)
+|--- Equipment status, coded. (Optional) Type: Alphanumeric(1..3)
+|--- Full/Empty Indicator, coded. Allowed codes (Dependent) Type: Alphanumeric(1..35)
 |-- EQD
 |-- EQA:EQUIPMENT ATTACHED (grp3) (0)
 |--- Equipment Qualifier: Allowed qualifiers (Mandatory) Type: Alphanumeric(1..3)
 |--- Equipment Identification Number (Required) Type: Alphanumeric(1..17)
 |-- EQA
-|-- NAD:NAME AND ADDRESS (grp3) (0)
+|-- NAD:NAME AND ADDRESS (grp4) (0)
 |--- Party Qualifier (Mandatory) Type: Alphanumeric(1..3)
-|--- Composite element: Party Id Identification (grp3)
-|---- Party Id Identification (Mandatory) Type: Alphanumeric(1..35)
+|--- Composite element: Party Id Identification (grp4)
+|---- Party Id Identification (Mandatory) Type: Alphanumeric(1..17)
+|----  (0) Type: Alphabetic(0..0)
 |---- Code List Qualifier (Required) Type: Alphanumeric(1..3)
 |---- Code List Responsible Agency, coded. Allowed codes (Required) Type: Alphanumeric(1..3)
 |-- NAD
-|-- DGS:DANGEROUS GOODS (grp4) (0)
+|-- DGS:DANGEROUS GOODS (grp5) (0)
 |--- Dangerous Goods Regulations (Required) Type: Alphanumeric(1..3)
 |--- Composite element: Hazard Code Identification (grp4)
 |---- Hazard Code Identification (Mandatory) Type: Alphanumeric(1..7)
@@ -185,27 +199,27 @@ Segments:
 |--- UNDG Number (Optional) Type: Numeric(4)
 |--- Composite element: Shipment Flashpoint (grp4)
 |---- Shipment Flashpoint (Optional) Type: Numeric(3)
-|---- Measure Unit Qualifier (Optional) Type: Decimal(3)
-|--- Packing group, coded (Optional) Type: Alphanumeric(3)
-|--- EMS number (Optional) Type: Alphanumeric(6)
-|--- MFAG (Optional) Type: Alphanumeric(4)
+|---- Measure Unit Qualifier (Optional) Type: Decimal(1..3)
+|--- Packing group, coded (Optional) Type: Alphanumeric(1..3)
+|--- EMS number (Optional) Type: Alphanumeric(1..6)
+|--- MFAG (Optional) Type: Alphanumeric(1..4)
 |--- Empty element
 |--- Composite element: Hazard Identification number, upper part (grp4)
-|---- Hazard Identification number (Optional) Type: Alphanumeric(4)
-|---- Substance Identification number (Optional) Type: Alphanumeric(4)
+|---- Hazard Identification number (Optional) Type: Alphanumeric(1..4)
+|---- Substance Identification number (Optional) Type: Alphanumeric(1..4)
 |--- Composite element: Dangerous Goods Label Marking (grp4)
-|---- Dangerous Goods Label Marking (1) (Optional) Type: Alphanumeric(4)
-|---- Dangerous Goods Label Marking (2) (Optional) Type: Alphanumeric(4)
-|---- Dangerous Goods Label Marking (3) (Optional) Type: Alphanumeric(4)
+|---- Dangerous Goods Label Marking (1) (Optional) Type: Alphanumeric(1..4)
+|---- Dangerous Goods Label Marking (2) (Optional) Type: Alphanumeric(1..4)
+|---- Dangerous Goods Label Marking (3) (Optional) Type: Alphanumeric(1..4)
 |-- DGS
-|-- FTX:FREE TEXT (grp4) (0)
+|-- FTX:FREE TEXT (grp5) (0)
 |--- Text Subject Qualifier. (Mandatory) Type: Alphanumeric(1..3)
 |--- Empty element
-|--- Empty element
-|--- Composite element: Free text (grp4)
-|---- Free text (Mandatory) Type: Alphanumeric(1..70)
-|---- Free text 2: (grp4) (Optional) Type: Alphanumeric(1..70)
-|---- Free text 3: (grp4) (Optional) Type: Alphanumeric(1..70)
+|--- Free text, coded. Allowed code (Optional) Type: Alphanumeric(1..3)
+|--- Composite element: Free text: (grp4)
+|---- Free text (Optional) Type: Alphanumeric(1..70)
+|---- Free text (Optional) Type: Alphanumeric(1..70)
+|---- Free text (Optional) Type: Alphanumeric(1..70)
 |-- FTX
 |- UNT:MESSAGE TRAILER (0)
 |-- Number of segments in the message (Mandatory) Type: Numeric(1..6)
