@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net.Mail;
+using Microsoft.VisualBasic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -107,7 +109,7 @@ namespace ReadEDIFACT.Models
             if (errors.Any())
             {
                 // EN CASO DE ERRORES FINALIZAR Y MOSTRAR LOS ERRORES
-                return errors; 
+                return errors;
             }
 
             // Valida la estructura del archivo
@@ -130,19 +132,19 @@ namespace ReadEDIFACT.Models
 
                 // Divide el segmento en elementos
                 var elements = line.Split(ElementSeparator);
-                
+
                 var segmentId = elements[0];
 
-                
+
                 var segmentDefinition = FindSegmentDefinition(segmentId, elements, Definition.Segments);
 
                 if (segmentDefinition == null)
                 {
-                    
+
                     continue;
                 }
 
-                
+
                 if (segmentDefinition is SegmentData segmentData)
                 {
                     var segmentErrors = ValidateSegmentData(segmentData, elements, lineIndex);
@@ -158,7 +160,7 @@ namespace ReadEDIFACT.Models
             return errors;
         }
 
-        
+
         public List<Dictionary<string, object>> Parse()
         {
             var ediData = new List<Dictionary<string, object>>();
@@ -177,7 +179,7 @@ namespace ReadEDIFACT.Models
                 var segmentDefinition = FindSegmentDefinition(segmentId, elements, Definition.Segments);
                 if (segmentDefinition == null)
                 {
-                    
+
                     continue;
                 }
 
@@ -203,7 +205,7 @@ namespace ReadEDIFACT.Models
             // {
             //     elements["Notes"] = segmentData.Notes;
             // }
-            int elementIndex = 1; 
+            int elementIndex = 1;
             for (int i = 0; i < segmentData.DataElements.Count(); i++)
             {
                 var element = segmentData.DataElements.ElementAt(i);
@@ -317,31 +319,31 @@ namespace ReadEDIFACT.Models
 
         private bool IsSegmentStructureValid(SegmentData segmentData, string[] ediElements)
         {
-            
+
             int ediElementIndex = 1;
             int ruleElementIndex = 0;
 
-            
+
             while (ruleElementIndex < segmentData.DataElements.Count() && ediElementIndex < ediElements.Length)
             {
                 var ruleElement = segmentData.DataElements.ElementAt(ruleElementIndex);
 
                 if (ruleElement is DataElement dataElement)
                 {
-                    
+
                     if (dataElement.Usage == RuleUsage.Mandatory && string.IsNullOrEmpty(ediElements[ediElementIndex]))
                     {
-                        
+
                         return false;
                     }
 
-                    
+
                     ediElementIndex++;
                     ruleElementIndex++;
                 }
                 else if (ruleElement is CompositeElement compositeElement)
                 {
-                    
+
                     var compositeValues = ediElements[ediElementIndex].Split(DataElementSeparator);
                     int compositeValueIndex = 0;
 
@@ -352,7 +354,7 @@ namespace ReadEDIFACT.Models
                             if (subDataElement.Usage == RuleUsage.Mandatory &&
                                 (compositeValueIndex >= compositeValues.Length || string.IsNullOrEmpty(compositeValues[compositeValueIndex])))
                             {
-                                
+
                                 return false;
                             }
 
@@ -365,27 +367,27 @@ namespace ReadEDIFACT.Models
                 }
                 else if (ruleElement is EmptyElement)
                 {
-                    
+
                     ediElementIndex++;
                     ruleElementIndex++;
                 }
             }
 
-            
+
             while (ruleElementIndex < segmentData.DataElements.Count())
             {
                 var ruleElement = segmentData.DataElements.ElementAt(ruleElementIndex);
 
                 if (ruleElement is DataElement dataElement && dataElement.Usage == RuleUsage.Mandatory)
                 {
-                    
+
                     return false;
                 }
 
                 ruleElementIndex++;
             }
 
-            
+
             return true;
         }
 
@@ -475,19 +477,19 @@ namespace ReadEDIFACT.Models
             {
                 if (segment is SegmentData segmentData && segmentData.SegmentID == segmentId)
                 {
-                    
+
                     if (IsSegmentStructureValid(segmentData, ediElements))
                     {
-                        return segmentData; 
+                        return segmentData;
                     }
                 }
                 else if (segment is SegmentGroup segmentGroup)
                 {
-                    
+
                     var nestedSegment = FindSegmentDefinition(segmentId, ediElements, segmentGroup.Segments);
                     if (nestedSegment != null)
                     {
-                        return nestedSegment; 
+                        return nestedSegment;
                     }
                 }
             }
@@ -497,21 +499,21 @@ namespace ReadEDIFACT.Models
 
         private void ProcessSegmentData(Dictionary<string, object> segment, string[] elements, SegmentData segmentData)
         {
-            
+
             if (!string.IsNullOrEmpty(segmentData.Notes))
             {
                 segment["Notes"] = segmentData.Notes;
             }
 
-           
-            int elementIndex = 1; 
 
-            
+            int elementIndex = 1;
+
+
             foreach (var elementDefinition in segmentData.DataElements)
             {
                 if (elementDefinition is CompositeElement compositeElement)
                 {
-                    
+
                     var compositeData = new Dictionary<string, object>();
                     string compositeValue = elementIndex < elements.Length ? elements[elementIndex] : "";
 
@@ -537,14 +539,14 @@ namespace ReadEDIFACT.Models
                 }
                 else if (elementDefinition is DataElement dataElement)
                 {
-                    
+
                     string value = elementIndex < elements.Length ? elements[elementIndex] : "";
                     segment[dataElement.Name] = value;
                     elementIndex++;
                 }
                 else if (elementDefinition is EmptyElement)
                 {
-                    
+
                     segment[$"Empty{elementIndex}"] = "";
                     elementIndex++;
                 }
@@ -591,8 +593,22 @@ namespace ReadEDIFACT.Models
         public string ToJson()
         {
             var parsedData = Parse();
-            return JsonConvert.SerializeObject(parsedData, Formatting.Indented);
+            var jsonObject = new Dictionary<string, object>
+            {
+                { "Name", Definition.Name },
+                { "Version", Definition.Version }
+            };
+
+            jsonObject.Add("ParsedData", parsedData);
+            return JsonConvert.SerializeObject(jsonObject, Formatting.Indented);
         }
+        // public void ToSeeJson()
+        // {
+        //     var parsedData = Parse();
+        //     var json = JsonConvert.SerializeObject(parsedData, Formatting.Indented);
+        //     Console.WriteLine($"ToJson:: {json}");
+        //     // return JsonConvert.SerializeObject(parsedData, Formatting.Indented);
+        // }
 
         public void SaveJsonToFile(string filePath)
         {
@@ -610,10 +626,20 @@ namespace ReadEDIFACT.Models
                     throw new ArgumentException("El contenido del JSON no puede estar vacío.");
                 }
 
-                JArray jsonArray = JArray.Parse(jsonContent);
+                // Parsear el JSON como un objeto (no como un array)
+                var jsonObject = JObject.Parse(jsonContent);
+
+                // Extraer el array "ParsedData"
+                var parsedData = jsonObject["ParsedData"] as JArray;
+                if (parsedData == null)
+                {
+                    throw new ArgumentException("El JSON no contiene un array 'ParsedData' válido.");
+                }
+
                 var ediSegments = new List<string>();
 
-                foreach (var segmentJson in jsonArray)
+                // Procesar cada segmento dentro de "ParsedData"
+                foreach (var segmentJson in parsedData)
                 {
                     var segmentID = segmentJson["SegmentID"]?.ToString();
                     if (string.IsNullOrEmpty(segmentID))
@@ -625,6 +651,7 @@ namespace ReadEDIFACT.Models
                     ediSegments.Add(ediSegment);
                 }
 
+                // Unir los segmentos EDI con el separador de segmentos
                 return string.Join(Definition.SegmentSeparator.ToString(), ediSegments) + Definition.SegmentSeparator;
             }
             catch (Exception ex)
@@ -666,13 +693,13 @@ namespace ReadEDIFACT.Models
                     {
                         if (IsEmptyValue(value))
                         {
-                            continue; 
+                            continue;
                         }
                     }
 
                     if (property.Name.StartsWith("Empty"))
                     {
-                        elements.Add(""); 
+                        elements.Add("");
                         continue;
                     }
 
@@ -686,7 +713,6 @@ namespace ReadEDIFACT.Models
                     }
                     else if (value.Type == JTokenType.Array)
                     {
-                        
                         foreach (var item in value)
                         {
                             var itemValue = GenerateCompositeValueFromJson(item);
@@ -698,13 +724,11 @@ namespace ReadEDIFACT.Models
                     }
                     else
                     {
-                       
                         elements.Add(value.ToString());
                     }
                 }
             }
 
-            
             return string.Join(Definition.ElementSeparator.ToString(), elements);
         }
 
@@ -712,14 +736,13 @@ namespace ReadEDIFACT.Models
         {
             var subElements = new List<string>();
 
-           
             foreach (var property in compositeJson.Children<JProperty>())
             {
                 var value = property.Value;
 
                 if (string.IsNullOrEmpty(value.ToString()))
                 {
-                    subElements.Add(""); 
+                    subElements.Add("");
                 }
                 else
                 {
