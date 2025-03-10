@@ -243,7 +243,7 @@ namespace ReadEDIFACT.Models
                                 DataType = DataType.Alphanumeric,
                                 Precision = new[] { 1, 35 }
                             }
-                            
+
                         }
                         },
                         new EmptyElement(),
@@ -262,293 +262,11 @@ namespace ReadEDIFACT.Models
                     }
                 },// ACA FINALIZA EL SEGMENTO BGM 
 
-                new SegmentData()
-                {
-                    SegmentID = "DTM",
-                    Name = "Date - Time - Period",
-                    Usage = RuleUsage.Mandatory,
-                    DataElements = new Element[]
-                    {
-                        new CompositeElement()
-                        {
-                            Name = "DATE/TIME/PERIOD",
-                            Description = "Date and/or time, or period relevant to the specified date/time/period type. It is recommended to transmit date and time as UTC.",
-                            DataElements = new DataElement[]
-                            {
-
-                                new DataElement()
-                                {
-                                    Name = "Date or time or period function code qualifier",
-                                    Description = @"Code ""137"" (Document/Message Date/Time)",
-                                    Usage = RuleUsage.Mandatory,
-                                    DataType = DataType.Alphanumeric,
-                                    Precision = new[] { 1, 3 }
-                                },
-
-                                new DataElement()
-                                {
-                                    Name = "Date or time or period text",
-                                    Description = "The value of a date, a date and time, a time or of a period in a specified representation.",
-                                    Usage = RuleUsage.Required,
-                                    DataType = DataType.Alphanumeric,
-                                    Precision = new[] { 1, 35 }
-                                },
-
-                                new DataElement()
-                                {
-                                    Name = "Date or time or period format code",
-                                    Description = @"Code specifying the representation of a date, time or period. 102 = CCYYMMDD. 203 = CCYYMMDDHHMM",
-                                    Usage = RuleUsage.Required,
-                                    DataType = DataType.Alphanumeric,
-                                    Precision = new[] { 1, 3 }
-                                }
-
-                            }
-                        }
-                    }
-                },// ACA FINALIZA EL SEGMENTO DTM
-
                 new SegmentGroup()
                 {
                     GroupRepeat = 1,
                     Segments = new Segment[]
                     {
-
-                        new SegmentData()
-                        {
-                            SegmentID = "TDT",
-                            Name = "DETAILS OF TRANSPORT",
-                            Notes = "1",
-                            Usage = RuleUsage.Mandatory,
-                            DataElements = new Element[]
-                            {
-                                new DataElement()
-                                {
-                                    Name = "Transport Stage Qualifier",
-                                    Description = @"Code ""20"" (Main Carriage)",
-                                    Usage = RuleUsage.Mandatory,
-                                    DataType = DataType.Alphanumeric,
-                                    Precision = new[] { 1, 3 }
-                                },
-
-                                new DataElement()
-                                {
-                                    Name = "Conveyance Reference Number",
-                                    Description = "Discharge voyage number as assigned by the Operating Carrier or his agent. The trade route could be included in this voyage number, if required.",
-                                    Usage = RuleUsage.Required,
-                                    DataType = DataType.Alphanumeric,
-                                    Precision = new[] { 1, 17 }
-                                },
-
-                                new EmptyElement(),
-                                new EmptyElement(),
-
-                                new CompositeElement()
-                                {
-                                    Name = "Code List",
-                                    Description = "Carrier name, coded. Codes to be agreed or standard carrier alpha code (SCAC).",
-
-                                    DataElements = new DataElement[]
-                                    {
-                                        new DataElement()
-                                        {
-                                            Name = "Carrier Identification",
-                                            Description = "Carrier name, coded. Codes to be agreed or standard carrier alpha code (SCAC).",
-                                            Usage = RuleUsage.Required,
-                                            DataType = DataType.Alphanumeric,
-                                            Precision = new[] { 1, 17 }
-                                        },
-
-                                        new DataElement()
-                                        {
-                                            Name = "Code List Qualifier",
-                                            Description = @"Code ""172"" (Carrier Code)",
-                                            Usage = RuleUsage.Required,
-                                            DataType = DataType.Alphanumeric,
-                                            Precision = new[] { 1, 3 }
-                                        },
-
-                                        new DataElement()
-                                        {
-                                            Name = "Code list responsible agency, coded. Allowed codes",
-                                            Description = @"""20"" = BIC (Bureau International des Containeurs) ""166"" = US National Motor Freight Classification Association (SCAC) ""ZZZ"" = Mutually defined.",
-                                            Usage = RuleUsage.Required,
-                                            DataType = DataType.Alphanumeric,
-                                            Precision = new[] { 1, 3 }
-                                        },
-                                    }
-
-                                },
-
-                                new EmptyElement(),
-                                new EmptyElement(),
-
-                                new CompositeElement()
-                                {
-                                    Name = "Id of Means of Transport Identification. Vessel code",
-                                    Usage = RuleUsage.Required,
-                                    DataElements = new DataElement[]
-                                    {
-                                        new DataElement()
-                                        {
-                                            Name = "Id of Means of Transport Identification. Vessel code:",
-                                            Description = @"1. Lloyd’s Code (IMO number) 2. Call Sign 3. Mutually agreed vessel code.",
-                                            Usage = RuleUsage.Required,
-                                            DataType = DataType.Alphanumeric,
-                                            Precision = new[] { 1, 9 }
-                                        },
-
-                                        new DataElement()
-                                        {
-                                            Name = "Code List Qualifier: Allowed qualifiers:",
-                                            Description = @"""103"" = Call Sign Directory ""146"" = Means of Transport Identification(Lloyd's Code or IMO number) ""ZZZ"" = Mutually defined or IMO number",
-                                            Usage = RuleUsage.Required,
-                                            DataType = DataType.Alphanumeric,
-                                            Precision = new[] { 1, 3 }
-                                        },
-
-                                        new DataElement()
-                                        {
-                                            Name = "Code list responsible agency, coded. Allowed code:",
-                                            Description = @"""11"" = Lloyd's register of shipping. Only to be used whenLloyd's Code is used for vessel/barge identification (Code ""146"" in c222.e1131). ""ZZZ"" = Mutually defined. To be used in all other cases.",
-                                            Usage = RuleUsage.Required,
-                                            DataType = DataType.Alphanumeric,
-                                            Precision = new[] { 1, 3 }
-                                        },
-
-                                        new DataElement()
-                                        {
-                                            Name = "Name of Means of Transport Identification. Vessel name",
-                                            Description = "Name of the vessel.",
-                                            Usage = RuleUsage.Required,
-                                            DataType = DataType.Alphanumeric,
-                                            Precision = new[] { 1, 35 }
-                                        },
-
-                                        new DataElement()
-                                        {
-                                            Name = "Nationality of Means of Transport",
-                                            Description = "Coded according to UN-country code (ISO 3166).",
-                                            Usage = RuleUsage.Optional,
-                                            DataType = DataType.Alphanumeric,
-                                            Precision = new[] { 1, 3 }
-                                        }
-                                    }
-
-                                },
-                            }
-                        },// ACA FINALIZA EL SEGMENTO TDT DEL GRUPO 1
-
-                        new SegmentData()
-                        {
-                            SegmentID = "LOC",
-                            Name = "PLACE/LOCATION IDENTIFICATION (grp1)",
-                            Notes = "1",
-                            Usage = RuleUsage.Mandatory,
-                            DataElements = new Element[]
-                            {
-                                new DataElement()
-                                {
-                                    Name = "Place/Location Qualifier",
-                                    Description = @"""5"" = Place of Departure ""61"" = Next port of call",
-                                    Usage = RuleUsage.Mandatory,
-                                    DataType = DataType.Alphanumeric,
-                                    Precision = new[] { 1, 3 }
-                                },
-
-                                new CompositeElement()
-                                {
-                                    Name = "Place/Location Identification:",
-                                    DataElements = new DataElement[]
-                                    {
-                                        new DataElement()
-                                        {
-                                            Name = "Location Identification",
-                                            Description = "place of departure (normally the sender of the message). If possible, UN-Locodes of 5 characters according to UN recommendation no.16. must be used.",
-                                            Usage = RuleUsage.Required,
-                                            DataType = DataType.Alphanumeric,
-                                            Precision = new[] { 1, 25 }
-                                        },
-
-                                        new DataElement()
-                                        {
-                                            Name = "Code list qualifier. Allowed qualifiers:",
-                                            Description = @"""139"" = Port.",
-                                            Usage = RuleUsage.Required,
-                                            DataType = DataType.Alphanumeric,
-                                            Precision = new[] { 1, 3 }
-                                        },
-
-                                        new DataElement()
-                                        {
-                                            Name = "Code list responsible agency, coded. Allowed codes",
-                                            Description = @"""112"" = US, US Census Bureau, Schedule D for U S locations, Schedule K for foreign port locations.""6"" = UN/ECE - United Nations - Economic Commission for Europe. (UN-Locodes)..",
-                                            Usage = RuleUsage.Required,
-                                            DataType = DataType.Alphanumeric,
-                                            Precision = new[] { 1, 3 }
-                                        }
-                                    }
-                                },
-
-                                new CompositeElement(){
-                                    Name = "location one identification",
-                                    DataElements = new DataElement[]
-                                    {
-                                        new DataElement()
-                                        {
-                                            Name = "Related place/location one identification",
-                                            Description = "The ISO country code",
-                                            Usage = RuleUsage.Optional,
-                                            DataType = DataType.Alphanumeric,
-                                            Precision = new[] { 1, 25 }
-                                        },
-
-                                        new DataElement()
-                                        {
-                                            Name = "Code list qualifier. Allowed qualifiers:",
-                                            Description = @"""162"" = Country",
-                                            Usage = RuleUsage.Optional,
-                                            DataType = DataType.Alphanumeric,
-                                            Precision = new[] { 1, 3 }
-                                        },
-
-                                        new DataElement()
-                                        {
-                                            Name = "Code list responsible agency, coded. Allowed codes",
-                                            Description = @"""5"" = ISO",
-                                            Usage = RuleUsage.Optional,
-                                            DataType = DataType.Alphanumeric,
-                                            Precision = new[] { 1, 3 }
-                                        }
-                                    }
-                                },
-
-                                new CompositeElement(){
-                                    Name = "location two identification.",
-                                    DataElements = new DataElement[]
-                                    {
-                                        new DataElement()
-                                        {
-                                            Name = "Related place/location two identification",
-                                            Description = "The state or province code, postal abbreviations.",
-                                            Usage = RuleUsage.Optional,
-                                            DataType = DataType.Alphanumeric,
-                                            Precision = new[] { 1, 25 }
-                                        },
-
-                                        new DataElement()
-                                        {
-                                            Name = "Code list qualifier. Allowed qualifiers:",
-                                            Description = @"""163"" = Country sub-entity; state or province.",
-                                            Usage = RuleUsage.Optional,
-                                            DataType = DataType.Alphanumeric,
-                                            Precision = new[] { 1, 3 }
-                                        },
-
-                                    }
-                                }
-                            }
-                        },// ACA FINALIZA EL SEGMENTO LOC DEL GRUPO 1
 
                         new SegmentData(){
 
@@ -560,24 +278,25 @@ namespace ReadEDIFACT.Models
                             DataElements = new Element[]
                             {
 
+                                new DataElement()
+                                {
+                                    Name = "Date or time or period function code qualifier",
+                                    Description = @"Code qualifying the function of a date, time or period. 171 Reference date/time",
+                                    Usage = RuleUsage.Mandatory,
+                                    DataType = DataType.Alphanumeric,
+                                    Precision = new[] { 1, 3 }
+                                },
+
                                 new CompositeElement()
                                 {
-                                    Name = "Place/Location Identification:",
+                                    Name = "DATE/TIME/PERIOD",
                                     DataElements = new DataElement[]
                                     {
-                                        new DataElement()
-                                        {
-                                            Name = "Date/Time/Period Qualifier: Allowed qualifiers",
-                                            Description = @"""178"" = actual date/time of arrival at senders port ""132"" = estimated date or date/time of arrival at the next port of call ""133"" = estimated date or date/time of departure at senders port ""136"" = actual date/time of departure at senders port",
-                                            Usage = RuleUsage.Mandatory,
-                                            DataType = DataType.Alphanumeric,
-                                            Precision = new[] { 1, 3 }
-                                        },
 
                                         new DataElement()
                                         {
-                                            Name = "Date/Time/Period",
-                                            Description = @"Date or date/time in local time when Means of Transport has arrived/departed or is expected to depart at the senders port or is expected to arrive at the next port of call.",
+                                            Name = "Date or time or period text",
+                                            Description = @"The value of a date, a date and time, a time or of a period in a specified representation.",
                                             Usage = RuleUsage.Required,
                                             DataType = DataType.Alphanumeric,
                                             Precision = new[] { 1, 35 }
@@ -586,7 +305,7 @@ namespace ReadEDIFACT.Models
                                         new DataElement()
                                         {
                                             Name = "Date/Time/Period Format Qualifier. Allowed qualifiers",
-                                            Description = @"""101"" = YYMMDD ""201"" = YYMMDDHHMM ""301"" = YYMMDDHHMMZZZ (""ZZZ"" = Time zone, e.g. ""GMT"" or other)",
+                                            Description = @"Code specifying the representation of a date, time or period. 203 = CCYYMMDDHHMM 303 = CCYYMMDDHHMMZZZ",
                                             Usage = RuleUsage.Required,
                                             DataType = DataType.Alphanumeric,
                                             Precision = new[] { 1, 3 }
@@ -596,41 +315,6 @@ namespace ReadEDIFACT.Models
                             }
                         }, // ACA FINALIZA EL SEGMENTO DTM (grp1)
 
-                        new SegmentData(){
-                            SegmentID = "RFF",
-                            Name = "REFERENCE (grp1)",
-                            Notes = "1",
-                            Position = 1,
-                            DataElements = new Element[]
-                            {
-
-                                new CompositeElement()
-                                {
-                                    Name = "Reference",
-                                    DataElements = new DataElement[]
-                                    {
-
-                                        new DataElement()
-                                        {
-                                            Name = "Reference code qualifier",
-                                            Description = @"Code qualifying a reference. ACW = Reference number to previous message AGO = Sender's reference to the original message MS = Message sender",
-                                            Usage = RuleUsage.Mandatory,
-                                            DataType = DataType.Alphanumeric,
-                                            Precision = new[] { 1, 3 }
-                                        },
-
-                                        new DataElement()
-                                        {
-                                            Name = "Reference identifier",
-                                            Description = @"Identifies a reference.",
-                                            Usage = RuleUsage.Required,
-                                            DataType = DataType.Alphanumeric,
-                                            Precision = new[] { 1, 70 }
-                                        }
-                                    }
-                                }
-                            }
-                        }, // ACA FINALIZA EL SEGMENTO RFF (grp1)
                     },
 
                 },// ACA FINALIZA EL GRUPO 1
@@ -639,57 +323,6 @@ namespace ReadEDIFACT.Models
                     GroupRepeat = 99999,
                     Segments = new Segment[]
                     {
-                        new SegmentData(){
-                            SegmentID = "LOC",
-                            Name = "PLACE/LOCATION IDENTIFICATION (grp2)",
-                            Notes = "2",
-                            Position = 1,
-                            DataElements = new Element[]
-                            {
-                                new DataElement()
-                                {
-                                    Name = "Place/Location Qualifier",
-                                    Description = @"Code ""147"" (Stowage Cell)",
-                                    Usage = RuleUsage.Mandatory,
-                                    DataType = DataType.Alphanumeric,
-                                    Precision = new[] { 1, 3 }
-                                },
-
-                                new CompositeElement()
-                                {
-                                    Name = "Place/Location Identification:",
-                                    DataElements = new DataElement[]
-                                    {
-                                        new DataElement()
-                                        {
-                                            Name = "Location Identification",
-                                            Description = @"The actual location of the equipment or cargo on the vessel. The following formats are allowed:1. ISO-format 2. Ro/Ro-format3. Other non-ISO-format (to be agreed between partners)1. ISO-format: Bay/Row/Tier (BBBRRTT). If Bay number is less than 3 characters it must be filled with leading zeroes, e.g. ""0340210"".2. Ro/Ro-format:Deck/Bay/Row/Tier (DDBBBRRTT).",
-                                            Usage = RuleUsage.Required,
-                                            DataType = DataType.Alphanumeric,
-                                            Precision = new[] { 1, 25 }
-                                        },
-
-                                        new DataElement()
-                                        {
-                                            Name = string.Empty,
-                                            Description = string.Empty,
-                                            Usage = RuleUsage.Required,
-                                            DataType = DataType.Alphanumeric,
-                                            Precision = new[] {0 , 0 }
-                                        },
-
-                                        new DataElement()
-                                        {
-                                            Name = "Code list responsible agency, coded. Allowed codes",
-                                            Description = @"To indicate which format is used. Valid codes are:""5"" (ISO-format)""87"" (Ro/Ro-format, assigned by the Carrier""ZZZ"" (non-ISO-format, mutually defined).",
-                                            Usage = RuleUsage.Required,
-                                            DataType = DataType.Alphanumeric,
-                                            Precision = new[] { 1, 3 }
-                                        }
-                                    }
-                                }
-                            }
-                        }, // ACA FINALIZA EL SEGMENTO LOC (grp2)
 
                         new SegmentData(){
                             SegmentID = "GID",
@@ -741,116 +374,6 @@ namespace ReadEDIFACT.Models
                                 }
                             }
                         }, // ACA FINALIZA EL SEGMENTO GDS DEL GRUPO 2
-
-                        new SegmentData(){
-                            SegmentID = "FTX",
-                            Name = "FREE TEXT (grp2)",
-                            Notes = "2",
-                            DataElements = new Element[]{
-                                new DataElement(){
-                                    Name = "Text Subject Qualifier",
-                                    Description = @"Allowed qualifiers: ""AAA"" = Description of Goods""HAN"" = Handling Instructions""CLR"" = Container Loading Remarks""SIN"" = Special instructions""AAI"" = General information""AAY"" = Certification statements""ZZZ"" = Mutually defined use",
-                                    Usage = RuleUsage.Mandatory,
-                                    DataType = DataType.Alphanumeric,
-                                    Precision = new[] { 1, 3 }
-                                },
-
-                                new EmptyElement(),
-
-                                new DataElement(){
-                                    Name = "Text reference",
-                                    Description = @"In case of e4451 = AAY used for specification of data transmitted in c108. Use codes defined in SMDG codelist VGM.",
-                                    Usage = RuleUsage.Optional,
-                                    DataType = DataType.Alphanumeric,
-                                    Precision = new[] { 1, 3 }
-                                },
-
-                                new CompositeElement(){
-                                    Name = "Description/Instructions/Remarks",
-                                    DataElements = new Element[]{
-                                        new DataElement(){
-                                            Name = "Free Text",
-                                            Description = @"Description/Instructions/Remarks in plain language or coded, for specific cargo/equipment. Codes, etc. to be agreed between partners.",
-                                            Usage = RuleUsage.Mandatory,
-                                            DataType = DataType.Alphanumeric,
-                                            Precision = new[] { 1, 70 }
-                                        },
-
-                                        new DataElement(){
-                                            Name = "Free Text 1",
-                                            Description = @"Information about VGM according to code specified in c107.4441. (For details see page 42.)",
-                                            Usage = RuleUsage.Optional,
-                                            DataType = DataType.Alphanumeric,
-                                            Precision = new[] { 1, 70 }
-                                        },
-
-                                        new DataElement(){
-                                            Name = "Free Text 2",
-                                            Description = @"Information about VGM according to code specified in c107.4441. (For details see page 42.)",
-                                            Usage = RuleUsage.Optional,
-                                            DataType = DataType.Alphanumeric,
-                                            Precision = new[] { 1, 70 }
-                                        },
-
-                                        new DataElement(){
-                                            Name = "Free Text 3",
-                                            Description = @"Information about VGM according to code specified in c107.4441. (For details see page 42.)",
-                                            Usage = RuleUsage.Optional,
-                                            DataType = DataType.Alphanumeric,
-                                            Precision = new[] { 1, 70 }
-                                        },
-
-                                        new DataElement(){
-                                            Name = "Free Text 4",
-                                            Description = @"Information about VGM according to code specified in c107.4441. (For details see page 42.)",
-                                            Usage = RuleUsage.Optional,
-                                            DataType = DataType.Alphanumeric,
-                                            Precision = new[] { 1, 70 }
-                                        }
-                                    }
-                                }
-                            }
-                        }, // ACA FINALIZA EL SEGMENTO FTX DEL GRUPO 2
-
-                        new SegmentData(){
-                            SegmentID = "MEA",
-                            Name = "MEASUREMENTS (grp2)",
-                            Notes = "2",
-                            DataElements = new Element[]{
-                                new DataElement(){
-                                    Name = "Measurement Application Qualifier",
-                                    Description = @"Allowed qualifiers: ""WT"" (gross weight / gross mass) – not confirmed as verified ""VGM"" (verified gross mass) – specified weight is verified[code VGM has been introduced in D.15B for data element 6313]",
-                                    Usage = RuleUsage.Mandatory,
-                                    DataType = DataType.Alphanumeric,
-                                    Precision = new[] { 1, 3 }
-                                },
-
-                                new EmptyElement(),
-
-                               new CompositeElement(){
-                                    Name = "Measure Unit",
-                                    DataElements = new Element[]{
-                                        new DataElement(){
-                                            Name = "Measure Unit Qualifier",
-                                            Description = @"Allowed qualifiers: ""KGM"" = kilogram = preferred ""LBR"" = pounds",
-                                            Usage = RuleUsage.Mandatory,
-                                            DataType = DataType.Alphanumeric,
-                                            Precision = new[] { 1, 3 }
-                                        },
-
-                                        new DataElement(){
-                                            Name = "Measurement Value",
-                                            Description = @"The gross mass of the transport equipment including cargo in kilograms or pounds, as qualified (no decimals)",
-                                            Usage = RuleUsage.Required,
-                                            DataType = DataType.Numeric,
-                                            Precision = new []{1, 18}
-                                            // Precision = 18 //LONGITUD EXACTA SI O SI TIENE QUE TENER UNA LOGITUD DE 18
-                                            
-                                        }
-                                    }
-                               }
-                            }
-                        },
 
                         new SegmentData()
                         {
@@ -1083,37 +606,6 @@ namespace ReadEDIFACT.Models
                             }
                         }, // ACA FINALIZA EL SEGMENTO LOC DEL GRUPO 2
 
-                        new SegmentData(){
-                            SegmentID = "RFF",
-                            Name = "REFERENCE (grp2)",
-                            Notes = "2",
-                            DataElements = new Element[]
-                            {
-                                new CompositeElement(){
-                                    Name = "Reference Qualifier: Allowed qualifiers: (grp2)",
-                                    DataElements = new Element[]{
-                                new DataElement()
-                                {
-                                    Name = "Reference Qualifier: Allowed qualifiers:",
-                                    Description = @"""BM"" = B/L-number. ""BN"" = Booking reference number.""ET"" = Excess Transportation Number to be used for leading Stowage position, in case of Break-bulk or odd-sized-cargo. ""ZZZ"" = Mutually defined.",
-                                    Usage = RuleUsage.Mandatory,
-                                    DataType = DataType.Alphanumeric,
-                                    Precision = new []{ 1, 3}
-                                },
-
-                                new DataElement()
-                                {
-                                    Name = @"Reference Number: For Qualifiers ""BM"", ""BN"" or ""ZZZ"":",
-                                    Description = @"Dummy value ""1"" or the actual Bill of Lading number resp. Booking Reference number, as agreed. For Qualifier ""ET"": leading stowage location, containing relevant data for this consignment.",
-                                    Usage = RuleUsage.Required,
-                                    DataType = DataType.Alphanumeric,
-                                    Precision = new []{ 1, 35 }
-                                }
-                            }
-                            }
-                            }
-                        } // ACA FINALIZA EL SEGMENTO RFF DEL GRUPO 2
-
                     }, // ACA FINALIZA LOS SEGMENTOS GRUPO 2
                     
                 }, //ACA FINALIZA EL GRUPO 2
@@ -1122,63 +614,78 @@ namespace ReadEDIFACT.Models
                         GroupRepeat = 9,
                         Segments = new Segment[]
                         {
+
                             new SegmentData(){
-                                SegmentID = "EQD",
-                                Name = "EQUIPMENT DETAILS (grp3)",
-                                Notes = "3",
-                                DataElements = new Element[]
+                            SegmentID = "CTA",
+                            Name = "Contact Information (grp3)",
+                            Notes = "3",
+                            DataElements = new Element[]
+                            {
+                                new DataElement()
                                 {
-                                   new DataElement()
-                                {
-                                    Name = "Equipment Qualifier",
-                                    Description = @" ""CN"" = Container ""BB"" = Break-bulk ""TE"" = Trailer ""ZZZ"" = Ro/Ro or otherwise",
-                                    Usage = RuleUsage.Mandatory,
+                                    Name = "CONTACT FUNCTION CODE",
+                                    Description = @"Code specifying the function of a contact (e.g. department or person). AH = Coordination contact",
+                                    Usage = RuleUsage.Required,
                                     DataType = DataType.Alphanumeric,
                                     Precision = new []{ 1, 3}
                                 },
 
+                                new CompositeElement(){
+                                    Name = "CONTACT DETAILS: (grp3)",
+                                    DataElements = new Element[]{
                                 new DataElement()
                                 {
-                                    Name = @"Equipment Identification Number",
-                                    Description = @"1. The container number: Format: One continuous string with the identification, prefixand number. Examples: SCXU 2387653 must be transmitted as ""SCXU2387653"", EU 876 must be transmitted as ""EU876"". The number will be treated as a character string. E.g. alphanumeric check-digits can be transmitted here. If this segment is used the unique equipment identification number must always be transmitted, although this element is not mandatory! 2. Break-bulk: The break-bulk reference number. The assigned break-bulk reference numbers must be agreed between partners. 3. Otherwise (Ro/Ro): The equipment identification number.",
-                                    Usage = RuleUsage.Required,
+                                    Name = "Contact identifier",
+                                    Description = @"To identify a contact, such as a department or employee.",
+                                    Usage = RuleUsage.Optional,
                                     DataType = DataType.Alphanumeric,
-                                    Precision = new []{ 1, 17 }
+                                    Precision = new []{ 1, 17}
                                 },
 
                                 new DataElement()
                                 {
-                                    Name = @"Equipment Size and Type Identification",
-                                    Description = @"ISO size-type code of 4 digits (ISO 6346). Leave blank in case of break-bulk. For unknown ISO size/type codes the following codes can beagreed between partners ""9999"" = No information at all. ""4999"" = Length = 40ft, rest unknown""2999"" = Length = 20ft, rest unknown""4299"" = 40ft ""8'6"", rest unknown""2299"" = 20ft ""8'6"", rest unknown""4099"" = 40ft ""8'0"", rest unknown ""2099"" = 20ft ""8'0"", rest unknownOther codes to be agreed between partners.",
-                                    Usage = RuleUsage.Dependent,
+                                    Name = @"Contact name",
+                                    Description = @"Name of a contact, such as a department or employee.",
+                                    Usage = RuleUsage.Optional,
                                     DataType = DataType.Alphanumeric,
-                                    Precision = new []{ 1, 4 }
+                                    Precision = new []{ 1, 256 }
+                                }
+                            }
+                            }
+                            }
+                        }, // ACA FINALIZA EL SEGMENTO CTA DEL GRUPO 3
+                        new SegmentData(){
+                            SegmentID = "COM",
+                            Name = "Communication Contact (grp3)",
+                            Notes = "3",
+                            DataElements = new Element[]
+                            {
+
+                                new CompositeElement(){
+                                    Name = "COMMUNICATION CONTACT: (grp3)",
+                                    Description = "Communication number of a department or employee in a specified channel.",
+                                    DataElements = new Element[]{
+                                new DataElement()
+                                {
+                                    Name = " Communication address identifier",
+                                    Description = @"To identify a communication address.",
+                                    Usage = RuleUsage.Mandatory,
+                                    DataType = DataType.Alphanumeric,
+                                    Precision = new []{ 1, 512}
                                 },
-
-                               // new EmptyElement(),
-
-                                //  new DataElement()
-                                // {
-                                //     Name = @"Equipment status, coded",
-                                //     Description = @"1: Continental 11: Direct delivery 2: Export 12: Bond transport 3: Import 13: Transship to other vesse 4: Remain on board 14: Transship to other pier 5: Shifter 15: Rail road transport 6: Transshipment 16: Road transport 7: Hot delivery 17: Barge transport 8: MLB 18: Temporary stowage 9: MCB (Micro Land Bridge) 19: Urgent unpacking 10: Canada Bound transport 20: Sea & Air",
-                                //     Usage = RuleUsage.Optional,
-                                //     DataType = TypeCode.String,
-                                //     Precision = new []{ 1, 3 }
-                                // },
-
-                                new EmptyElement(),
-                                new EmptyElement(),
 
                                 new DataElement()
                                 {
-                                    Name = @"Full/Empty Indicator, coded. Allowed codes",
-                                    Description = @"""5"" = Full ""4"" = Empty. Leave blank in case of break-bulk.",
-                                    Usage = RuleUsage.Dependent,
+                                    Name = @"Communication means type code",
+                                    Description = @"Code specifying the type of communication address. AL = Cellular phone AV = Inmarsat call number EM = Electronic mail FX = Telefax MA = Mail TE = Telephone",
+                                    Usage = RuleUsage.Mandatory,
                                     DataType = DataType.Alphanumeric,
                                     Precision = new []{ 1, 3 }
                                 }
-                                }
-                            }, // ACA FINALIZA EL SEGMENTO EQD DEL GRUPO 3
+                            }
+                            }
+                            }
+                        }, // ACA FINALIZA EL SEGMENTO COM DEL GRUPO 3
 
                             new SegmentData(){
                                 SegmentID = "EQA",
@@ -1207,55 +714,6 @@ namespace ReadEDIFACT.Models
                                 }
                             }, // ACA FINALIZA EL SEGMENTO EQA DEL GRUPO 3
 
-                            new SegmentData(){
-                            SegmentID = "NAD",
-                            Name = "NAME AND ADDRESS (grp3)",
-                            Notes = "3",
-                            DataElements = new Element[]
-                            {
-                                new DataElement()
-                                {
-                                    Name = @"Party Qualifier",
-                                    Description = @"Allowed code: ""CA"" (Carrier of the cargo).",
-                                    Usage = RuleUsage.Mandatory,
-                                    DataType = DataType.Alphanumeric,
-                                    Precision = new []{ 1, 3 }
-                                },
-
-                                new CompositeElement(){
-                                    Name = "Party Id Identification (grp3)",
-                                    DataElements = new Element[]{
-                                new DataElement()
-                                {
-                                    Name = "Party Id Identification",
-                                    Description = @"Name code of party responsible for the carriage of the goods and/or equipment.",
-                                    Usage = RuleUsage.Mandatory,
-                                    DataType = DataType.Alphanumeric,
-                                    Precision = new []{ 1, 35}
-                                },
-
-                                new DataElement()
-                                {
-                                    Name = @"Code List Qualifier",
-                                    Description = @"Qualifier ""172"" (Carrier Code)",
-                                    Usage = RuleUsage.Required,
-                                    DataType = DataType.Alphanumeric,
-                                    Precision = new []{ 1, 3 }
-                                },
-
-                                new DataElement()
-                                {
-                                    Name = @"Code List Responsible Agency, coded. Allowed codes",
-                                    Description = @"""20"" = BIC (Bureau International des Containeurs) ""166"" = US National Motor Freight Classification Association (SCAC) ""ZZZ"" = Mutually agreed",
-                                    Usage = RuleUsage.Required,
-                                    DataType = DataType.Alphanumeric,
-                                    Precision = new []{ 1, 3 }
-                                }
-                            }
-                            }
-                            }
-                        } // ACA FINALIZA EL SEGMENTO NAD DEL GRUPO 3
-
                         }
                     }, // ACA FINALIZA EL GRUPO 3
 
@@ -1263,6 +721,155 @@ namespace ReadEDIFACT.Models
                         GroupRepeat = 9999,
                         Segments = new Segment[]
                         {
+
+                            new SegmentData()
+                        {
+                            SegmentID = "TDT",
+                            Name = "Transport Information",
+                            Notes = "4",
+                            Usage = RuleUsage.Mandatory,
+                            DataElements = new Element[]
+                            {
+                                new DataElement()
+                                {
+                                    Name = "Transport Stage Code Qualifier",
+                                    Description = @"Code ""20"" (Main Carriage)",
+                                    Usage = RuleUsage.Mandatory,
+                                    DataType = DataType.Alphanumeric,
+                                    Precision = new[] { 1, 3 }
+                                },
+
+                                new DataElement()
+                                {
+                                    Name = "MEANS OF TRANSPORT JOURNEY IDENTIFIER",
+                                    Description = "To identify a journey of a means of transport. Discharge voyage number as assigned by the vessel operator or his agent.",
+                                    Usage = RuleUsage.Required,
+                                    DataType = DataType.Alphanumeric,
+                                    Precision = new[] { 1, 17 }
+                                },
+
+                                new EmptyElement(),
+                                new EmptyElement(),
+
+                                new CompositeElement()
+                                {
+                                    Name = "CARRIER",
+                                    Description = "Identification of a carrier by code and/or by name. Code preferred.",
+
+                                    DataElements = new DataElement[]
+                                    {
+                                        new DataElement()
+                                        {
+                                            Name = "Carrier Identification",
+                                            Description = "To identify a carrier.",
+                                            Usage = RuleUsage.Required,
+                                            DataType = DataType.Alphanumeric,
+                                            Precision = new[] { 1, 17 }
+                                        },
+
+                                        new DataElement()
+                                        {
+                                            Name = "Code list identification code",
+                                            Description = @"Code identifying a user or association maintained code list. LINES = SMDG code list for liner codes",
+                                            Usage = RuleUsage.Required,
+                                            DataType = DataType.Alphanumeric,
+                                            Precision = new[] { 1, 3 }
+                                        },
+
+                                        new DataElement()
+                                        {
+                                            Name = "Code list responsible agency code",
+                                            Description = @"Code specifying the agency responsible for a code list. 306 = SMDG (Ship-planning Message Design Group)",
+                                            Usage = RuleUsage.Required,
+                                            DataType = DataType.Alphanumeric,
+                                            Precision = new[] { 1, 3 }
+                                        },
+                                    }
+
+                                },
+
+                                new EmptyElement(),
+                                new EmptyElement(),
+
+                                new CompositeElement()
+                                {
+                                    Name = "Id of Means of Transport Identification. Vessel code",
+                                    Usage = RuleUsage.Required,
+                                    DataElements = new DataElement[]
+                                    {
+                                        new DataElement()
+                                        {
+                                            Name = "Transport means identification name identifier",
+                                            Description = @"Identifies the name of the transport means. Preferably specify IMO-number specified by Lloyd's register of shipping - C222.1131=IMO, C222.3055=11 Alternately specify call sign specified by ITU - C222.131=CALLSIGN, C222.3055=296",
+                                            Usage = RuleUsage.Required,
+                                            DataType = DataType.Alphanumeric,
+                                            Precision = new[] { 1, 9 }
+                                        },
+
+                                        new DataElement()
+                                        {
+                                            Name = "Code list identification code",
+                                            Description = @"Code identifying a user or association maintained code list. CALLSIGN = radio communications call sign IMO = IMO number, unique identifier registered by Lloyd's Register of Shipping",
+                                            Usage = RuleUsage.Required,
+                                            DataType = DataType.Alphanumeric,
+                                            Precision = new[] { 1, 3 }
+                                        },
+
+                                        new DataElement()
+                                        {
+                                            Name = "Code list responsible agency code",
+                                            Description = @"Code specifying the agency responsible for a code list. 11 Lloyd's register of shipping 296 ITU (International Telecommunication Union)",
+                                            Usage = RuleUsage.Required,
+                                            DataType = DataType.Alphanumeric,
+                                            Precision = new[] { 1, 3 }
+                                        },
+
+                                        new DataElement()
+                                        {
+                                            Name = "Transport means identification name",
+                                            Description = "Name identifying a means of transport.",
+                                            Usage = RuleUsage.Optional,
+                                            DataType = DataType.Alphanumeric,
+                                            Precision = new[] { 1, 35 }
+                                        },
+
+                                    }
+
+                                },
+                            }
+                        },// ACA FINALIZA EL SEGMENTO TDT DEL GRUPO 4
+
+                        new SegmentData(){
+                            SegmentID = "RFF",
+                            Name = "REFERENCE (grp4)",
+                            Notes = "4",
+                            DataElements = new Element[]
+                            {
+                                new CompositeElement(){
+                                    Name = "Reference code qualifier: (grp4)",
+                                    DataElements = new Element[]{
+                                new DataElement()
+                                {
+                                    Name = "Reference Qualifier: Allowed qualifiers:",
+                                    Description = @"Code qualifying a reference. Loading voyage number VON = Voyage number",
+                                    Usage = RuleUsage.Mandatory,
+                                    DataType = DataType.Alphanumeric,
+                                    Precision = new []{ 1, 3}
+                                },
+
+                                new DataElement()
+                                {
+                                    Name = @"Reference identifier",
+                                    Description = @"Identifies loading voyage number.. loading voyage number as assigned by vessel operator or his agent",
+                                    Usage = RuleUsage.Required,
+                                    DataType = DataType.Alphanumeric,
+                                    Precision = new []{ 1, 70 }
+                                }
+                            }
+                            }
+                            }
+                        }, // ACA FINALIZA EL SEGMENTO RFF DEL GRUPO 4
+
                             new SegmentData(){
                                 SegmentID = "DGS",
                                 Name = "DANGEROUS GOODS (grp4)",
@@ -1429,7 +1036,7 @@ namespace ReadEDIFACT.Models
                                    new DataElement()
                                 {
                                     Name = "Text Subject Qualifier.",
-                                    Description = @" ""AAC"" = Dangerous goods additional information ""AAD"" = Dangerous goods, technical name, proper shipping name.",
+                                    Description = @"Code qualifying the subject of the text. Refer to D.13B Data Element Dictionary for acceptable code values.",
                                     Usage = RuleUsage.Mandatory,
                                     DataType = DataType.Alphanumeric,
                                     Precision = new []{ 1, 3}
@@ -1438,43 +1045,494 @@ namespace ReadEDIFACT.Models
                                 new EmptyElement(),
                                 new EmptyElement(),
 
-                                new CompositeElement(){
-                                    Name = "Free text (grp4)",
-                                    DataElements = new Element[]{
+
                                 new DataElement()
                                 {
                                     Name = "Free text",
-                                    Description = @"Description of hazard material in plain language. One element of maximum 70 characters to be given only for the description. Transmit the text ""NIL"", if no description is available and one or both of the following data elements must be transmitted.",
+                                    Description = @"Free form text.",
                                     Usage = RuleUsage.Mandatory,
                                     DataType = DataType.Alphanumeric,
-                                    Precision = new [] {1, 70}
-                                },
-
-                                new DataElement()
-                                {
-                                    Name = @"Free text 2: (grp4)",
-                                    Description = @"The net weight in kilos of the hazardous material to be transmitted here.",
-                                    Usage = RuleUsage.Optional,
-                                    DataType = DataType.Alphanumeric,
-                                    Precision = new []{1, 70}
-                                },
-
-                                new DataElement()
-                                {
-                                    Name = @"Free text 3: (grp4)",
-                                    Description = @"The DG-reference number as allocated by the central planner, if known.",
-                                    Usage = RuleUsage.Optional,
-                                    DataType = DataType.Alphanumeric,
-                                    Precision = new []{1, 70}
+                                    Precision = new [] {1, 512}
                                 }
-                            }
-                            }
 
                                 }
                             }, // ACA FINALIZA EL SEGMENTO FTX DEL GRUPO 4
 
                         }
                     }, // ACA FINALIZA EL GRUPO 4
+
+                    new SegmentGroup(){
+                        GroupRepeat = 9,
+                        Segments = new Segment[]{
+                            new SegmentData()
+                        {
+                            SegmentID = "LOC",
+                            Name = "PLACE/LOCATION IDENTIFICATION (grp5)",
+                            Notes = "5",
+                            Usage = RuleUsage.Mandatory,
+                            DataElements = new Element[]
+                            {
+                                new DataElement()
+                                {
+                                    Name = "Place/Location Qualifier",
+                                    Description = @"""5"" = Place of Departure ""61"" = Next port of call",
+                                    Usage = RuleUsage.Mandatory,
+                                    DataType = DataType.Alphanumeric,
+                                    Precision = new[] { 1, 3 }
+                                },
+
+                                new CompositeElement()
+                                {
+                                    Name = "Place/Location Identification:",
+                                    DataElements = new DataElement[]
+                                    {
+                                        new DataElement()
+                                        {
+                                            Name = "Location Identification",
+                                            Description = "To identify a location. Always use UN/locodes as defined by http://www.unece.org/cefact/locode/service/location.html",
+                                            Usage = RuleUsage.Required,
+                                            DataType = DataType.Alphanumeric,
+                                            Precision = new[] { 1, 25 }
+                                        }
+                                    }
+                                },
+
+                                new CompositeElement(){
+                                    Name = "RELATED LOCATION ONE IDENTIFICATION",
+                                    DataElements = new DataElement[]
+                                    {
+                                        new DataElement()
+                                        {
+                                            Name = "First related location identifier",
+                                            Description = "To identify a first related location.",
+                                            Usage = RuleUsage.Required,
+                                            DataType = DataType.Alphanumeric,
+                                            Precision = new[] { 1, 35 }
+                                        },
+
+                                        new DataElement()
+                                        {
+                                            Name = "Code list identification code",
+                                            Description = @"Code identifying a user or association maintained code list. TERMINALS SMDG code list for terminal facilities",
+                                            Usage = RuleUsage.Required,
+                                            DataType = DataType.Alphanumeric,
+                                            Precision = new[] { 1, 17 }
+                                        },
+
+                                        new DataElement()
+                                        {
+                                            Name = "Code list responsible agency code",
+                                            Description = @"Code specifying the agency responsible for a code list. 306 = SMDG (Ship-planning Message Design Group)",
+                                            Usage = RuleUsage.Optional,
+                                            DataType = DataType.Alphanumeric,
+                                            Precision = new[] { 1, 3 }
+                                        }
+                                    }
+                                }
+                            }
+                        },// ACA FINALIZA EL SEGMENTO LOC DEL GRUPO 5
+
+                        new SegmentData()
+                {
+                    SegmentID = "DTM",
+                    Name = "Date - Time - Period",
+                    Usage = RuleUsage.Mandatory,
+                    DataElements = new Element[]
+                    {
+                        new CompositeElement()
+                        {
+                            Name = "DATE/TIME/PERIOD",
+                            Description = "Date and/or time, or period relevant to the specified date/time/period type. It is recommended to transmit date and time as UTC.",
+                            DataElements = new DataElement[]
+                            {
+
+                                new DataElement()
+                                {
+                                    Name = "Date or time or period function code qualifier",
+                                    Description = @"Code qualifying the function of a date, time or period. 132 = Transport means arrival date time, estimated 133 = Transport means departure date/time, estimated 136 = Transport means departure date time, actual 178 = Transport means arrival date time, actual",
+                                    Usage = RuleUsage.Mandatory,
+                                    DataType = DataType.Alphanumeric,
+                                    Precision = new[] { 1, 3 }
+                                },
+
+                                new DataElement()
+                                {
+                                    Name = "Date or time or period text",
+                                    Description = "The value of a date, a date and time, a time or of a period in a specified representation.",
+                                    Usage = RuleUsage.Optional,
+                                    DataType = DataType.Alphanumeric,
+                                    Precision = new[] { 1, 35 }
+                                },
+
+                                new DataElement()
+                                {
+                                    Name = "Date or time or period format code",
+                                    Description = @"Code specifying the representation of a date, time or period. Use of codes specifying time with time zone (205, 303) need to be  bilaterally agreed between partners. 102 = CCYYMMDD 203 = CCYYMMDDHHMM 205 = CCYYMMDDHHMMZHHMM 303 = CCYYMMDDHHMMZZZ",
+                                    Usage = RuleUsage.Optional,
+                                    DataType = DataType.Alphanumeric,
+                                    Precision = new[] { 1, 3 }
+                                }
+
+                            }
+                        }
+                    }
+                },// ACA FINALIZA EL SEGMENTO DTM DEL GRUPO 5
+                        }
+                    }, // ACA FINALIZA EL GRUPO 5
+
+                    new SegmentData(){
+                            SegmentID = "UNS",
+                            Name = "Section Control",
+                            Notes = "4",
+                            DataElements = new Element[]
+                            {
+                                new DataElement()
+                                {
+                                    Name = @"SECTION IDENTIFIER",
+                                    Description = @"A character identifying the next section in a message. D = Header/detail section separation",
+                                    Usage = RuleUsage.Mandatory,
+                                    DataType = DataType.Numeric,
+                                    Precision = 1
+                                }
+
+                            }
+                        }, // ACA FINALIZA EL SEGMENTO UNS
+
+                        new SegmentGroup(){
+                            GroupRepeat = 99999,
+                            Segments = new Segment[]{
+
+                                new SegmentData(){
+                            SegmentID = "LOC",
+                            Name = "PLACE/LOCATION IDENTIFICATION (grp6)",
+                            Notes = "6",
+                            Position = 1,
+                            DataElements = new Element[]
+                            {
+                                new DataElement()
+                                {
+                                    Name = "LOCATION FUNCTION CODE QUALIFIER",
+                                    Description = @"Code identifying the function of a location. 147 = Transport means stowage location",
+                                    Usage = RuleUsage.Mandatory,
+                                    DataType = DataType.Alphanumeric,
+                                    Precision = new[] { 1, 3 }
+                                },
+
+                                new CompositeElement()
+                                {
+                                    Name = "LOCATION IDENTIFICATION",
+                                    Description = "Identification of a location by code. Stowage location: - For container vessel cell-grid positions shall be identified according to ISO 9711. - For RoRo and other vessel identify positions as assigned by carrier",
+                                    DataElements = new DataElement[]
+                                    {
+                                        new DataElement()
+                                        {
+                                            Name = "Location identifier",
+                                            Description = @"To identify a location. Container vessel stowage locations must be transmitted by exactly 7 digits in format BBBRRTT. The SMDG recommendation on tier numbering is to be applied for vessels allowing 10 or more tiers on deck. In case the bay-, row-, tier number does not match the format BBB, RR or  TT leading zero(s) are to be prepended. - C517.1131=9711, C517.3055=5 For RoRo-vessel prepend a 2-digit deck number in form DDBBBRRTT (exactly 9 digits). - C517.1131=STOLOC, C517.3055=87 BBBRRTT bay-row-tier cell grid position as defined by ISO 9711 DDBBBRRTT deck-bay-row-tier position as defined by carrier",
+                                            Usage = RuleUsage.Required,
+                                            DataType = DataType.Alphanumeric,
+                                            Precision = new[] { 1, 35 }
+                                        },
+
+                                        new DataElement()
+                                        {
+                                            Name = "Code list identification code",
+                                            Description = "Code identifying a user or association maintained code list. 9711 - identifies codes according to ISO 9711 9711 stowage location according to ISO 9711 - Information related to freight containers on board vessels STOLOC stowage location identification as assigned by carrier",
+                                            Usage = RuleUsage.Required,
+                                            DataType = DataType.Alphanumeric,
+                                            Precision = new[] {1 , 17 }
+                                        },
+
+                                        new DataElement()
+                                        {
+                                            Name = "Code list responsible agency code",
+                                            Description = @"Code specifying the agency responsible for a code list. 5 = ISO (International Organization for Standardization) 87 = Assigned by carrier",
+                                            Usage = RuleUsage.Required,
+                                            DataType = DataType.Alphanumeric,
+                                            Precision = new[] { 1, 3 }
+                                        }
+                                    }
+                                }
+                            }
+                        }, // ACA FINALIZA EL SEGMENTO LOC (grp6)
+
+                        new SegmentData(){
+                            SegmentID = "FTX",
+                            Name = "FREE TEXT (grp6)",
+                            Notes = "6",
+                            DataElements = new Element[]{
+                                new DataElement(){
+                                    Name = "TEXT SUBJECT CODE QUALIFIER",
+                                    Description = @"Code qualifying the subject of the text. AGW = Location",
+                                    Usage = RuleUsage.Mandatory,
+                                    DataType = DataType.Alphanumeric,
+                                    Precision = new[] { 1, 3 }
+                                },
+
+                                new EmptyElement(),
+
+                                new CompositeElement(){
+                                    Name = "TEXT REFERENCE",
+                                    DataElements = new Element[]{
+                                        new DataElement(){
+                                            Name = "TEXT REFERENCE",
+                                            Description = @"Code specifying information ACCESS = Stowage location blocked in order to allow access to equipment in adjacent stowage location CONTAM = Stowage location is contaminated DAMAGE = Damaged cell guide or stacking cone(s) LOST = Blocked by oversized cargo in adjacent stowage position RESRVD = Stowage location reserved for stowage in subsequent port",
+                                            Usage = RuleUsage.Mandatory,
+                                            DataType = DataType.Alphanumeric,
+                                            Precision = new[] { 1, 17 }
+                                        },
+
+                                        new DataElement(){
+                                            Name = "Code list identification code",
+                                            Description = @"Code identifying code list. BLOCKING = SMDG code list for stowage location blocking",
+                                            Usage = RuleUsage.Optional,
+                                            DataType = DataType.Alphanumeric,
+                                            Precision = new[] { 1, 17 }
+                                        },
+
+                                        new DataElement(){
+                                            Name = "Code list responsible agency code",
+                                            Description = @"Code specifying the agency responsible for a code list. 306 = SMDG (Ship-planning Message Design Group)",
+                                            Usage = RuleUsage.Optional,
+                                            DataType = DataType.Alphanumeric,
+                                            Precision = new[] { 1, 3 }
+                                        }
+                                    }
+                                }
+                            }
+                        }, // ACA FINALIZA EL SEGMENTO FTX DEL GRUPO 6
+
+                        new SegmentData(){
+                            SegmentID = "RFF",
+                            Name = "REFERENCE (grp6)",
+                            Notes = "6",
+                            Position = 00230,
+                            DataElements = new Element[]
+                            {
+
+                                new CompositeElement()
+                                {
+                                    Name = "Reference",
+                                    DataElements = new DataElement[]
+                                    {
+
+                                        new DataElement()
+                                        {
+                                            Name = "Reference code qualifier",
+                                            Description = @"Code qualifying a reference. EQ = Equipment number",
+                                            Usage = RuleUsage.Mandatory,
+                                            DataType = DataType.Alphanumeric,
+                                            Precision = new[] { 1, 3 }
+                                        },
+
+                                        new DataElement()
+                                        {
+                                            Name = "Reference identifier",
+                                            Description = @"Specify related equipment identification as specified in EQD-segment's C237.8260. Equipment or breakbulk identification as defined in segment EQD data element C237.8260.",
+                                            Usage = RuleUsage.Required,
+                                            DataType = DataType.Alphanumeric,
+                                            Precision = new[] { 1, 70 }
+                                        }
+                                    }
+                                }
+                            }
+                        }, // ACA FINALIZA EL SEGMENTO RFF (grp6)
+
+                            }
+                        },// ACA FINALIZA EL GRUPO 6
+
+                        new SegmentGroup(){
+                            GroupRepeat = 9,
+                            Segments = new Segment[]{
+                                new SegmentData(){
+                                SegmentID = "EQD",
+                                Name = "EQUIPMENT DETAILS (grp7)",
+                                Notes = "7",
+                                DataElements = new Element[]
+                                {
+                                new DataElement()
+                                {
+                                    Name = "Equipment Qualifier",
+                                    Description = @"Code qualifying a type of equipment. Use BL for any kind of extra equipment used for fixing cargo (breakbulk). BB = Breakbulk BL = Blocks CH = Chassis CN = Container DPL = On-board equipment TE = Trailer",
+                                    Usage = RuleUsage.Mandatory,
+                                    DataType = DataType.Alphanumeric,
+                                    Precision = new []{ 1, 3}
+                                },
+
+                                new CompositeElement(){
+                                    Name = "",
+                                    DataElements = new DataElement[]{
+
+                                new DataElement()
+                                {
+                                    Name = "Equipment identifier",
+                                    Description = @"To identify equipment. For ISO-certified containerized equipment specify equipment's standard identification marking which consists of 4-letter prefix, 6-digit registration number and check-digit as defined by ISO 6346. - C237.1131=6346, C237.3055=5 In case equipment's identification is not (yet) known, transmit this field as TBNx - where ""x"" stands for a unique number for each unit of equipment  on board. - C237.1131=TBN, omit C237.3055. In case of containers whose identification does not comply with ISO 6346 (mostly shipper's owned containers) apply SMDG Recommendation #2 (http://www.smdg.org/documents/smdg-recommendations/) - C237.1131=CNID, omit C237.3055 For breakbulk and equipment used for fixing breakbulk specify unique breakbulk identifier consisting of UN-locode of port of loading and a 5-digit reference number. Example: ""DEHAM00001"" - C237.1131=BBID, omit C237.3055",
+                                    Usage = RuleUsage.Mandatory,
+                                    DataType = DataType.Alphanumeric,
+                                    Precision = new []{ 1, 17}
+                                },
+
+                                new DataElement()
+                                {
+                                    Name = @"Code list identification code",
+                                    Description = @"Code identifying a user or association maintained code list. 6346 = container identification according to ISO 6346 - Freight containers - Coding, identification, marking BBID = breakbulk identification CNID = container identification not compliant with ISO 6346 TBN = identification not known yet",
+                                    Usage = RuleUsage.Dependent,
+                                    DataType = DataType.Alphanumeric,
+                                    Precision = new []{ 1, 17 }
+                                },
+
+                                 new DataElement()
+                                {
+                                    Name = @"Code list responsible agency code",
+                                    Description = @"Code specifying the agency responsible for a code list. Dependency (semantic): - Required in case of identification according to ISO 6346. - Leave empty in any other case. 5 = ISO (International Organization for Standardization)",
+                                    Usage = RuleUsage.Dependent,
+                                    DataType = DataType.Alphanumeric,
+                                    Precision = new []{ 1, 3 }
+                                },
+
+                                }
+                                },
+
+                                new CompositeElement(){
+                                    Name = "EQUIPMENT SIZE AND TYPE",
+                                    Description = "Code identifying size and type of equipment.",
+                                    DataElements = new DataElement[]{
+
+                                    new DataElement()
+                                    {
+                                        Name = @"Equipment size and type description code",
+                                        Description = @"Code specifying the size and type of equipment. For containerized equipment always use a 4-digt size type code according to ISO 6346. In case actual dimensions are not sufficiently specified by ISO size type code the use of additional DIM segments with according qualifier is required. Do not use data element 8154 for this purpose. At minimum the leading 2 digits specifying equipment's length and height are required. In case the complete size and type code is not known the digits 3 and 4 specifying ""detailed type code"" may be set to ""%"". For example: 22%% - some type of container with length 20 ft and height 8'6 L5%% - some type of container with length 45 ft and height 9'6 Fully specified equipment: - C224.1131=6346, C224.3055=5 otherwise: - C224.1131=6346, omit C224.3055",
+                                        Usage = RuleUsage.Required,
+                                        DataType = DataType.Alphanumeric,
+                                        Precision = new []{ 1, 10 }
+                                    },
+
+                                    new DataElement()
+                                    {
+                                        Name = @"Code list identification code",
+                                        Description = @"Code identifying a user or association maintained code list. Dependency: required if C224.3055 is specified 6346 = size and type according to ISO 6346 - Freight containers - Coding, identification and marking",
+                                        Usage = RuleUsage.Dependent,
+                                        DataType = DataType.Alphanumeric,
+                                        Precision = new []{ 1, 17 }
+                                    },
+
+                                    new DataElement()
+                                    {
+                                        Name = @"Code list responsible agency code",
+                                        Description = @"Code specifying the agency responsible for a code list. Dependency (semantic): required in case of full size type specification 5 ISO (International Organization for Standardization)",
+                                        Usage = RuleUsage.Dependent,
+                                        DataType = DataType.Alphanumeric,
+                                        Precision = new []{ 1, 3 }
+                                    },
+
+                                    }
+                                },
+
+
+
+                                new EmptyElement(),
+                                new EmptyElement(),
+
+                                new DataElement()
+                                {
+                                    Name = @"Full/Empty Indicator, coded. Allowed codes",
+                                    Description = @"""5"" = Full ""4"" = Empty. Leave blank in case of break-bulk.",
+                                    Usage = RuleUsage.Dependent,
+                                    DataType = DataType.Alphanumeric,
+                                    Precision = new []{ 1, 3 }
+                                }
+                                }
+                            }, // ACA FINALIZA EL SEGMENTO EQD DEL GRUPO 7
+
+                            new SegmentData(){
+                            SegmentID = "NAD",
+                            Name = "NAME AND ADDRESS (grp7)",
+                            Notes = "7",
+                            DataElements = new Element[]
+                            {
+                                new DataElement()
+                                {
+                                    Name = @"PARTY FUNCTION CODE QUALIFIER",
+                                    Description = @"Code giving specific meaning to a party. CF - container operator (booking party), may be different than slot owner (VSA partner) GF - slot owner, partner in vessel sharing agreement (VSA) CF = Container operator/lessee GF = Slot charter party",
+                                    Usage = RuleUsage.Mandatory,
+                                    DataType = DataType.Alphanumeric,
+                                    Precision = new []{ 1, 3 }
+                                },
+
+                                new CompositeElement(){
+                                    Name = "PARTY IDENTIFICATION DETAILS (grp7)",
+                                    DataElements = new Element[]{
+                                new DataElement()
+                                {
+                                    Name = "Party identifier",
+                                    Description = @"Code specifying the identity of a party",
+                                    Usage = RuleUsage.Mandatory,
+                                    DataType = DataType.Alphanumeric,
+                                    Precision = new []{ 1, 35}
+                                },
+
+                                new DataElement()
+                                {
+                                    Name = @" Code list identification code",
+                                    Description = @"Code identifying a user or association maintained code list. LINES = SMDG code list for master liner codes",
+                                    Usage = RuleUsage.Required,
+                                    DataType = DataType.Alphanumeric,
+                                    Precision = new []{ 1, 17 }
+                                },
+
+                                new DataElement()
+                                {
+                                    Name = @"Code list responsible agency code",
+                                    Description = @"Code specifying the agency responsible for a code list. 306 SMDG (Ship-planning Message Design Group)",
+                                    Usage = RuleUsage.Required,
+                                    DataType = DataType.Alphanumeric,
+                                    Precision = new []{ 1, 3 }
+                                }
+                            }
+                            }
+                            }
+                        }, // ACA FINALIZA EL SEGMENTO NAD DEL GRUPO 7
+
+                        new SegmentData(){
+                            SegmentID = "MEA",
+                            Name = "MEASUREMENTS (grp7)",
+                            Notes = "7",
+                            DataElements = new Element[]{
+                                new DataElement(){
+                                    Name = "Measurement Application Qualifier",
+                                    Description = @"Code qualifying the purpose of the measurement. AAE = Measurement",
+                                    Usage = RuleUsage.Mandatory,
+                                    DataType = DataType.Alphanumeric,
+                                    Precision = new[] { 1, 3 }
+                                },
+
+                               new CompositeElement(){
+                                    Name = "MEASUREMENT DETAILS",
+                                    Description = "Identification of measurement type.",
+                                    DataElements = new Element[]{
+                                        new DataElement(){
+                                            Name = "Measure Unit Qualifier",
+                                            Description = @"Code specifying the attribute measured. note: Code VGM has been introduced in directory D.15B. AAO = Humidity AAS = Air flow AET = Transport equipment gross weight BRJ = Vertical center of gravity BRK = Maximum allowable transport stacking weight BRL = Carbon Dioxide T = Tare weight VGM = Transport equipment verified gross mass (weight) ZO = Oxygen",
+                                            Usage = RuleUsage.Required,
+                                            DataType = DataType.Alphanumeric,
+                                            Precision = new[] { 1, 3 }
+                                        },
+
+                                        new DataElement(){
+                                            Name = "Measurement significance code",
+                                            Description = @"Code specifying the significance of a measurement. dependency: To be used if C502.6313 = BRK 5 Greater than or equal to 6 Greater than 12 True value",
+                                            Usage = RuleUsage.Required,
+                                            DataType = DataType.Numeric,
+                                            Precision = new []{1, 18}
+                                            // Precision = 18 //LONGITUD EXACTA SI O SI TIENE QUE TENER UNA LOGITUD DE 18
+                                            
+                                        }
+                                    }
+                               }
+                            }
+                        }, // ACA FINALIZA EL SEGMENTO MEA DEL GRUPO 7
+
+                            }
+                        }, // ACA FINALIZA EL GRUPO 7
 
                     new SegmentData(){
                             SegmentID = "UNT",

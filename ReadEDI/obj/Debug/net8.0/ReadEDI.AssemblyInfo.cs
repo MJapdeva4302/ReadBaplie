@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ReadEDI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2dff1d8eff56d40ebed0230f96414ea85c8d782d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4bc616c9feeeed7e203fdac738024d49c18905a1")]
 [assembly: System.Reflection.AssemblyProductAttribute("ReadEDI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ReadEDI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
