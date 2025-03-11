@@ -1509,6 +1509,7 @@ namespace ReadEDIFACT.Models
                                     Name = "MEASUREMENT DETAILS",
                                     Description = "Identification of measurement type.",
                                     DataElements = new Element[]{
+
                                         new DataElement(){
                                             Name = "Measure Unit Qualifier",
                                             Description = @"Code specifying the attribute measured. note: Code VGM has been introduced in directory D.15B. AAO = Humidity AAS = Air flow AET = Transport equipment gross weight BRJ = Vertical center of gravity BRK = Maximum allowable transport stacking weight BRL = Carbon Dioxide T = Tare weight VGM = Transport equipment verified gross mass (weight) ZO = Oxygen",
@@ -1519,7 +1520,32 @@ namespace ReadEDIFACT.Models
 
                                         new DataElement(){
                                             Name = "Measurement significance code",
-                                            Description = @"Code specifying the significance of a measurement. dependency: To be used if C502.6313 = BRK 5 Greater than or equal to 6 Greater than 12 True value",
+                                            Description = @"Code specifying the significance of a measurement. dependency: To be used if C502.6313 = BRK 5 = Greater than or equal to 6 = Greater than 12 = True value",
+                                            Usage = RuleUsage.Required,
+                                            DataType = DataType.Numeric,
+                                            Precision = new []{1, 3}
+                                            // Precision = 3 //LONGITUD EXACTA SI O SI TIENE QUE TENER UNA LOGITUD DE 18
+                                            
+                                        }
+                                    }
+                               },
+
+                               new CompositeElement(){
+                                    Name = "VALUE/RANGE",
+                                    Description = "Measurement value.",
+                                    DataElements = new Element[]{
+
+                                        new DataElement(){
+                                            Name = "Measure Unit Qualifier",
+                                            Description = @"Code specifying the unit of measurement. Codes defined by UN/CEFACT recommendation 20. CMT = centimeters KGM = kilogram MQH = cubic meter per hour P1 = percent (%, proportion equal to 0.01)",
+                                            Usage = RuleUsage.Mandatory,
+                                            DataType = DataType.Alphanumeric,
+                                            Precision = new[] { 1, 8 }
+                                        },
+
+                                        new DataElement(){
+                                            Name = "Measure",
+                                            Description = @"To specify the value of a measurement. For VCG specify height above breakbulk's bottom layer.",
                                             Usage = RuleUsage.Required,
                                             DataType = DataType.Numeric,
                                             Precision = new []{1, 18}
@@ -1530,6 +1556,55 @@ namespace ReadEDIFACT.Models
                                }
                             }
                         }, // ACA FINALIZA EL SEGMENTO MEA DEL GRUPO 7
+
+                        new SegmentData(){
+                            SegmentID = "HAN",
+                            Name = "NAME AND ADDRESS (grp7)",
+                            Notes = "7",
+                            DataElements = new Element[]
+                            {
+                                new DataElement()
+                                {
+                                    Name = @"PARTY FUNCTION CODE QUALIFIER",
+                                    Description = @"Code giving specific meaning to a party. CF - container operator (booking party), may be different than slot owner (VSA partner) GF - slot owner, partner in vessel sharing agreement (VSA) CF = Container operator/lessee GF = Slot charter party",
+                                    Usage = RuleUsage.Mandatory,
+                                    DataType = DataType.Alphanumeric,
+                                    Precision = new []{ 1, 3 }
+                                },
+
+                                new CompositeElement(){
+                                    Name = "PARTY IDENTIFICATION DETAILS (grp7)",
+                                    DataElements = new Element[]{
+                                new DataElement()
+                                {
+                                    Name = "Party identifier",
+                                    Description = @"Code specifying the identity of a party",
+                                    Usage = RuleUsage.Mandatory,
+                                    DataType = DataType.Alphanumeric,
+                                    Precision = new []{ 1, 35}
+                                },
+
+                                new DataElement()
+                                {
+                                    Name = @" Code list identification code",
+                                    Description = @"Code identifying a user or association maintained code list. LINES = SMDG code list for master liner codes",
+                                    Usage = RuleUsage.Required,
+                                    DataType = DataType.Alphanumeric,
+                                    Precision = new []{ 1, 17 }
+                                },
+
+                                new DataElement()
+                                {
+                                    Name = @"Code list responsible agency code",
+                                    Description = @"Code specifying the agency responsible for a code list. 306 SMDG (Ship-planning Message Design Group)",
+                                    Usage = RuleUsage.Required,
+                                    DataType = DataType.Alphanumeric,
+                                    Precision = new []{ 1, 3 }
+                                }
+                            }
+                            }
+                            }
+                        }, // ACA FINALIZA EL SEGMENTO HAN DEL GRUPO 7
 
                             }
                         }, // ACA FINALIZA EL GRUPO 7
