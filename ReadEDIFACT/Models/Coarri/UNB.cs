@@ -18,7 +18,7 @@ namespace ReadEDIFACT.Models.Coarri
         public override string ToEDIString()
         {
 
-            return $"UNB+{(SyntaxIdentifier = !SyntaxIdentifier.Equals("UNOA") ? "UNOA" : SyntaxIdentifier)}:{(SyntaxVersion = !SyntaxVersion.Equals("2") ? "2" : SyntaxVersion)}+{(SenderIdentification = SenderIdentification == "" || SenderIdentification == null ? "" : SenderIdentification)}+{(ReceiverIdentification = ReceiverIdentification != "" ? ReceiverIdentification : "")}+{(Date = Date != null ? Date : "")}:{(Time = Time != null ? Time : "")}+{InterchangeRef}'";
+            return $"UNB+{(string.IsNullOrEmpty(SyntaxIdentifier) ? "UNOA" : SyntaxIdentifier)}:{(string.IsNullOrEmpty(SyntaxVersion) ? "2" : SyntaxVersion)}+{(string.IsNullOrEmpty(SenderIdentification) ? "" : SenderIdentification)}+{(string.IsNullOrEmpty(ReceiverIdentification) ? "" : ReceiverIdentification)}+{(string.IsNullOrEmpty(Date) ? "" : Date)}:{(string.IsNullOrEmpty(Time) ? "" : Time)}+{InterchangeRef}'";
         }
     }
 }
