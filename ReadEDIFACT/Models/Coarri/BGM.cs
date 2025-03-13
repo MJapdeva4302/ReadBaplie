@@ -24,5 +24,10 @@ namespace ReadEDIFACT.Models.Coarri
 
             return $"BGM+{DocumentName}+{(DocumentNumber ?? "")}+{(MessageFunction ?? "9")}'";
         }
+
+        public override string ToCustomEDI()
+        {
+            return $"";
+        }
     }
 }

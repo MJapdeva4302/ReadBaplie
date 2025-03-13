@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace ReadEDIFACT.Models.Coarri
 {
-    public abstract class EDISegment
+    public class Seal
     {
-        public abstract string ToEDIString();
-        public abstract string ToCustomEDI();
+        public string SealNumber { get; set; }
+        public string SealType { get; set; }
     }
 }
