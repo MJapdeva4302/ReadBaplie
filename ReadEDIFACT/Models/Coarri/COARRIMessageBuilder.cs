@@ -21,17 +21,20 @@ namespace ReadEDIFACT.Models.Coarri
             StringBuilder coarriMessage = new StringBuilder();
 
             // Encabezado del intercambio
-            // var unb = new UNB
-            // {
-            //     SyntaxIdentifier = "UNOA",
-            //     SyntaxVersion = "2",
-            //     SenderIdentification = _sender,
-            //     ReceiverIdentification = _receiver,
-            //     Date = DateTime.Now.ToString("yyMMdd"),
-            //     Time = DateTime.Now.ToString("HHmm"),
-            //     InterchangeRef = ""
-            // };
-            // coarriMessage.AppendLine(unb.ToEDIString());
+            var unb = new UNB
+            {
+                SyntaxIdentifier = "UNOA",
+                SyntaxVersion = "2",
+                SenderIdentification = "",
+                ReceiverIdentification = "",
+                Date = DateTime.Now.ToString("yyMMdd"),
+                Time = DateTime.Now.ToString("HHmm"),
+                InterchangeRef = ""
+            };
+            coarriMessage.AppendLine(unb.ToEDIString());
+
+            var unh = new UNH { MessageRefNumber = "244172", MessageTypeId = "COARRI", MessageTypeVersion = "D", MessageTypeRelease = "23A", ControllingAgency = "UN", AssociationAssigned = "ITG10" };
+            coarriMessage.AppendLine(unh.ToEDIString());
 
             // Generación de cada contenedor
             int count = 0;

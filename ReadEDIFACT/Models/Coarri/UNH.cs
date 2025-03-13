@@ -23,5 +23,30 @@ namespace ReadEDIFACT.Models.Coarri
         {
             throw new NotImplementedException();
         }
+
+        public static string GenerateInterchangeRef()
+        {
+            string timestamp = DateTime.UtcNow.ToString("yyyyMMddHHmmss");
+
+            if (timestamp.Length > 3)
+            {
+                timestamp = timestamp.Substring(timestamp.Length - 3);
+            }
+
+            Random random = new Random();
+            // Número entre 1000 y 9999
+            string randomNumber = random.Next(100, 999).ToString(); 
+
+            
+            string interchangeRef = $"{timestamp}{randomNumber}";
+
+           
+            if (interchangeRef.Length > 6)
+            {
+                interchangeRef = interchangeRef.Substring(0, 6);
+            }
+
+            return interchangeRef;
+        }
     }
 }
