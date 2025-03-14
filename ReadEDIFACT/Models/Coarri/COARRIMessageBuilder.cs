@@ -33,8 +33,30 @@ namespace ReadEDIFACT.Models.Coarri
             };
             coarriMessage.AppendLine(unb.ToEDIString());
 
-            var unh = new UNH { MessageRefNumber = "244172", MessageTypeId = "COARRI", MessageTypeVersion = "D", MessageTypeRelease = "23A", ControllingAgency = "UN", AssociationAssigned = "ITG10" };
+            var unh = new UNH { MessageRefNumber = "", MessageTypeId = "COARRI", MessageTypeVersion = "D", MessageTypeRelease = "23A", ControllingAgency = "UN", AssociationAssigned = "ITG10" };
             coarriMessage.AppendLine(unh.ToEDIString());
+
+            var bgm = new BGM { DocumentName = "", DocumentNumber = "", MessageFunction = "9" };
+            coarriMessage.AppendLine(bgm.ToEDIString());
+
+            var tdt = new TDT { TransportStage = "", TransportMeansJourney = "", TransportModeName = "", CarrierIdentifier = "", CodeListIdentification = "", CodeListAgency = "", CarrierName = "", TransportMeanIdentification = "", CodeListIdentificationTwo = "", CodeListResponsibleAgency = "", TransportIDName = "" };
+            coarriMessage.AppendLine(tdt.ToEDIString());
+
+            var rff = new RFF { ReferenceQualifier = "", ReferenceIdentifier = "" };
+            coarriMessage.AppendLine(rff.ToEDIString());
+
+
+            var loc1 = new LOC { LocationQualifier = "", LocationCode = "", BGM = bgm };
+            coarriMessage.AppendLine(loc1.ToEDIString());
+            var loc2 = new LOC { LocationQualifier = "", LocationCode = "", BGM = bgm };
+            coarriMessage.AppendLine(loc2.ToCustomEDI());
+            var loc3 = new LOC { LocationQualifier = "", LocationCode = "", BGM = bgm };
+            coarriMessage.AppendLine(loc3.ToCustomEDI());
+            var loc4 = new LOC { LocationQualifier = "", LocationCode = "", BGM = bgm };
+            coarriMessage.AppendLine(loc4.ToCustomEDI());
+
+            var dtm1 = new DTM { DateOrTimeQualifier = "", DateOrTime = "", DateOrTimeFormatQualifier = "", BGM = bgm };
+            coarriMessage.AppendLine(dtm1.ToCustomEDI());
 
             // Generación de cada contenedor
             int count = 0;

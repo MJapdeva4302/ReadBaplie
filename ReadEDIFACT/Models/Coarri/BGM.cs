@@ -17,9 +17,11 @@ namespace ReadEDIFACT.Models.Coarri
             {
             DocumentName = "119";
             }
-            else
+            else if (DocumentName != null && DocumentName.Contains("122"))
             {
             DocumentName = "122";
+            }else{
+            DocumentName = "270";
             }
 
             return $"BGM+{DocumentName}+{(DocumentNumber ?? "")}+{(MessageFunction ?? "9")}'";

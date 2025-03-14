@@ -200,5 +200,24 @@ string outputFilePathBAPLIE = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIF
 //             Console.WriteLine(coarriMessage);
 
 var unb = new UNB();
+var unh = new UNH();
+var bgm = new BGM(){DocumentName = "122"};
+var loc1 = new LOC(){BGM = bgm};
+var loc2 = new LOC(){BGM = bgm};
+var loc3 = new LOC(){BGM = bgm};
+var loc4 = new LOC(){BGM = bgm};
 var coarriMessage = unb.ToEDIString();
 Console.WriteLine(coarriMessage);
+var coarriMessageunh = unh.ToEDIString();
+Console.WriteLine(coarriMessageunh);
+// Console.WriteLine("");
+var coarriMessagebgm = bgm.ToEDIString();
+Console.WriteLine(coarriMessagebgm);
+var coarriMessageloc = loc1.ToEDIString();
+Console.WriteLine(coarriMessageloc);
+var coarriMessageloc2 = loc2.ToCustomEDI();
+Console.WriteLine(coarriMessageloc2);
+var coarriMessageloc3 = loc3.ToCustomEDI();
+Console.WriteLine(coarriMessageloc3);
+var coarriMessageloc4 = loc4.ToCustomEDI();
+Console.WriteLine(coarriMessageloc4);

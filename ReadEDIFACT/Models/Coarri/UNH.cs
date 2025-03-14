@@ -16,7 +16,7 @@ namespace ReadEDIFACT.Models.Coarri
 
         public override string ToEDIString()
         {
-            return $"UNH+{(MessageRefNumber = MessageRefNumber == "" || MessageRefNumber == null ? "244172" : MessageRefNumber)}+{(MessageTypeId = MessageTypeId == "" || MessageTypeId == null ? "COARRI" : MessageTypeId)}:{(MessageTypeVersion = MessageTypeVersion == "" || MessageTypeVersion == null ? "D" : MessageTypeVersion)}:{(MessageTypeRelease = MessageTypeRelease == "" || MessageTypeRelease == null ? "23A" : MessageTypeRelease)}:{(ControllingAgency = ControllingAgency == "" || ControllingAgency == null ? "UN" : ControllingAgency)}+{(AssociationAssigned = AssociationAssigned == "" || AssociationAssigned == null ? "ITG10" : AssociationAssigned)}'";
+            return $"UNH+{(string.IsNullOrEmpty(MessageRefNumber) ? GenerateInterchangeRef() : MessageRefNumber)}+{(MessageTypeId = MessageTypeId == "" || MessageTypeId == null ? "COARRI" : MessageTypeId)}:{(MessageTypeVersion = MessageTypeVersion == "" || MessageTypeVersion == null ? "D" : MessageTypeVersion)}:{(MessageTypeRelease = MessageTypeRelease == "" || MessageTypeRelease == null ? "23A" : MessageTypeRelease)}:{(ControllingAgency = ControllingAgency == "" || ControllingAgency == null ? "UN" : ControllingAgency)}+{(AssociationAssigned = AssociationAssigned == "" || AssociationAssigned == null ? "ITG10" : AssociationAssigned)}'";
         }
 
         public override string ToCustomEDI()
@@ -28,22 +28,22 @@ namespace ReadEDIFACT.Models.Coarri
         {
             string timestamp = DateTime.UtcNow.ToString("yyyyMMddHHmmss");
 
-            if (timestamp.Length > 3)
+            if (timestamp.Length > 5)
             {
-                timestamp = timestamp.Substring(timestamp.Length - 3);
+                timestamp = timestamp.Substring(timestamp.Length - 5);
             }
 
             Random random = new Random();
-            // Número entre 1000 y 9999
+            
             string randomNumber = random.Next(100, 999).ToString(); 
 
             
             string interchangeRef = $"{timestamp}{randomNumber}";
 
            
-            if (interchangeRef.Length > 6)
+            if (interchangeRef.Length > 8)
             {
-                interchangeRef = interchangeRef.Substring(0, 6);
+                interchangeRef = interchangeRef.Substring(0, 8);
             }
 
             return interchangeRef;
