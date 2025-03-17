@@ -42,6 +42,12 @@ namespace ReadEDIFACT.Models.Coarri
             var tdt = new TDT { TransportStage = "", TransportMeansJourney = "", TransportModeName = "", CarrierIdentifier = "", CodeListIdentification = "", CodeListAgency = "", CarrierName = "", TransportMeanIdentification = "", CodeListIdentificationTwo = "", CodeListResponsibleAgency = "", TransportIDName = "" };
             coarriMessage.AppendLine(tdt.ToEDIString());
 
+            var dtmETA = new DTM { DateOrTimeQualifier = "", DateOrTime = "", DateOrTimeFormatQualifier = ""};
+            coarriMessage.AppendLine(dtmETA.ReturnFormat(null, "2021-09-01"));
+
+            var dtmETD = new DTM { DateOrTimeQualifier = "", DateOrTime = "", DateOrTimeFormatQualifier = ""};
+            coarriMessage.AppendLine(dtmETD.ReturnFormat(null, "2021-09-01"));
+
             var rff = new RFF { ReferenceQualifier = "", ReferenceIdentifier = "" };
             coarriMessage.AppendLine(rff.ToEDIString());
 
@@ -58,21 +64,23 @@ namespace ReadEDIFACT.Models.Coarri
             var dtm1 = new DTM { DateOrTimeQualifier = "", DateOrTime = "", DateOrTimeFormatQualifier = "", BGM = bgm };
             coarriMessage.AppendLine(dtm1.ToCustomEDI());
 
+            var nad = new NAD { PartyQualifier = "", PartyIdentifier = "", CodeListIdentification = "", CodeListResponsibleAgency = "" , PartyName = ""};
+            coarriMessage.AppendLine(nad.ToEDIString());
+
             // Generación de cada contenedor
             int count = 0;
             string messageRef = "244172";
             foreach (var equipment in _equipments)
             {
                 count++;
+                var eqd = new EQD { EquipmentQualifier = "CN", ContainerNumber = equipment.EquipmentDetails.ContainerNumber, ContainerType = equipment.EquipmentDetails.ContainerType, FullEmptyIndicator = equipment.EquipmentDetails.FullEmptyIndicator };
+                coarriMessage.AppendLine(eqd.ToEDIString());
 
-                // var unh = new UNH { MessageRef = messageRef, MessageType = "COARRI:D:23A:UN:ITG10" };
-                // coarriMessage.AppendLine(unh.ToEDIString());
+                var rffBN = new RFF { ReferenceQualifier = "BN", ReferenceIdentifier = equipment.TripIdentificationNumber, EQD = eqd };
+                coarriMessage.AppendLine(rffBN.ToCustomEDI());
 
-                // var bgm = new BGM { DocumentName = "270", DocumentNumber = "", MessageFunction = "9" };
-                // coarriMessage.AppendLine(bgm.ToEDIString());
-
-                // var tdt = new TDT { TransportStage = "20", VoyageNumber = _voyageNumber, ModeOfTransport = "1", TransportID = _transportID, VesselName = _vesselName };
-                // coarriMessage.AppendLine(tdt.ToEDIString());
+                var dtm132 = new DTM { DateOrTimeQualifier = "203", DateOrTime = equipment.LoadingUnloadingDate, DateOrTimeFormatQualifier = "203" };
+                coarriMessage.AppendLine(dtm132.ReturnFormat(equipment.LoadingUnloadingDate, null));
 
                 // var dtm132 = new DTM { DateTimeQualifier = "132", DateTime = equipment.LoadingUnloadingDate, FormatQualifier = "203" };
                 // coarriMessage.AppendLine(dtm132.ToEDIString());

@@ -32,14 +32,15 @@ namespace ReadEDIFACT.Models.Coarri
 
         public override string ToEDIString()
         {
-            
+
             if (BGM != null && BGM.DocumentName.Contains("119"))
             {
 
                 return $"LOC+{(string.IsNullOrEmpty(LocationQualifier) ? "41" : LocationQualifier)}+{(string.IsNullOrEmpty(LocationCode) ? "0002" : LocationCode)}'";
             }
-            
-            else if (BGM != null && BGM.DocumentName.Contains("122")){
+
+            else if (BGM != null && BGM.DocumentName.Contains("122"))
+            {
 
                 return $"LOC+{(string.IsNullOrEmpty(LocationQualifier) ? "42" : LocationQualifier)}+{(string.IsNullOrEmpty(LocationCode) ? "0002" : LocationCode)}'";
             }
@@ -48,21 +49,38 @@ namespace ReadEDIFACT.Models.Coarri
                 return string.Empty;
             }
         }
-        
+
         public override string ToCustomEDI()
         {
-            if (BGM != null && BGM.DocumentName.Contains("122")){
-                // Loading report
-                return $"LOC+{(string.IsNullOrEmpty(LocationQualifier) ? "9" : LocationQualifier)}+{(string.IsNullOrEmpty(LocationCode) ? "" : LocationCode)}:{(string.IsNullOrEmpty(CodeListIdentification) ? "ZZZ" : CodeListIdentification)}:{(string.IsNullOrEmpty(CodeListResponsibleAgency) ? "98" : CodeListResponsibleAgency)}:{(string.IsNullOrEmpty(LocationName) ? "" : LocationName)}+{(string.IsNullOrEmpty(CountryNameCode) ? "0002" : CountryNameCode)}'";
+            if (BGM != null && BGM.DocumentName.Contains("122"))
+            {
+                if ((LocationCode.Equals("CRMOB") && LocationQualifier.Equals("9")) || (LocationCode.Equals("CRMOB") && LocationQualifier.Equals("61")))
+                {
+                    // Loading report
+                    return $"LOC+{(string.IsNullOrEmpty(LocationQualifier) ? "9" : LocationQualifier)}+{(string.IsNullOrEmpty(LocationCode) ? "" : LocationCode)}:{(string.IsNullOrEmpty(CodeListIdentification) ? "ZZZ" : CodeListIdentification)}:{(string.IsNullOrEmpty(CodeListResponsibleAgency) ? "98" : CodeListResponsibleAgency)}:{(string.IsNullOrEmpty(LocationName) ? "" : LocationName)}+{(string.IsNullOrEmpty(CountryNameCode) ? "0002" : CountryNameCode)}'";
+                }
+                else if ((LocationCode.Equals("CRCLIO") && LocationQualifier.Equals("9")) || (LocationCode.Equals("CRCLIO") && LocationQualifier.Equals("61")))
+                {
+                    return $"LOC+{(string.IsNullOrEmpty(LocationQualifier) ? "9" : LocationQualifier)}+{(string.IsNullOrEmpty(LocationCode) ? "" : LocationCode)}:{(string.IsNullOrEmpty(CodeListIdentification) ? "ZZZ" : CodeListIdentification)}:{(string.IsNullOrEmpty(CodeListResponsibleAgency) ? "98" : CodeListResponsibleAgency)}:{(string.IsNullOrEmpty(LocationName) ? "" : LocationName)}+{(string.IsNullOrEmpty(CountryNameCode) ? "0001" : CountryNameCode)}'";
+                }
+                else if (LocationQualifier.Equals("94") && (!LocationCode.Equals("CRMOB") && !LocationCode.Equals("CRCLIO")))
+                {
+                    return $"LOC+{(string.IsNullOrEmpty(LocationQualifier) ? "94" : LocationQualifier)}+{(string.IsNullOrEmpty(LocationCode) ? "" : LocationCode)}:{(string.IsNullOrEmpty(CodeListIdentification) ? "ZZZ" : CodeListIdentification)}:{(string.IsNullOrEmpty(CodeListResponsibleAgency) ? "98" : CodeListResponsibleAgency)}:{(string.IsNullOrEmpty(LocationName) ? "" : LocationName)}'";
+                }
+                else
+                {
+                    return $"LOC+{(string.IsNullOrEmpty(LocationQualifier) ? "61" : LocationQualifier)}+{(string.IsNullOrEmpty(LocationCode) ? "" : LocationCode)}:{(string.IsNullOrEmpty(CodeListIdentification) ? "ZZZ" : CodeListIdentification)}:{(string.IsNullOrEmpty(CodeListResponsibleAgency) ? "98" : CodeListResponsibleAgency)}:{(string.IsNullOrEmpty(LocationName) ? "" : LocationName)}'";
+                }
             }
-            else if (BGM != null && BGM.DocumentName.Contains("119")){
+            else if (BGM != null && BGM.DocumentName.Contains("119"))
+            {
                 // Loading report
                 return $"LOC+{(string.IsNullOrEmpty(LocationQualifier) ? "11" : LocationQualifier)}+{(string.IsNullOrEmpty(LocationCode) ? "" : LocationCode)}:{(string.IsNullOrEmpty(CodeListIdentification) ? "ZZZ" : CodeListIdentification)}:{(string.IsNullOrEmpty(CodeListResponsibleAgency) ? "98" : CodeListResponsibleAgency)}:{(string.IsNullOrEmpty(LocationName) ? "" : LocationName)}+{(string.IsNullOrEmpty(CountryNameCode) ? "0002" : CountryNameCode)}'";
             }
             else
             {
                 // Discharge report
-                return $"ELSELOC+{(string.IsNullOrEmpty(LocationQualifier) ? "9" : LocationQualifier)}+{(string.IsNullOrEmpty(LocationCode) ? "" : LocationCode)}:{(string.IsNullOrEmpty(CodeListIdentification) ? "ZZZ" : CodeListIdentification)}:{(string.IsNullOrEmpty(CodeListResponsibleAgency) ? "98" : CodeListResponsibleAgency)}:{(string.IsNullOrEmpty(LocationName) ? "" : LocationName)}'";
+                return $"LOC+{(string.IsNullOrEmpty(LocationQualifier) ? "9" : LocationQualifier)}+{(string.IsNullOrEmpty(LocationCode) ? "" : LocationCode)}:{(string.IsNullOrEmpty(CodeListIdentification) ? "ZZZ" : CodeListIdentification)}:{(string.IsNullOrEmpty(CodeListResponsibleAgency) ? "98" : CodeListResponsibleAgency)}:{(string.IsNullOrEmpty(LocationName) ? "" : LocationName)}'";
             }
         }
     }

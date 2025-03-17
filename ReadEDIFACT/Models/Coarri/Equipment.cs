@@ -7,9 +7,7 @@ namespace ReadEDIFACT.Models.Coarri
 {
     public class Equipment
     {
-        public string ContainerNumber { get; set; }
-        public int OperationType { get; set; }
-        public int Condition { get; set; }
+        public EQD EquipmentDetails { get; set; }
         public string TripIdentificationNumber { get; set; }
         public string LoadingUnloadingDate { get; set; }
         public int StowagePosition { get; set; }

@@ -49,5 +49,10 @@ namespace ReadEDIFACT.Models.Coarri
             }
             return $"";
         }
+
+        public static string DateOperation(string dateOrTime)
+        {
+            return $"DTM+203:{dateOrTime}:203'";
+        }
     }
 }
