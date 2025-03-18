@@ -19,19 +19,19 @@ namespace ReadEDIFACT.Models.Coarri
 
         public override string ToCustomEDI()
         {
-            if (EQD != null)
+            if (EQD == null)
             {
-                return $"";
+                return $"tttt";
             }
             else
             {
                 // BM Guía de transporte; Número de Guía de transporte
-                if (EQD?.FullEmptyIndicator?.Equals("5") == true && ReferenceQualifier?.Equals("BM") == true)
+                if (EQD.FullEmptyIndicator.Equals("5") && ReferenceQualifier.Equals("BM"))
                 {
                     return $"RFF+{ReferenceQualifier}:{ReferenceIdentifier}'";
                 }
                 // BN Número de reserva asignado por la línea naviera;  Número de reserva
-                else if (EQD?.FullEmptyIndicator?.Equals("4") == true && ReferenceQualifier?.Equals("BN") == true)
+                else if (EQD.FullEmptyIndicator.Equals("4") && ReferenceQualifier.Equals("BN"))
                 {
                     return $"RFF+{ReferenceQualifier}:{ReferenceIdentifier}'";
                 }

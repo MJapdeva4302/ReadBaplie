@@ -15,6 +15,11 @@ namespace ReadEDIFACT.Models.Coarri
         9 = Puerto de salida
         94 = puerto de atraque previo
         61 = Proximo Puerto de llamada
+
+        Esto pertenece al segmento LOC que esta dentro del EQD en el COARRI
+        147 = Localizacion de la estiba
+        9 = Lugar de procedencia / carga
+        11 = Lugar de descarga
         */
         public string LocationQualifier { get; set; }
         // LOCODE = ECGYE = Ecuador - Guayaquil; si es 119 en el BGM el puerto de descarga es CRMOB = Costa Rica - Moín
@@ -81,6 +86,22 @@ namespace ReadEDIFACT.Models.Coarri
             {
                 // Discharge report
                 return $"LOC+{(string.IsNullOrEmpty(LocationQualifier) ? "9" : LocationQualifier)}+{(string.IsNullOrEmpty(LocationCode) ? "" : LocationCode)}:{(string.IsNullOrEmpty(CodeListIdentification) ? "ZZZ" : CodeListIdentification)}:{(string.IsNullOrEmpty(CodeListResponsibleAgency) ? "98" : CodeListResponsibleAgency)}:{(string.IsNullOrEmpty(LocationName) ? "" : LocationName)}'";
+            }
+        }
+
+        public string Location(string LocationQualifier, string LocationIdentifier, string CodeListIdentification, string CodeListResponsibleAgency)
+        {
+            if (LocationQualifier.Equals("147"))
+            {
+                return $"LOC+{(string.IsNullOrEmpty(LocationQualifier) ? "147" : LocationQualifier)}+{LocationIdentifier}:{CodeListIdentification}:{CodeListResponsibleAgency}'";
+            }
+            else if (LocationQualifier.Equals("9"))
+            {
+                return $"LOC+{(string.IsNullOrEmpty(LocationQualifier) ? "9" : LocationQualifier)}+{LocationIdentifier}'";
+            }
+            else
+            {
+                return $"LOC+{(string.IsNullOrEmpty(LocationQualifier) ? "11" : LocationQualifier)}+{LocationIdentifier}'";
             }
         }
     }

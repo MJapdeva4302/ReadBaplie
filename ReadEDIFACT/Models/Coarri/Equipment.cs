@@ -8,20 +8,14 @@ namespace ReadEDIFACT.Models.Coarri
     public class Equipment
     {
         public EQD EquipmentDetails { get; set; }
-        public string TripIdentificationNumber { get; set; }
-        public string LoadingUnloadingDate { get; set; }
-        public int StowagePosition { get; set; }
-        public string LoadingPort { get; set; }
-        public string DischargePort { get; set; }
-        public double VerifyGrossMass { get; set; }
-        public double Weight { get; set; }
-        public string Temperature { get; set; }
-        public string TemperatureUnit { get; set; }
-        public int HazardousCode { get; set; }
-        public int TransportStageCode { get; set; }
-        public string WarehouseDestiny { get; set; }
-        public string CarrierIdentification { get; set; }
-        public int LocationFunctionPortCode { get; set; }
-        public List<Seal> Seals { get; set; }
+        public RFF Reference { get; set; }
+        public DTM Date { get; set; }
+        // public List<LOC> Location { get; set; }
+        public LOC Location { get; set; }
+        public MEA Measurements { get; set; }
+        public TMP Temperature { get; set; }
+        public List<SEL> Seals { get; set; }
+        public DGS DangerousGoods { get; set; }
+        public FTX FreeText { get; set; }
     }
 }

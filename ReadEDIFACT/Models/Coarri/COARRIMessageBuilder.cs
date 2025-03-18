@@ -73,65 +73,48 @@ namespace ReadEDIFACT.Models.Coarri
             foreach (var equipment in _equipments)
             {
                 count++;
-                var eqd = new EQD { EquipmentQualifier = "CN", ContainerNumber = equipment.EquipmentDetails.ContainerNumber, ContainerType = equipment.EquipmentDetails.ContainerType, FullEmptyIndicator = equipment.EquipmentDetails.FullEmptyIndicator };
+                var eqd = new EQD { EquipmentQualifier = "CN", ContainerNumber = equipment.EquipmentDetails.ContainerNumber, EquipmentSizeAndType = equipment.EquipmentDetails.EquipmentSizeAndType, CodeListIdentification = "", CodeListResponsibleAgency = "", EquipmentStatusCode = "", FullEmptyIndicator = equipment.EquipmentDetails.FullEmptyIndicator };
                 coarriMessage.AppendLine(eqd.ToEDIString());
 
-                var rffBN = new RFF { ReferenceQualifier = "BN", ReferenceIdentifier = equipment.TripIdentificationNumber, EQD = eqd };
+                var rffBN = new RFF { ReferenceQualifier = "BN", ReferenceIdentifier = equipment.Reference.ReferenceIdentifier, EQD = eqd };
                 coarriMessage.AppendLine(rffBN.ToCustomEDI());
 
-                var dtm132 = new DTM { DateOrTimeQualifier = "203", DateOrTime = equipment.LoadingUnloadingDate, DateOrTimeFormatQualifier = "203" };
-                coarriMessage.AppendLine(dtm132.ReturnFormat(equipment.LoadingUnloadingDate, null));
+                var dtm203 = new DTM { DateOrTimeQualifier = "203", DateOrTime = equipment.Date.DateOrTime, DateOrTimeFormatQualifier = "203" };
+                coarriMessage.AppendLine(dtm203.DateOperation(equipment.Date.DateOrTime));
 
-                // var dtm132 = new DTM { DateTimeQualifier = "132", DateTime = equipment.LoadingUnloadingDate, FormatQualifier = "203" };
-                // coarriMessage.AppendLine(dtm132.ToEDIString());
+                var loc147 = new LOC { LocationQualifier = "147", LocationCode = equipment.Location.LocationQualifier};
+                coarriMessage.AppendLine(loc147.ToCustomEDI());
 
-                // var dtm133 = new DTM { DateTimeQualifier = "133", DateTime = equipment.LoadingUnloadingDate, FormatQualifier = "203" };
-                // coarriMessage.AppendLine(dtm133.ToEDIString());
+                var loc9 = new LOC { LocationQualifier = "9", LocationCode = equipment.Location.LocationCode};
+                coarriMessage.AppendLine(loc9.ToCustomEDI());
 
-                // var nadCA = new NAD { PartyQualifier = "CA", PartyIdentification = $"{_transportID}:160:166" };
-                // coarriMessage.AppendLine(nadCA.ToEDIString());
+                var loc11 = new LOC { LocationQualifier = "11", LocationCode = equipment.Location.LocationCode};
+                coarriMessage.AppendLine(loc11.Location("11", loc11.LocationCode, "", ""));
 
-                // var nadCF = new NAD { PartyQualifier = "CF", PartyIdentification = $"{_transportID}:160:166" };
-                // coarriMessage.AppendLine(nadCF.ToEDIString());
+                var meaVGM = new MEA { MeasurementQualifier = "AAE", MeasurementAttribute = equipment.Measurements.MeasurementAttribute, MeasurementValue = equipment.Measurements.MeasurementValue };
+                coarriMessage.AppendLine(meaVGM.ToEDIString());
 
-                // var eqd = new EQD { EquipmentQualifier = "CN", ContainerNumber = equipment.ContainerNumber, ContainerType = "45R1" }; // Ajusta el tipo de contenedor si es necesario
-                // coarriMessage.AppendLine(eqd.ToEDIString());
+                var tmp = new TMP { TemperatureQualifier = "2", TemperatureValue = equipment.Temperature.TemperatureValue, TemperatureUnit = equipment.Temperature.TemperatureUnit };
+                coarriMessage.AppendLine(tmp.ToEDIString());
 
-                // var rffBN = new RFF { ReferenceQualifier = "BN", ReferenceNumber = equipment.TripIdentificationNumber };
-                // coarriMessage.AppendLine(rffBN.ToEDIString());
+                foreach (var seal in equipment.Seals)
+                {
+                    var sel = new SEL { SealNumber = seal.SealNumber, SealType = seal.SealType };
+                    coarriMessage.AppendLine(sel.ToEDIString());
+                }
 
-                // var rffABT = new RFF { ReferenceQualifier = "ABT", ReferenceNumber = "" };
-                // coarriMessage.AppendLine(rffABT.ToEDIString());
-
-                // var tmd = new TMD { TransportMode = "3" };
-                // coarriMessage.AppendLine(tmd.ToEDIString());
-
-                // var dtm203 = new DTM { DateTimeQualifier = "203", DateTime = equipment.LoadingUnloadingDate, FormatQualifier = "203" };
-                // coarriMessage.AppendLine(dtm203.ToEDIString());
-
-                // var loc147 = new LOC { LocationQualifier = "147", LocationCode = equipment.DischargePort };
-                // coarriMessage.AppendLine(loc147.ToEDIString());
-
-                // var loc11 = new LOC { LocationQualifier = "11", LocationCode = equipment.LoadingPort };
-                // coarriMessage.AppendLine(loc11.ToEDIString());
-
-                // var loc9 = new LOC { LocationQualifier = "9", LocationCode = _location };
-                // coarriMessage.AppendLine(loc9.ToEDIString());
-
-                // var meaVGM = new MEA { MeasurementQualifier = "AAE", Weight = equipment.VerifyGrossMass };
-                // coarriMessage.AppendLine(meaVGM.ToEDIString());
-
-                // var meaG = new MEA { MeasurementQualifier = "AAE", Weight = equipment.Weight };
-                // coarriMessage.AppendLine(meaG.ToEDIString());
-
-                // var tmp = new TMP { TemperatureQualifier = "2", Temperature = $"{equipment.Temperature}:{equipment.TemperatureUnit}" };
-                // coarriMessage.AppendLine(tmp.ToEDIString());
-
-                // foreach (var seal in equipment.Seals)
-                // {
-                //     var sel = new SEL { SealNumber = seal.SealNumber };
-                //     coarriMessage.AppendLine(sel.ToEDIString());
-                // }
+                if(equipment.DangerousGoods != null)
+                {
+                    
+                        var dgs = new DGS { DangerousGoodsCode = equipment.DangerousGoods.DangerousGoodsCode, HazardIdentificationCode = equipment.DangerousGoods.HazardIdentificationCode, DangerousGoodsClassificationCode = equipment.DangerousGoods.DangerousGoodsClassificationCode };
+                        coarriMessage.AppendLine(dgs.ToCustomEDI());
+                        var ftx = new FTX { TextSubjectCode = "AAD", TextValue = equipment.FreeText.TextValue };
+                        coarriMessage.AppendLine(ftx.ToEDIString());
+                }
+                
+                    var unt = new UNT { SegmentCount = "000023", MessageRef = messageRef };
+                    coarriMessage.AppendLine(unt.ToEDIString());
+                
 
                 // var cnt = new CNT { ControlTotalQualifier = "16", ControlTotalValue = "1" };
                 // coarriMessage.AppendLine(cnt.ToEDIString());
