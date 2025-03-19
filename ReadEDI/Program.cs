@@ -224,6 +224,12 @@ var tmp = new TMP(){TemperatureQualifier = "2", TemperatureValue = 10.0, Tempera
 var sel = new SEL(){ SealNumber = "123456", SealType = "AA"};
 var dgs = new DGS(){DangerousGoodsCode = "IMD", HazardIdentificationCode = "3.1", DangerousGoodsClassificationCode = "9999"};
 var ftx = new FTX(){TextSubjectCode = "", TextValue = "", DGS = dgs};
+var nads = new NAD(){PartyQualifier = "CF", PartyIdentifier = "MAEU", CodeListIdentification = "160", CodeListResponsibleAgency = "166"};
+
+var cnt = new CNT(){ControlTotalQualifier = "16", ControlTotalValue = "1"};
+var unt = new UNT(){SegmentCount = "16", MessageRef = unh.MessageRefNumber};
+var unz = new UNZ(){InterchangeControlCount = "1", MessageRef = unb.InterchangeRef};
+
 var coarriMessage = unb.ToEDIString();
 Console.WriteLine(coarriMessage);
 var coarriMessageunh = unh.ToEDIString();
@@ -233,9 +239,9 @@ var coarriMessagebgm = bgm.ToEDIString();
 Console.WriteLine(coarriMessagebgm);
 var coarriMessagetdt = tdt.ToEDIString();
 Console.WriteLine(coarriMessagetdt);
-var coarriMessagedtmETA = dtmETA.ReturnFormat(null, "2021-09-01");
+var coarriMessagedtmETA = dtmETA.ReturnFormat(null, "20210901");
 Console.WriteLine(coarriMessagedtmETA);
-var coarriMessagedtmETD = dtmETD.ReturnFormat(null, "2021-09-01");
+var coarriMessagedtmETD = dtmETD.ReturnFormat(null, "20210901");
 Console.WriteLine(coarriMessagedtmETD);
 var coarriMessagerff = rff.ToEDIString();
 Console.WriteLine(coarriMessagerff);
@@ -275,3 +281,21 @@ var coarriMessagedgs = dgs.ToCustomEDI();
 Console.WriteLine(coarriMessagedgs);
 var coarriMessageftx = ftx.ToEDIString();
 Console.WriteLine(coarriMessageftx);
+var coarriMessagenads = nads.ToCustomEDI();
+Console.WriteLine(coarriMessagenads);
+var coarriMessagecnt = cnt.ToEDIString();
+Console.WriteLine(coarriMessagecnt);
+var coarriMessageunt = unt.ToEDIString();
+Console.WriteLine(coarriMessageunt);
+var coarriMessageunz = unz.ToEDIString();
+Console.WriteLine(coarriMessageunz);
+
+
+// string filePath = "ruta/al/archivo.json";
+// var root = COARRIMessageBuilder.LoadJson(filePath);
+
+// var equipments = COARRIMessageBuilder.MapFromJson(root);
+// var builder = new COARRIMessageBuilder(equipments);
+
+// string ediMessage = builder.BuildMessage();
+// Console.WriteLine(ediMessage);

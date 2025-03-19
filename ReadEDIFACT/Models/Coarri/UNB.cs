@@ -14,12 +14,15 @@ namespace ReadEDIFACT.Models.Coarri
         public string Date { get; set; }
         public string Time { get; set; }
         public string InterchangeRef { get; set; }
-        private static int _counter = 0;
 
+        public UNB()
+        {
+            InterchangeRef = GenerateInterchangeRef();
+        }
         public override string ToEDIString()
         {
 
-            return $"UNB+{(string.IsNullOrEmpty(SyntaxIdentifier) ? "UNOA" : SyntaxIdentifier)}:{(string.IsNullOrEmpty(SyntaxVersion) ? "2" : SyntaxVersion)}+{(string.IsNullOrEmpty(SenderIdentification) ? "JAPDEVACRMOB" : SenderIdentification)}+{(string.IsNullOrEmpty(ReceiverIdentification) ? "CRCUSTOMS01" : ReceiverIdentification)}+{(string.IsNullOrEmpty(Date) ? DateTime.UtcNow.ToString("yyMMdd") : Date)}:{(string.IsNullOrEmpty(Time) ? DateTime.UtcNow.ToString("HHmm") : Time )}+{GenerateInterchangeRef()}'";
+            return $"UNB+{(string.IsNullOrEmpty(SyntaxIdentifier) ? "UNOA" : SyntaxIdentifier)}:{(string.IsNullOrEmpty(SyntaxVersion) ? "2" : SyntaxVersion)}+{(string.IsNullOrEmpty(SenderIdentification) ? "JAPDEVACRMOB" : SenderIdentification)}+{(string.IsNullOrEmpty(ReceiverIdentification) ? "CRCUSTOMS01" : ReceiverIdentification)}+{(string.IsNullOrEmpty(Date) ? DateTime.UtcNow.ToString("yyMMdd") : Date)}:{(string.IsNullOrEmpty(Time) ? DateTime.UtcNow.ToString("HHmm") : Time )}+{InterchangeRef}'";
         }
 
         public override string ToCustomEDI()

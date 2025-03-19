@@ -14,9 +14,13 @@ namespace ReadEDIFACT.Models.Coarri
         public string ControllingAgency { get; set; }
         public string AssociationAssigned { get; set; }
 
+        public UNH()
+        {
+            MessageRefNumber = GenerateMessageRefNumber();
+        }
         public override string ToEDIString()
         {
-            return $"UNH+{(string.IsNullOrEmpty(MessageRefNumber) ? GenerateInterchangeRef() : MessageRefNumber)}+{(MessageTypeId = MessageTypeId == "" || MessageTypeId == null ? "COARRI" : MessageTypeId)}:{(MessageTypeVersion = MessageTypeVersion == "" || MessageTypeVersion == null ? "D" : MessageTypeVersion)}:{(MessageTypeRelease = MessageTypeRelease == "" || MessageTypeRelease == null ? "23A" : MessageTypeRelease)}:{(ControllingAgency = ControllingAgency == "" || ControllingAgency == null ? "UN" : ControllingAgency)}+{(AssociationAssigned = AssociationAssigned == "" || AssociationAssigned == null ? "ITG10" : AssociationAssigned)}'";
+            return $"UNH+{MessageRefNumber}+{(MessageTypeId = MessageTypeId == "" || MessageTypeId == null ? "COARRI" : MessageTypeId)}:{(MessageTypeVersion = MessageTypeVersion == "" || MessageTypeVersion == null ? "D" : MessageTypeVersion)}:{(MessageTypeRelease = MessageTypeRelease == "" || MessageTypeRelease == null ? "23A" : MessageTypeRelease)}:{(ControllingAgency = ControllingAgency == "" || ControllingAgency == null ? "UN" : ControllingAgency)}+{(AssociationAssigned = AssociationAssigned == "" || AssociationAssigned == null ? "ITG10" : AssociationAssigned)}'";
         }
 
         public override string ToCustomEDI()
@@ -24,7 +28,7 @@ namespace ReadEDIFACT.Models.Coarri
             throw new NotImplementedException();
         }
 
-        public static string GenerateInterchangeRef()
+        public static string GenerateMessageRefNumber()
         {
             string timestamp = DateTime.UtcNow.ToString("yyyyMMddHHmmss");
 

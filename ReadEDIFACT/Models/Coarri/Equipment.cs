@@ -17,5 +17,6 @@ namespace ReadEDIFACT.Models.Coarri
         public List<SEL> Seals { get; set; }
         public DGS DangerousGoods { get; set; }
         public FTX FreeText { get; set; }
+        public NAD Parties { get; set; }
     }
 }
