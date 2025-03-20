@@ -227,7 +227,7 @@ var ftx = new FTX(){TextSubjectCode = "", TextValue = "", DGS = dgs};
 var nads = new NAD(){PartyQualifier = "CF", PartyIdentifier = "MAEU", CodeListIdentification = "160", CodeListResponsibleAgency = "166"};
 
 var cnt = new CNT(){ControlTotalQualifier = "16", ControlTotalValue = "1"};
-var unt = new UNT(){SegmentCount = "16", MessageRef = unh.MessageRefNumber};
+var unt = new UNT(){SegmentCount = 16.ToString("D6"), MessageRef = unh.MessageRefNumber};
 var unz = new UNZ(){InterchangeControlCount = "1", MessageRef = unb.InterchangeRef};
 
 var coarriMessage = unb.ToEDIString();

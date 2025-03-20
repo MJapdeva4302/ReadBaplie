@@ -25,83 +25,83 @@ namespace ReadEDIFACT.Models.Coarri
         }
 
         // Método para mapear el JSON a la estructura de la clase Equipment
-        public static List<Equipment> MapFromJson(RootData jsonData)
-        {
-            var equipments = new List<Equipment>();
+        // public static List<Equipment> MapFromJson(RootData jsonData)
+        // {
+        //     var equipments = new List<Equipment>();
 
-            foreach (var jsonEquipment in jsonData.Equipments)
-            {
-                var equipment = new Equipment
-                {
-                    EquipmentDetails = new EQD
-                    {
-                        EquipmentQualifier = "CN",
-                        ContainerNumber = jsonEquipment.ContainerNumber,
-                        EquipmentSizeAndType = "",
-                        CodeListIdentification = "",
-                        CodeListResponsibleAgency = "",
-                        EquipmentStatusCode = "",
-                        FullEmptyIndicator = jsonEquipment.Condition.ToString(),
-                    },
-                    Reference = new RFF
-                    {
-                        ReferenceIdentifier = jsonEquipment.TripIdentificationNumber,
-                        ReferenceQualifier = "BN"
-                    },
-                    Date = new DTM
-                    {
-                        DateOrTime = jsonEquipment.LoadingUnloadingDate,
-                        DateOrTimeQualifier = "203",
-                        DateOrTimeFormatQualifier = "203"
-                    },
-                    Location = new LOC
-                    {
-                        LocationCode = jsonEquipment.DischargePort,
-                        LocationQualifier = "9" // Código para el puerto de descarga
-                    },
-                    Measurements = new MEA
-                    {
-                        MeasurementQualifier = "AAE",
-                        MeasurementAttribute = "VGM",
-                        MeasurementValue = jsonEquipment.VerifyGrossMass,
-                        WeightUnitCode = "KGM"
-                    },
-                    Temperature = new TMP
-                    {
-                        TemperatureQualifier = "2",
-                        TemperatureValue = jsonEquipment.Temperature,
-                        TemperatureUnit = jsonEquipment.TemperatureUnit
-                    },
-                    Seals = jsonEquipment.Seals.Select(seal => new SEL
-                    {
-                        SealNumber = seal.SealNumber,
-                        SealType = seal.SealType
-                    }).ToList(),
-                    DangerousGoods = jsonEquipment.HazardousCode != 0 ? new DGS
-                    {
-                        DangerousGoodsCode = jsonEquipment.HazardousCode.ToString(),
-                        HazardIdentificationCode = "", // Puedes asignar un valor predeterminado o dejarlo vacío
-                        DangerousGoodsClassificationCode = "" // Puedes asignar un valor predeterminado o dejarlo vacío
-                    } : null,
-                    FreeText = new FTX
-                    {
-                        TextSubjectCode = "AAD",
-                        TextValue = "" // Puedes asignar un valor predeterminado o dejarlo vacío
-                    },
-                    Parties = new NAD
-                    {
-                        PartyQualifier = "CF",
-                        PartyIdentifier = jsonEquipment.CarrierIdentification,
-                        CodeListIdentification = "", // Puedes asignar un valor predeterminado o dejarlo vacío
-                        CodeListResponsibleAgency = "" // Puedes asignar un valor predeterminado o dejarlo vacío
-                    }
-                };
+        //     foreach (var jsonEquipment in jsonData.Equipments)
+        //     {
+        //         var equipment = new Equipment
+        //         {
+        //             EquipmentDetails = new EQD
+        //             {
+        //                 EquipmentQualifier = "CN",
+        //                 ContainerNumber = jsonEquipment.ContainerNumber,
+        //                 EquipmentSizeAndType = "",
+        //                 CodeListIdentification = "",
+        //                 CodeListResponsibleAgency = "",
+        //                 EquipmentStatusCode = "",
+        //                 FullEmptyIndicator = jsonEquipment.Condition.ToString(),
+        //             },
+        //             Reference = new RFF
+        //             {
+        //                 ReferenceIdentifier = jsonEquipment.TripIdentificationNumber,
+        //                 ReferenceQualifier = "BN"
+        //             },
+        //             Date = new DTM
+        //             {
+        //                 DateOrTime = jsonEquipment.LoadingUnloadingDate,
+        //                 DateOrTimeQualifier = "203",
+        //                 DateOrTimeFormatQualifier = "203"
+        //             },
+        //             Location = new LOC
+        //             {
+        //                 LocationCode = jsonEquipment.DischargePort,
+        //                 LocationQualifier = "9" 
+        //             },
+        //             Measurements = new MEA
+        //             {
+        //                 MeasurementQualifier = "AAE",
+        //                 MeasurementAttribute = "VGM",
+        //                 MeasurementValue = jsonEquipment.VerifyGrossMass,
+        //                 WeightUnitCode = "KGM"
+        //             },
+        //             Temperature = new TMP
+        //             {
+        //                 TemperatureQualifier = "2",
+        //                 TemperatureValue = jsonEquipment.Temperature,
+        //                 TemperatureUnit = jsonEquipment.TemperatureUnit
+        //             },
+        //             Seals = jsonEquipment.Seals.Select(seal => new SEL
+        //             {
+        //                 SealNumber = seal.SealNumber,
+        //                 SealType = seal.SealType
+        //             }).ToList(),
+        //             DangerousGoods = jsonEquipment.HazardousCode != 0 ? new DGS
+        //             {
+        //                 DangerousGoodsCode = jsonEquipment.HazardousCode.ToString(),
+        //                 HazardIdentificationCode = "", 
+        //                 DangerousGoodsClassificationCode = "" 
+        //             } : null,
+        //             FreeText = new FTX
+        //             {
+        //                 TextSubjectCode = "AAD",
+        //                 TextValue = "" 
+        //             },
+        //             Parties = new NAD
+        //             {
+        //                 PartyQualifier = "CF",
+        //                 PartyIdentifier = jsonEquipment.CarrierIdentification,
+        //                 CodeListIdentification = "", 
+        //                 CodeListResponsibleAgency = "" 
+        //             }
+        //         };
 
-                equipments.Add(equipment);
-            }
+        //         equipments.Add(equipment);
+        //     }
 
-            return equipments;
-        }
+        //     return equipments;
+        // }
 
         public string BuildMessage()
         {
@@ -233,7 +233,7 @@ namespace ReadEDIFACT.Models.Coarri
                 coarriMessage.AppendLine(cnt.ToEDIString());
                 segmentCount++;
 
-                var unt = new UNT { SegmentCount = segmentCount.ToString(), MessageRef = unh.MessageRefNumber };
+                var unt = new UNT { SegmentCount = segmentCount.ToString("D6"), MessageRef = unh.MessageRefNumber };
                 coarriMessage.AppendLine(unt.ToEDIString());
 
             // Cierre del intercambio
