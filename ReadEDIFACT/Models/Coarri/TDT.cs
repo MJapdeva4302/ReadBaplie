@@ -37,9 +37,9 @@ namespace ReadEDIFACT.Models.Coarri
             if (string.IsNullOrEmpty(CarrierIdentifier) && string.IsNullOrEmpty(CarrierName))
             {
 
-                return $"TDT+{(string.IsNullOrEmpty(TransportStage) ? "20" : TransportStage)}+{(string.IsNullOrEmpty(TransportMeansJourney) ? "" : TransportMeansJourney)}+{(string.IsNullOrEmpty(TransportModeName) ? "1" : TransportModeName)}++{CarrierIdentifier}:172:166+++{(string.IsNullOrEmpty(TransportMeanIdentification) ? "" : TransportMeanIdentification)}::{(string.IsNullOrEmpty(CodeListAgency) ? "11" : CodeListAgency)}:{TransportIDName}'";
+                return $"TDT+{(string.IsNullOrEmpty(TransportStage) ? "20" : TransportStage)}+{(string.IsNullOrEmpty(TransportMeansJourney) ? "133" : TransportMeansJourney)}+{(string.IsNullOrEmpty(TransportModeName) ? "1" : TransportModeName)}++{CarrierIdentifier}:172:166+++{(string.IsNullOrEmpty(TransportMeanIdentification) ? "" : TransportMeanIdentification)}::{(string.IsNullOrEmpty(CodeListAgency) ? "11" : CodeListAgency)}:{TransportIDName}'";
             }
-            return $"TDT+{(string.IsNullOrEmpty(TransportStage) ? "20" : TransportStage)}+{(string.IsNullOrEmpty(TransportMeansJourney) ? "" : TransportMeansJourney)}+{(string.IsNullOrEmpty(TransportModeName) ? "1" : TransportModeName)}++{CarrierIdentifier}:172:166:{CarrierName}+++{TransportMeanIdentification}:146:11:{TransportIDName}'";
+            return $"TDT+{(string.IsNullOrEmpty(TransportStage) ? "20" : TransportStage)}+{(string.IsNullOrEmpty(TransportMeansJourney) ? "133" : TransportMeansJourney)}+{(string.IsNullOrEmpty(TransportModeName) ? "1" : TransportModeName)}++{CarrierIdentifier}:172:166:{CarrierName}+++{TransportMeanIdentification}:146:11:{TransportIDName}'";
         }
         public override string ToCustomEDI()
         {

@@ -10,6 +10,7 @@ namespace ReadEDIFACT.Models.Coarri
         public string ReferenceQualifier { get; set; } 
         public string ReferenceIdentifier { get; set; }
         public EQD EQD { get; set; }
+        public BGM BGM { get; set; }
 
         public override string ToEDIString()
         {
@@ -21,7 +22,7 @@ namespace ReadEDIFACT.Models.Coarri
         {
             if (EQD == null)
             {
-                return $"tttt";
+                return $"";
             }
             else
             {

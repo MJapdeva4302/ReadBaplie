@@ -17,7 +17,7 @@ namespace ReadEDIFACT.Models.Coarri
 
         public override string ToEDIString()
         {
-            return $"TMP+{TemperatureQualifier}+{TemperatureValue.ToString("F1", CultureInfo.InvariantCulture)}:{TemperatureUnit}'";
+            return $"TMP+{(string.IsNullOrEmpty(TemperatureQualifier) ? "2" : TemperatureQualifier)}+{TemperatureValue.ToString("F1", CultureInfo.InvariantCulture)}:{(string.IsNullOrEmpty(TemperatureUnit) ? "CEL" : TemperatureUnit)}'";
         }
 
         public override string ToCustomEDI()

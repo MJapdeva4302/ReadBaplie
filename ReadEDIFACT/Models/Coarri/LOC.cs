@@ -72,6 +72,10 @@ namespace ReadEDIFACT.Models.Coarri
                 {
                     return $"LOC+{(string.IsNullOrEmpty(LocationQualifier) ? "94" : LocationQualifier)}+{(string.IsNullOrEmpty(LocationCode) ? "" : LocationCode)}:{(string.IsNullOrEmpty(CodeListIdentification) ? "ZZZ" : CodeListIdentification)}:{(string.IsNullOrEmpty(CodeListResponsibleAgency) ? "98" : CodeListResponsibleAgency)}:{(string.IsNullOrEmpty(LocationName) ? "" : LocationName)}'";
                 }
+                else if (LocationQualifier.Equals("11"))
+                {
+                    return $"LOC+{(string.IsNullOrEmpty(LocationQualifier) ? "11" : LocationQualifier)}+{(string.IsNullOrEmpty(LocationCode) ? "" : LocationCode)}:{(string.IsNullOrEmpty(CodeListIdentification) ? "ZZZ" : CodeListIdentification)}:{(string.IsNullOrEmpty(CodeListResponsibleAgency) ? "98" : CodeListResponsibleAgency)}:{(string.IsNullOrEmpty(LocationName) ? "" : LocationName)}+{(string.IsNullOrEmpty(CountryNameCode) ? "0002" : CountryNameCode)}'";
+                }
                 else
                 {
                     return $"LOC+{(string.IsNullOrEmpty(LocationQualifier) ? "61" : LocationQualifier)}+{(string.IsNullOrEmpty(LocationCode) ? "" : LocationCode)}:{(string.IsNullOrEmpty(CodeListIdentification) ? "ZZZ" : CodeListIdentification)}:{(string.IsNullOrEmpty(CodeListResponsibleAgency) ? "98" : CodeListResponsibleAgency)}:{(string.IsNullOrEmpty(LocationName) ? "" : LocationName)}'";
@@ -80,7 +84,28 @@ namespace ReadEDIFACT.Models.Coarri
             else if (BGM != null && BGM.DocumentName.Contains("119"))
             {
                 // Loading report
-                return $"LOC+{(string.IsNullOrEmpty(LocationQualifier) ? "11" : LocationQualifier)}+{(string.IsNullOrEmpty(LocationCode) ? "" : LocationCode)}:{(string.IsNullOrEmpty(CodeListIdentification) ? "ZZZ" : CodeListIdentification)}:{(string.IsNullOrEmpty(CodeListResponsibleAgency) ? "98" : CodeListResponsibleAgency)}:{(string.IsNullOrEmpty(LocationName) ? "" : LocationName)}+{(string.IsNullOrEmpty(CountryNameCode) ? "0002" : CountryNameCode)}'";
+                // return $"LOC+{(string.IsNullOrEmpty(LocationQualifier) ? "11" : LocationQualifier)}+{(string.IsNullOrEmpty(LocationCode) ? "" : LocationCode)}:{(string.IsNullOrEmpty(CodeListIdentification) ? "ZZZ" : CodeListIdentification)}:{(string.IsNullOrEmpty(CodeListResponsibleAgency) ? "98" : CodeListResponsibleAgency)}:{(string.IsNullOrEmpty(LocationName) ? "" : LocationName)}+{(string.IsNullOrEmpty(CountryNameCode) ? "0002" : CountryNameCode)}'";
+                if ((LocationCode.Equals("CRMOB") && LocationQualifier.Equals("9")) || (LocationCode.Equals("CRMOB") && LocationQualifier.Equals("61")))
+                {
+                    // Loading report
+                    return $"LOC+{(string.IsNullOrEmpty(LocationQualifier) ? "9" : LocationQualifier)}+{(string.IsNullOrEmpty(LocationCode) ? "" : LocationCode)}:{(string.IsNullOrEmpty(CodeListIdentification) ? "ZZZ" : CodeListIdentification)}:{(string.IsNullOrEmpty(CodeListResponsibleAgency) ? "98" : CodeListResponsibleAgency)}:{(string.IsNullOrEmpty(LocationName) ? "" : LocationName)}+{(string.IsNullOrEmpty(CountryNameCode) ? "0002" : CountryNameCode)}'";
+                }
+                else if ((LocationCode.Equals("CRCLIO") && LocationQualifier.Equals("9")) || (LocationCode.Equals("CRCLIO") && LocationQualifier.Equals("61")))
+                {
+                    return $"LOC+{(string.IsNullOrEmpty(LocationQualifier) ? "9" : LocationQualifier)}+{(string.IsNullOrEmpty(LocationCode) ? "" : LocationCode)}:{(string.IsNullOrEmpty(CodeListIdentification) ? "ZZZ" : CodeListIdentification)}:{(string.IsNullOrEmpty(CodeListResponsibleAgency) ? "98" : CodeListResponsibleAgency)}:{(string.IsNullOrEmpty(LocationName) ? "" : LocationName)}+{(string.IsNullOrEmpty(CountryNameCode) ? "0001" : CountryNameCode)}'";
+                }
+                else if (LocationQualifier.Equals("94") && (!LocationCode.Equals("CRMOB") && !LocationCode.Equals("CRCLIO")))
+                {
+                    return $"LOC+{(string.IsNullOrEmpty(LocationQualifier) ? "94" : LocationQualifier)}+{(string.IsNullOrEmpty(LocationCode) ? "" : LocationCode)}:{(string.IsNullOrEmpty(CodeListIdentification) ? "ZZZ" : CodeListIdentification)}:{(string.IsNullOrEmpty(CodeListResponsibleAgency) ? "98" : CodeListResponsibleAgency)}:{(string.IsNullOrEmpty(LocationName) ? "" : LocationName)}'";
+                }
+                else if (LocationQualifier.Equals("11"))
+                {
+                    return $"LOC+{(string.IsNullOrEmpty(LocationQualifier) ? "11" : LocationQualifier)}+{(string.IsNullOrEmpty(LocationCode) ? "" : LocationCode)}:{(string.IsNullOrEmpty(CodeListIdentification) ? "ZZZ" : CodeListIdentification)}:{(string.IsNullOrEmpty(CodeListResponsibleAgency) ? "98" : CodeListResponsibleAgency)}:{(string.IsNullOrEmpty(LocationName) ? "" : LocationName)}+{(string.IsNullOrEmpty(CountryNameCode) ? "0002" : CountryNameCode)}'";
+                }
+                else
+                {
+                    return $"LOC+{(string.IsNullOrEmpty(LocationQualifier) ? "61" : LocationQualifier)}+{(string.IsNullOrEmpty(LocationCode) ? "" : LocationCode)}:{(string.IsNullOrEmpty(CodeListIdentification) ? "ZZZ" : CodeListIdentification)}:{(string.IsNullOrEmpty(CodeListResponsibleAgency) ? "98" : CodeListResponsibleAgency)}:{(string.IsNullOrEmpty(LocationName) ? "" : LocationName)}'";
+                }
             }
             else
             {
@@ -93,7 +118,7 @@ namespace ReadEDIFACT.Models.Coarri
         {
             if (LocationQualifier.Equals("147"))
             {
-                return $"LOC+{(string.IsNullOrEmpty(LocationQualifier) ? "147" : LocationQualifier)}+{LocationIdentifier}:{CodeListIdentification}:{CodeListResponsibleAgency}'";
+                return $"LOC+{(string.IsNullOrEmpty(LocationQualifier) ? "147" : LocationQualifier)}+{(string.IsNullOrEmpty(LocationIdentifier) || LocationIdentifier.Equals("0") || LocationIdentifier == "0" ? "" : LocationIdentifier)}:{(string.IsNullOrEmpty(CodeListIdentification) ? "139" : CodeListIdentification)}:{(string.IsNullOrEmpty(CodeListResponsibleAgency) ? "5" : CodeListResponsibleAgency)}'";
             }
             else if (LocationQualifier.Equals("9"))
             {

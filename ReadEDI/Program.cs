@@ -199,103 +199,127 @@ string outputFilePathBAPLIE = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIF
 //             // Imprimir el mensaje generado
 //             Console.WriteLine(coarriMessage);
 
-var unb = new UNB();
-var unh = new UNH();
-var bgm = new BGM(){DocumentName = "122"};
-var tdt = new TDT();
-var dtmETA = new DTM();
-var dtmETD = new DTM();
-var rff = new RFF();
-var loc1 = new LOC(){BGM = bgm};
-var loc2 = new LOC(){LocationCode = "CRCLIO", LocationQualifier = "94", BGM = bgm};
-var loc3 = new LOC(){LocationCode = "", LocationQualifier = "94", BGM = bgm};
-var loc4 = new LOC(){LocationCode = "", LocationQualifier = "", BGM = bgm};
-var dtm1 = new DTM(){BGM = bgm};
-var nad = new NAD(){PartyQualifier = "CA", PartyIdentifier = "CHIQUITA BRANDS", CodeListIdentification = "160", CodeListResponsibleAgency = "166", PartyName = "CHIQUITA BRANDS"};
+// var unb = new UNB();
+// var unh = new UNH();
+// var bgm = new BGM(){DocumentName = "122"};
+// var tdt = new TDT();
+// var dtmETA = new DTM();
+// var dtmETD = new DTM();
+// var rff = new RFF();
+// var loc1 = new LOC(){BGM = bgm};
+// var loc2 = new LOC(){LocationCode = "CRCLIO", LocationQualifier = "94", BGM = bgm};
+// var loc3 = new LOC(){LocationCode = "", LocationQualifier = "94", BGM = bgm};
+// var loc4 = new LOC(){LocationCode = "", LocationQualifier = "", BGM = bgm};
+// var dtm1 = new DTM(){BGM = bgm};
+// var nad = new NAD(){PartyQualifier = "CA", PartyIdentifier = "CHIQUITA BRANDS", CodeListIdentification = "160", CodeListResponsibleAgency = "166", PartyName = "CHIQUITA BRANDS"};
 
-var eqd = new EQD(){EquipmentQualifier = "CN", ContainerNumber = "BEAU5199464", EquipmentSizeAndType = "45G1", CodeListIdentification = "102", CodeListResponsibleAgency = "5", EquipmentStatusCode = "2", FullEmptyIndicator = "4"};
-var rff2 = new RFF(){ReferenceQualifier = "BN", ReferenceIdentifier = "HJSC1234740", EQD = eqd};
-var dtm203 = new DTM(){DateOrTimeQualifier = "203", DateOrTime = "20210901", DateOrTimeFormatQualifier = "203"};
-var loc147 = new LOC(){LocationQualifier = "147", LocationCode = ""};
-var loc9 = new LOC(){LocationQualifier = "9", LocationCode = ""};
-var loc11 = new LOC(){LocationQualifier = "11", LocationCode = ""};
-var mea = new MEA(){MeasurementQualifier = "AAE", MeasurementAttribute = "VGM", WeightUnitCode = "KGM", MeasurementValue = 10000.00};
-var tmp = new TMP(){TemperatureQualifier = "2", TemperatureValue = 10.0, TemperatureUnit = "CEL"};
-var sel = new SEL(){ SealNumber = "123456", SealType = "AA"};
-var dgs = new DGS(){DangerousGoodsCode = "IMD", HazardIdentificationCode = "3.1", DangerousGoodsClassificationCode = "9999"};
-var ftx = new FTX(){TextSubjectCode = "", TextValue = "", DGS = dgs};
-var nads = new NAD(){PartyQualifier = "CF", PartyIdentifier = "MAEU", CodeListIdentification = "160", CodeListResponsibleAgency = "166"};
+// var eqd = new EQD(){EquipmentQualifier = "CN", ContainerNumber = "BEAU5199464", EquipmentSizeAndType = "45G1", CodeListIdentification = "102", CodeListResponsibleAgency = "5", EquipmentStatusCode = "2", FullEmptyIndicator = "4"};
+// var rff2 = new RFF(){ReferenceQualifier = "BN", ReferenceIdentifier = "HJSC1234740", EQD = eqd};
+// var dtm203 = new DTM(){DateOrTimeQualifier = "203", DateOrTime = "20210901", DateOrTimeFormatQualifier = "203"};
+// var loc147 = new LOC(){LocationQualifier = "147", LocationCode = ""};
+// var loc9 = new LOC(){LocationQualifier = "9", LocationCode = ""};
+// var loc11 = new LOC(){LocationQualifier = "11", LocationCode = ""};
+// var mea = new MEA(){MeasurementQualifier = "AAE", MeasurementAttribute = "VGM", WeightUnitCode = "KGM", MeasurementValue = 10000.00};
+// var tmp = new TMP(){TemperatureQualifier = "2", TemperatureValue = 10.0, TemperatureUnit = "CEL"};
+// var sel = new SEL(){ SealNumber = "123456", SealType = "AA"};
+// var dgs = new DGS(){DangerousGoodsCode = "IMD", HazardIdentificationCode = "3.1", DangerousGoodsClassificationCode = "9999"};
+// var ftx = new FTX(){TextSubjectCode = "", TextValue = "", DGS = dgs};
+// var nads = new NAD(){PartyQualifier = "CF", PartyIdentifier = "MAEU", CodeListIdentification = "160", CodeListResponsibleAgency = "166"};
 
-var cnt = new CNT(){ControlTotalQualifier = "16", ControlTotalValue = "1"};
-var unt = new UNT(){SegmentCount = 16.ToString("D6"), MessageRef = unh.MessageRefNumber};
-var unz = new UNZ(){InterchangeControlCount = "1", MessageRef = unb.InterchangeRef};
+// var cnt = new CNT(){ControlTotalQualifier = "16", ControlTotalValue = "1"};
+// var unt = new UNT(){SegmentCount = 16.ToString("D6"), MessageRef = unh.MessageRefNumber};
+// var unz = new UNZ(){InterchangeControlCount = "1", MessageRef = unb.InterchangeRef};
 
-var coarriMessage = unb.ToEDIString();
-Console.WriteLine(coarriMessage);
-var coarriMessageunh = unh.ToEDIString();
-Console.WriteLine(coarriMessageunh);
+// var coarriMessage = unb.ToEDIString();
+// Console.WriteLine(coarriMessage);
+// var coarriMessageunh = unh.ToEDIString();
+// Console.WriteLine(coarriMessageunh);
+// // Console.WriteLine("");
+// var coarriMessagebgm = bgm.ToEDIString();
+// Console.WriteLine(coarriMessagebgm);
+// var coarriMessagetdt = tdt.ToEDIString();
+// Console.WriteLine(coarriMessagetdt);
+// var coarriMessagedtmETA = dtmETA.ReturnFormat(null, "20210901");
+// Console.WriteLine(coarriMessagedtmETA);
+// var coarriMessagedtmETD = dtmETD.ReturnFormat(null, "20210901");
+// Console.WriteLine(coarriMessagedtmETD);
+// var coarriMessagerff = rff.ToEDIString();
+// Console.WriteLine(coarriMessagerff);
+// var coarriMessageloc = loc1.ToEDIString();
+// Console.WriteLine(coarriMessageloc);
+// var coarriMessageloc2 = loc2.ToCustomEDI();
+// Console.WriteLine(coarriMessageloc2);
+// var coarriMessageloc3 = loc3.ToCustomEDI();
+// Console.WriteLine(coarriMessageloc3);
+// var coarriMessageloc4 = loc4.ToCustomEDI();
+// Console.WriteLine(coarriMessageloc4);
+// var coarriMessagedtm1 = dtm1.ToCustomEDI();
+// Console.WriteLine(coarriMessagedtm1);
+// var coarriMessagenad = nad.ToEDIString();
+// Console.WriteLine(coarriMessagenad);
 // Console.WriteLine("");
-var coarriMessagebgm = bgm.ToEDIString();
-Console.WriteLine(coarriMessagebgm);
-var coarriMessagetdt = tdt.ToEDIString();
-Console.WriteLine(coarriMessagetdt);
-var coarriMessagedtmETA = dtmETA.ReturnFormat(null, "20210901");
-Console.WriteLine(coarriMessagedtmETA);
-var coarriMessagedtmETD = dtmETD.ReturnFormat(null, "20210901");
-Console.WriteLine(coarriMessagedtmETD);
-var coarriMessagerff = rff.ToEDIString();
-Console.WriteLine(coarriMessagerff);
-var coarriMessageloc = loc1.ToEDIString();
-Console.WriteLine(coarriMessageloc);
-var coarriMessageloc2 = loc2.ToCustomEDI();
-Console.WriteLine(coarriMessageloc2);
-var coarriMessageloc3 = loc3.ToCustomEDI();
-Console.WriteLine(coarriMessageloc3);
-var coarriMessageloc4 = loc4.ToCustomEDI();
-Console.WriteLine(coarriMessageloc4);
-var coarriMessagedtm1 = dtm1.ToCustomEDI();
-Console.WriteLine(coarriMessagedtm1);
-var coarriMessagenad = nad.ToEDIString();
-Console.WriteLine(coarriMessagenad);
-Console.WriteLine("");
 
-var coarriMessageeqd = eqd.ToEDIString();
-Console.WriteLine(coarriMessageeqd);
-var coarriMessagerff2 = rff2.ToCustomEDI();
-Console.WriteLine(coarriMessagerff2);
-var coarriMessagedtm203 = dtm203.DateOperation("20210901");
-Console.WriteLine(coarriMessagedtm203);
-var coarriMessageloc147 = loc147.Location("147", "0060382", "139", "5");
-Console.WriteLine(coarriMessageloc147);
-var coarriMessageloc9 = loc9.Location("9", "COCTG", "", "");
-Console.WriteLine(coarriMessageloc9);
-var coarriMessageloc11 = loc11.Location("11", "COCTG", "", "");
-Console.WriteLine(coarriMessageloc11);
-var coarriMessagemea = mea.ToEDIString();
-Console.WriteLine(coarriMessagemea);
-var coarriMessagetmp = tmp.ToEDIString();
-Console.WriteLine(coarriMessagetmp);
-var coarriMessagesel = sel.ToEDIString();
-Console.WriteLine(coarriMessagesel);
-var coarriMessagedgs = dgs.ToCustomEDI();
-Console.WriteLine(coarriMessagedgs);
-var coarriMessageftx = ftx.ToEDIString();
-Console.WriteLine(coarriMessageftx);
-var coarriMessagenads = nads.ToCustomEDI();
-Console.WriteLine(coarriMessagenads);
-var coarriMessagecnt = cnt.ToEDIString();
-Console.WriteLine(coarriMessagecnt);
-var coarriMessageunt = unt.ToEDIString();
-Console.WriteLine(coarriMessageunt);
-var coarriMessageunz = unz.ToEDIString();
-Console.WriteLine(coarriMessageunz);
+// var coarriMessageeqd = eqd.ToEDIString();
+// Console.WriteLine(coarriMessageeqd);
+// var coarriMessagerff2 = rff2.ToCustomEDI();
+// Console.WriteLine(coarriMessagerff2);
+// var coarriMessagedtm203 = dtm203.DateOperation("20210901");
+// Console.WriteLine(coarriMessagedtm203);
+// var coarriMessageloc147 = loc147.Location("147", "0060382", "139", "5");
+// Console.WriteLine(coarriMessageloc147);
+// var coarriMessageloc9 = loc9.Location("9", "COCTG", "", "");
+// Console.WriteLine(coarriMessageloc9);
+// var coarriMessageloc11 = loc11.Location("11", "COCTG", "", "");
+// Console.WriteLine(coarriMessageloc11);
+// var coarriMessagemea = mea.ToEDIString();
+// Console.WriteLine(coarriMessagemea);
+// var coarriMessagetmp = tmp.ToEDIString();
+// Console.WriteLine(coarriMessagetmp);
+// var coarriMessagesel = sel.ToEDIString();
+// Console.WriteLine(coarriMessagesel);
+// var coarriMessagedgs = dgs.ToCustomEDI();
+// Console.WriteLine(coarriMessagedgs);
+// var coarriMessageftx = ftx.ToEDIString();
+// Console.WriteLine(coarriMessageftx);
+// var coarriMessagenads = nads.ToCustomEDI();
+// Console.WriteLine(coarriMessagenads);
+// var coarriMessagecnt = cnt.ToEDIString();
+// Console.WriteLine(coarriMessagecnt);
+// var coarriMessageunt = unt.ToEDIString();
+// Console.WriteLine(coarriMessageunt);
+// var coarriMessageunz = unz.ToEDIString();
+// Console.WriteLine(coarriMessageunz);
 
 
-// string filePath = "ruta/al/archivo.json";
-// var root = COARRIMessageBuilder.LoadJson(filePath);
+// 1. Definir la ruta del archivo JSON de prueba
+string filePath = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT/Json COARRI Export Ejemplo.JSON"; // Asegúrate de que este archivo exista
 
-// var equipments = COARRIMessageBuilder.MapFromJson(root);
-// var builder = new COARRIMessageBuilder(equipments);
-
-// string ediMessage = builder.BuildMessage();
-// Console.WriteLine(ediMessage);
+try
+{
+    // 2. Cargar y parsear el JSON
+    var rootData = COARRIMessageBuilder.LoadJson(filePath);
+    
+    // 3. Mapear los datos a las estructuras EDI
+    // var arrivalData = COARRIMessageBuilder.MapArrivalDataFromJson(rootData);
+    // var equipments = COARRIMessageBuilder.MapEquipmentFromJson(rootData);
+    
+    // 4. Construir el mensaje EDI (necesitarías modificar tu clase para aceptar arrivalData)
+    var builder = new COARRIMessageBuilder(rootData.ArrivalData, rootData.Equipments); // <-- Necesitarás este constructor
+    string ediMessage = builder.BuildMessage();
+    
+    // 5. Mostrar resultados
+    Console.WriteLine("=== Mensaje EDI Generado ===");
+    Console.WriteLine(ediMessage);
+    
+    // 6. (Opcional) Guardar en archivo
+    File.WriteAllText("output.edi", ediMessage);
+    Console.WriteLine("\nMensaje guardado en 'output.edi'");
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"Error: {ex.Message}");
+    if (ex.InnerException != null)
+    {
+        Console.WriteLine($"Detalles: {ex.InnerException.Message}");
+    }
+}

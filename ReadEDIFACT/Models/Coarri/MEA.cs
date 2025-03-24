@@ -24,7 +24,7 @@ namespace ReadEDIFACT.Models.Coarri
 
         public override string ToCustomEDI()
         {
-            return $"MEA+{MeasurementQualifier}+VGM+KGM:{MeasurementValue}'";
+            return $"MEA+{(string.IsNullOrEmpty(MeasurementQualifier) ? "AAE" : MeasurementQualifier)}+VGM+KGM:{MeasurementValue}'";
         }
     }
 }

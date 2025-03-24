@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ReadEDIFACT")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ae67f9f6afc0663e74c9150a2832a428d66b1d6a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9f047735b86659cc43b1ab304e1e529e5e7d1624")]
 [assembly: System.Reflection.AssemblyProductAttribute("ReadEDIFACT")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ReadEDIFACT")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

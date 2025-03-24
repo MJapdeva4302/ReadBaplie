@@ -24,15 +24,15 @@ namespace ReadEDIFACT.Models.Coarri
         {
             if (PartyQualifier.Equals("CA"))
             {
-                return $"NAD+{PartyQualifier}+{(string.IsNullOrEmpty(PartyIdentifier) ? "" : PartyIdentifier)}:{(string.IsNullOrEmpty(CodeListIdentification) ? "160" : CodeListIdentification)}:{(string.IsNullOrEmpty(CodeListResponsibleAgency) ? "166" : CodeListResponsibleAgency)}++{(string.IsNullOrEmpty(PartyName) ? "" : PartyName)}'";
+                return $"NAD+{(string.IsNullOrEmpty(PartyQualifier) ? "CA" : PartyQualifier)}+{(string.IsNullOrEmpty(PartyIdentifier) ? "" : PartyIdentifier)}:{(string.IsNullOrEmpty(CodeListIdentification) ? "160" : CodeListIdentification)}:{(string.IsNullOrEmpty(CodeListResponsibleAgency) ? "166" : CodeListResponsibleAgency)}++{(string.IsNullOrEmpty(PartyName) ? "" : PartyName)}'";
             }
             else if (PartyQualifier.Equals("CF"))
             {
-                return $"NAD+{PartyQualifier}+{(string.IsNullOrEmpty(PartyIdentifier) ? "" : PartyIdentifier)}:{(string.IsNullOrEmpty(CodeListIdentification) ? "160" : CodeListIdentification)}:{(string.IsNullOrEmpty(CodeListResponsibleAgency) ? "166" : CodeListResponsibleAgency)}++{(string.IsNullOrEmpty(PartyName) ? "" : PartyName)}'";
+                return $"NAD+{(string.IsNullOrEmpty(PartyQualifier) ? "CF" : PartyQualifier)}+{(string.IsNullOrEmpty(PartyIdentifier) ? "" : PartyIdentifier)}:{(string.IsNullOrEmpty(CodeListIdentification) ? "160" : CodeListIdentification)}:{(string.IsNullOrEmpty(CodeListResponsibleAgency) ? "166" : CodeListResponsibleAgency)}++{(string.IsNullOrEmpty(PartyName) ? "" : PartyName)}'";
             }
             else
             {
-                return $"NAD+{PartyQualifier}+{(string.IsNullOrEmpty(PartyIdentifier) ? "" : PartyIdentifier)}:{(string.IsNullOrEmpty(CodeListIdentification) ? "160" : CodeListIdentification)}:{(string.IsNullOrEmpty(CodeListResponsibleAgency) ? "166" : CodeListResponsibleAgency)}++{(string.IsNullOrEmpty(PartyName) ? "" : PartyName)}'";
+                return $"NAD+{(string.IsNullOrEmpty(PartyQualifier) ? "" : PartyQualifier)}+{(string.IsNullOrEmpty(PartyIdentifier) ? "" : PartyIdentifier)}:{(string.IsNullOrEmpty(CodeListIdentification) ? "160" : CodeListIdentification)}:{(string.IsNullOrEmpty(CodeListResponsibleAgency) ? "166" : CodeListResponsibleAgency)}++{(string.IsNullOrEmpty(PartyName) ? "" : PartyName)}'";
             }
         }
 
