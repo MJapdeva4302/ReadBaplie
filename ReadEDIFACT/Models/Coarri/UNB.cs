@@ -22,7 +22,7 @@ namespace ReadEDIFACT.Models.Coarri
         public override string ToEDIString()
         {
 
-            return $"UNB+{(string.IsNullOrEmpty(SyntaxIdentifier) ? "UNOA" : SyntaxIdentifier)}:{(string.IsNullOrEmpty(SyntaxVersion) ? "2" : SyntaxVersion)}+{(string.IsNullOrEmpty(SenderIdentification) ? "JAPDEVACRMOB" : SenderIdentification)}+{(string.IsNullOrEmpty(ReceiverIdentification) ? "CRCUSTOMS01" : ReceiverIdentification)}+{(string.IsNullOrEmpty(Date) ? DateTime.UtcNow.ToString("yyMMdd") : Date)}:{(string.IsNullOrEmpty(Time) ? DateTime.UtcNow.ToString("HHmm") : Time )}+{InterchangeRef}'";
+            return $"UNB+{(string.IsNullOrEmpty(SyntaxIdentifier) ? "UNOA" : SyntaxIdentifier)}:{(string.IsNullOrEmpty(SyntaxVersion) ? "2" : SyntaxVersion)}+{(string.IsNullOrEmpty(SenderIdentification) ? "JAPDEVACRMOB" : SenderIdentification)}+{(string.IsNullOrEmpty(ReceiverIdentification) ? "CRCUSTOMS01" : ReceiverIdentification)}+{(string.IsNullOrEmpty(Date) ? DateTime.UtcNow.ToString("yyMMdd") : Date)}:{(string.IsNullOrEmpty(Time) ? DateTime.UtcNow.ToString("HHmm") : Time )}+{InterchangeRef = GenerateInterchangeRef()}'";
         }
 
         public override string ToCustomEDI()

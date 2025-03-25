@@ -15,19 +15,21 @@ namespace ReadEDIFACT.Models.Coarri
         public BGM BGM { get; set; }
 
 
-        public string ReturnFormat(string? ETA = null, string? ETD = null)
+        public string ReturnFormat(string data, string qualifier)
         {
-            if (ETA != null)
+            if (data.Contains("132"))
             {
                 DateOrTimeQualifier = "132";
-                DateOrTime = ETA;
+                DateOrTime = qualifier;
                 DateOrTimeFormatQualifier = "203";
+                return $"DTM+{DateOrTimeQualifier}:{DateOrTime}:{DateOrTimeFormatQualifier}'";
             }
-            else if (ETD != null)
+            else if (data.Contains("133"))
             {
                 DateOrTimeQualifier = "133";
-                DateOrTime = ETD;
+                DateOrTime = qualifier;
                 DateOrTimeFormatQualifier = "203";
+                return $"DTM+{DateOrTimeQualifier}:{DateOrTime}:{DateOrTimeFormatQualifier}'";
             }
             return $"DTM+{DateOrTimeQualifier}:{DateOrTime}:{DateOrTimeFormatQualifier}'";
         }
