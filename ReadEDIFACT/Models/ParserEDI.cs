@@ -206,7 +206,7 @@ namespace ReadEDIFACT.Models
             //     elements["Notes"] = segmentData.Notes;
             // }
             int elementIndex = 1;
-            for (int i = 0; i < segmentData.DataElements.Count(); i++)
+            for (int i = 0; i < segmentData?.DataElements?.Count(); i++)
             {
                 var element = segmentData.DataElements.ElementAt(i);
 
@@ -220,7 +220,7 @@ namespace ReadEDIFACT.Models
                 else if (element is CompositeElement compositeElement)
                 {
                     var value = elementIndex < elements.Length ? elements[elementIndex] : null;
-                    var compositeErrors = ValidateCompositeElement(compositeElement, value, lineIndex);
+                    var compositeErrors = ValidateCompositeElement(compositeElement, value ?? "", lineIndex);
                     errors.AddRange(compositeErrors);
                     elementIndex++;
                 }
@@ -236,7 +236,7 @@ namespace ReadEDIFACT.Models
             {
                 for (int i = elementIndex; i < elements.Length; i++)
                 {
-                    errors.Add($"El elemento en la posición {i + 1} del segmento '{segmentData.SegmentID}' en la línea {lineIndex + 1} no está definido en las reglas de validación.");
+                    errors.Add($"El elemento en la posición {i + 1} del segmento '{segmentData?.SegmentID}' en la línea {lineIndex + 1} no está definido en las reglas de validación.");
                 }
             }
 
@@ -258,7 +258,7 @@ namespace ReadEDIFACT.Models
 
             // Dividir el valor usando el DataElementSeparator
             var subElements = value.Split(DataElementSeparator);
-            for (int i = 0; i < compositeElement.DataElements.Count(); i++)
+            for (int i = 0; i < compositeElement?.DataElements?.Count(); i++)
             {
                 var dataElement = compositeElement.DataElements.ElementAt(i);
                 var subValue = i < subElements.Length ? subElements[i] : null;
@@ -473,6 +473,7 @@ namespace ReadEDIFACT.Models
 
         private Segment FindSegmentDefinition(string segmentId, string[] ediElements, IEnumerable<Segment> segments)
         {
+            Console.WriteLine($"SegmentID: {segmentId} --- EdiElements: {ediElements} --- Segments: {segments}");
             foreach (var segment in segments)
             {
                 if (segment is SegmentData segmentData && segmentData.SegmentID == segmentId)
@@ -494,6 +495,7 @@ namespace ReadEDIFACT.Models
                 }
             }
 
+            // throw new InvalidOperationException("No segment definition found for the given segment ID.");
             return null;
         }
 
@@ -523,7 +525,7 @@ namespace ReadEDIFACT.Models
 
                         for (int j = 0; j < subElements.Length; j++)
                         {
-                            var subElement = compositeElement.DataElements.ElementAtOrDefault(j);
+                            var subElement = compositeElement?.DataElements?.ElementAtOrDefault(j);
                             if (subElement == null) continue;
 
                             if (subElement is DataElement subElementDefinition)
@@ -534,14 +536,14 @@ namespace ReadEDIFACT.Models
                         }
                     }
 
-                    segment[elementDefinition.Name] = compositeData;
+                    segment[elementDefinition.Name ?? ""] = compositeData;
                     elementIndex++;
                 }
                 else if (elementDefinition is DataElement dataElement)
                 {
 
                     string value = elementIndex < elements.Length ? elements[elementIndex] : "";
-                    segment[dataElement.Name] = value;
+                    segment[dataElement.Name ?? ""] = value;
                     elementIndex++;
                 }
                 else if (elementDefinition is EmptyElement)
@@ -596,7 +598,7 @@ namespace ReadEDIFACT.Models
             var jsonObject = new Dictionary<string, object>
             {
                 { "Name", Definition.Name },
-                { "Version", Definition.Version }
+                { "Version", Definition.Version?.ToString() ?? "Unknown" }
             };
 
             jsonObject.Add("ParsedData", parsedData);

@@ -7,7 +7,7 @@ namespace ReadEDIFACT.Models.Coarri
 {
     public class TMD:EDISegment
     {
-        public string TransportMode { get; set; }
+        public string? TransportMode { get; set; }
 
         public override string ToEDIString()
         {

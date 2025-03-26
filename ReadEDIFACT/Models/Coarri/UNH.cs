@@ -17,6 +17,11 @@ namespace ReadEDIFACT.Models.Coarri
         public UNH()
         {
             MessageRefNumber = GenerateMessageRefNumber();
+            MessageTypeId = "COARRI";
+            MessageTypeVersion = "D";
+            MessageTypeRelease = "23A";
+            ControllingAgency = "UN";
+            AssociationAssigned = "ITG10";
         }
         public override string ToEDIString()
         {

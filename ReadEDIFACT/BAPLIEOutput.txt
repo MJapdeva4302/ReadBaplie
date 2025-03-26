@@ -1,6 +1,6 @@
 File Definition
 
-BAPLIE, Version: 3.1.1 
+BAPLIE, Version: 2.1.1 
 Segment Separator: ' 
 Element Separator: + 
 Data Element Separator: : 

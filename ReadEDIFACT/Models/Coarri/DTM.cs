@@ -9,10 +9,10 @@ namespace ReadEDIFACT.Models.Coarri
     {
         //178 = ATA = Actual Time of Arrival
         //186 = ATD = Actual Time of Departure
-        public string DateOrTimeQualifier { get; set; }
-        public string DateOrTime { get; set; }
-        public string DateOrTimeFormatQualifier { get; set; }
-        public BGM BGM { get; set; }
+        public string? DateOrTimeQualifier { get; set; }
+        public string? DateOrTime { get; set; }
+        public string? DateOrTimeFormatQualifier { get; set; }
+        public BGM? BGM { get; set; }
 
 
         public string ReturnFormat(string data, string qualifier)
@@ -41,11 +41,11 @@ namespace ReadEDIFACT.Models.Coarri
 
         public override string ToCustomEDI()
         {
-            if (BGM != null && BGM.DocumentName.Contains("119"))
+            if (BGM != null && BGM.DocumentName != null && BGM.DocumentName.Contains("119"))
             {
                 return $"DTM+{DateOrTimeQualifier = "178"}:{(DateOrTime = string.IsNullOrEmpty(DateOrTime) ? DateTime.UtcNow.ToString("yyyyMMdd") : DateOrTime)}:{DateOrTimeFormatQualifier = "102"}'";
             }
-            else if (BGM != null && BGM.DocumentName.Contains("122"))
+            else if (BGM != null && BGM.DocumentName != null && BGM.DocumentName.Contains("122"))
             {
                 return $"DTM+{DateOrTimeQualifier = "186"}:{(DateOrTime = string.IsNullOrEmpty(DateOrTime) ? DateTime.UtcNow.ToString("yyyyMMdd") : DateOrTime)}:{DateOrTimeFormatQualifier = "102"}'";
             }

@@ -7,10 +7,10 @@ namespace ReadEDIFACT.Models.Coarri
 {
     public class RFF:EDISegment
     {
-        public string ReferenceQualifier { get; set; } 
-        public string ReferenceIdentifier { get; set; }
-        public EQD EQD { get; set; }
-        public BGM BGM { get; set; }
+        public string? ReferenceQualifier { get; set; } 
+        public string? ReferenceIdentifier { get; set; }
+        public EQD? EQD { get; set; }
+        public BGM? BGM { get; set; }
         
         public override string ToEDIString()
         {
@@ -27,12 +27,12 @@ namespace ReadEDIFACT.Models.Coarri
             else
             {
                 // BM Guía de transporte; Número de Guía de transporte
-                if (EQD.FullEmptyIndicator.Equals("5") && ReferenceQualifier.Equals("BM"))
+                if (EQD?.FullEmptyIndicator?.Equals("5") == true && ReferenceQualifier?.Equals("BM") == true)
                 {
                     return $"RFF+{ReferenceQualifier}:{ReferenceIdentifier}'";
                 }
                 // BN Número de reserva asignado por la línea naviera;  Número de reserva
-                else if (EQD.FullEmptyIndicator.Equals("4") && ReferenceQualifier.Equals("BN"))
+                else if (EQD?.FullEmptyIndicator?.Equals("4") == true && ReferenceQualifier?.Equals("BN") == true)
                 {
                     return $"RFF+{ReferenceQualifier}:{ReferenceIdentifier}'";
                 }

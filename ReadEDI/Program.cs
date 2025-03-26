@@ -8,14 +8,14 @@ using ReadEDIFACT.Models.Coarri; // Add this line if ParserEDI is in the Parsers
 
 
 // Lee el archivo EDI
-// string filePathBAPLIE = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\BAPLIE_Export.EDI";
+string filePathBAPLIE = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\BAPLIE_Export.EDI";
 // string filePathMOVINS = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\MOVINS DMR V09.edi";
 // string filePath = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\DEPARTURE BAPLIE FINAL - DEL MONTE ROSE - 25360187.edi";
 // string filePath = @"C:\Users\mbermudez\OneDrive - JAPDEVA\Proyecto PortLogistics\EDI BAPLEY\Ejemplos\BAPLIE\CRMOB DEP DMG V42.edi";
 
 // string outputFilePathMOVINS = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\MOVINS DMR V09.json";
 // string outputFilePath = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\DEPARTURE BAPLIE FINAL - DEL MONTE ROSE - 25360187.json";
-// string outputFilePathBAPLIE = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\BAPLIE_Export4.json";
+string outputFilePathBAPLIE = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\BAPLIE_Export_NEW.json";
 // try
 // {
 //     var parser = new ParserEDI("", definitionBAPLIE);
@@ -127,45 +127,46 @@ using ReadEDIFACT.Models.Coarri; // Add this line if ParserEDI is in the Parsers
 
 // Console.ReadKey();
 // var baplie = new BaplieVersion3();
+var baplie = new BaplieVersion2();
 
-// using (var reader = new StreamReader(filePathBAPLIE))
-// {
-//     try
-//     {
-//         var parser = new ParserEDI(reader, baplie);
+using (var reader = new StreamReader(filePathBAPLIE))
+{
+    try
+    {
+        var parser = new ParserEDI(reader, baplie);
 
-//         // Validar el archivo EDI
-//         var validationErrors = parser.ValidateFullEDI(baplie.Name);
-//         // Console.WriteLine($"validationErrors: {validationErrors}");
-//         if (validationErrors.Any())
-//         {
-//             Console.WriteLine("Errores de validación:");
-//             foreach (var error in validationErrors)
-//             {
-//                 Console.WriteLine(error);
-//             }
-//         }
-//         else
-//         {
-//             // Guarda el JSON en un archivo
-//             parser.SaveJsonToFile(outputFilePathBAPLIE);
-//             Console.WriteLine("Archivo JSON guardado en: " + outputFilePathBAPLIE);
-//             // Leer el contenido del archivo JSON
-//             string jsonContent = File.ReadAllText(outputFilePathBAPLIE);
-//             Console.WriteLine("Contenido del JSON:");
-//             Console.WriteLine(jsonContent);
+        // Validar el archivo EDI
+        var validationErrors = parser.ValidateFullEDI(baplie.Name);
+        // Console.WriteLine($"validationErrors: {validationErrors}");
+        if (validationErrors.Any())
+        {
+            Console.WriteLine("Errores de validación:");
+            foreach (var error in validationErrors)
+            {
+                Console.WriteLine(error);
+            }
+        }
+        else
+        {
+            // Guarda el JSON en un archivo
+            parser.SaveJsonToFile(outputFilePathBAPLIE);
+            Console.WriteLine("Archivo JSON guardado en: " + outputFilePathBAPLIE);
+            // Leer el contenido del archivo JSON
+            string jsonContent = File.ReadAllText(outputFilePathBAPLIE);
+            Console.WriteLine("Contenido del JSON:");
+            Console.WriteLine(jsonContent);
 
-//             // Generar el archivo EDI a partir del JSON
-//             string ediContent = parser.GenerateEDIFromJson(jsonContent);
-//             Console.WriteLine($"EDI GENERADO:: {ediContent}");
+            // Generar el archivo EDI a partir del JSON
+            string ediContent = parser.GenerateEDIFromJson(jsonContent);
+            Console.WriteLine($"EDI GENERADO:: {ediContent}");
             
-//         }
-//     }
-//     catch (Exception ex)
-//     {
-//         Console.WriteLine($"Error al procesar el archivo EDI: {ex.Message}");
-//     }
-// }
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Error al procesar el archivo EDI: {ex.Message}");
+    }
+}
 // Console.WriteLine($"BAPLIE VERSION 3.1.1 {baplie}");
 
 // using (var sw = new StreamWriter(string.Format(@"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\{0}Output.txt", baplie.Name)))
@@ -173,32 +174,7 @@ using ReadEDIFACT.Models.Coarri; // Add this line if ParserEDI is in the Parsers
 //     sw.Write(baplie);
 // }
 
-
-// // Leer el archivo JSON
-//             string json = File.ReadAllText("data.json");
-//             var root = JsonConvert.DeserializeObject<Root>(json);
-
-//             // Datos del JSON
-//             var arrivalData = root.ArrivalData;
-//             var equipments = root.Equipments;
-
-//             // Construir el mensaje COARRI
-//             var builder = new COARRIMessageBuilder(
-//                 equipments,
-//                 arrivalData.ShippingLineIdentification, // Sender
-//                 "CHIQ2BBX", // Receiver (este valor no está en el JSON, lo dejo como ejemplo)
-//                 arrivalData.ArrivalNumber.ToString(), // InterchangeRef
-//                 arrivalData.ShipName, // VesselName
-//                 arrivalData.ArrivalNumber.ToString(), // VoyageNumber
-//                 arrivalData.ShippingLineIdentification, // Location
-//                 arrivalData.ShippingLineIdentification // TransportID
-//             );
-
-//             string coarriMessage = builder.BuildMessage();
-
-//             // Imprimir el mensaje generado
-//             Console.WriteLine(coarriMessage);
-
+// Probando los segmentos de COARRI
 // var unb = new UNB();
 // var unh = new UNH();
 // var bgm = new BGM(){DocumentName = "122"};
@@ -239,9 +215,9 @@ using ReadEDIFACT.Models.Coarri; // Add this line if ParserEDI is in the Parsers
 // Console.WriteLine(coarriMessagebgm);
 // var coarriMessagetdt = tdt.ToEDIString();
 // Console.WriteLine(coarriMessagetdt);
-// var coarriMessagedtmETA = dtmETA.ReturnFormat(null, "20210901");
+// var coarriMessagedtmETA = dtmETA.ReturnFormat("132", "20210901");
 // Console.WriteLine(coarriMessagedtmETA);
-// var coarriMessagedtmETD = dtmETD.ReturnFormat(null, "20210901");
+// var coarriMessagedtmETD = dtmETD.ReturnFormat("133", "20210901");
 // Console.WriteLine(coarriMessagedtmETD);
 // var coarriMessagerff = rff.ToEDIString();
 // Console.WriteLine(coarriMessagerff);
@@ -291,70 +267,51 @@ using ReadEDIFACT.Models.Coarri; // Add this line if ParserEDI is in the Parsers
 // Console.WriteLine(coarriMessageunz);
 
 
-// 1. Definir la ruta del archivo JSON de prueba
-string filePath = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT/Json COARRI Export Ejemplo.JSON"; // Asegúrate de que este archivo exista
+// Leer un json y convertirlo a EDI COARRI de carga y descarga
+// string filePath = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT/Json COARRI Export Ejemplo.JSON";
+// // string filePath = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT/Json COARRI Import Ejemplo.json";
 
-try
-{
-    // 2. Cargar y parsear el JSON
-    var rootData = COARRIMessageBuilder.LoadJson(filePath);
-    
-    // 3. Mapear los datos a las estructuras EDI
-    var arrivalData = COARRIMessageBuilder.MapArrivalDataFromJson(rootData);
-    
-    var equipments = COARRIMessageBuilder.MapEquipmentFromJson(rootData);
-    
-    // 4. Construir el mensaje EDI (necesitarías modificar tu clase para aceptar arrivalData)
-    var builder = new COARRIMessageBuilder(arrivalData, equipments); // <-- Necesitarás este constructor
-    string ediMessage = builder.BuildMessage();
-    
-    // 5. Mostrar resultados
-    Console.WriteLine("=== Mensaje EDI Generado ===");
-    Console.WriteLine(ediMessage);
-    
-    // 6. (Opcional) Guardar en archivo
-    File.WriteAllText(@"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT/outputprueba.edi", ediMessage);
-    Console.WriteLine("\nMensaje guardado en 'output.edi'");
-}
-catch (Exception ex)
-{
-    Console.WriteLine($"Error: {ex.Message}");
-    if (ex.InnerException != null)
-    {
-        Console.WriteLine($"Detalles: {ex.InnerException.Message}");
-    }
-}
-
-
-// var rootData = COARRIMessageBuilder.LoadJson(filePath);
-
-// if (rootData != null)
+// try
 // {
-//     Console.WriteLine($"Datos de llegada: {rootData.ArrivalData.ShipName}");
-//     Console.WriteLine($"Número de contenedores: {rootData.Equipments.Count}");
+//     // 2. Cargar y parsear el JSON
+//     var rootData = COARRIMessageBuilder.LoadJson(filePath);
     
-//     foreach (var equipment in rootData.Equipments)
+//     // 3. Mapear los datos a las estructuras EDI
+//     if (rootData == null)
 //     {
-//         Console.WriteLine($"Contenedor: {equipment.ContainerNumber}, Peso: {equipment.Weight}kg");
+//         throw new ArgumentNullException(nameof(rootData), "RootData cannot be null.");
+//     }
+//     var arrivalData = COARRIMessageBuilder.MapArrivalDataFromJson(rootData);
+    
+//     var equipments = COARRIMessageBuilder.MapEquipmentFromJson(rootData);
+    
+//     // 4. Construir el mensaje EDI (necesitarías modificar tu clase para aceptar arrivalData)
+//     var builder = new COARRIMessageBuilder(arrivalData, equipments); // <-- Necesitarás este constructor
+//     string ediMessage = builder.BuildMessage();
+    
+//     // 5. Mostrar resultados
+//     Console.WriteLine("=== Mensaje EDI Generado ===");
+//     // Console.WriteLine(ediMessage);
+    
+//     File.WriteAllText(@"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT/outputImportSinPPP.edi", ediMessage);
+//     // File.WriteAllText(@"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT/outputExportSinDGS.edi", ediMessage);
+//     Console.WriteLine("\nMensaje guardado");
+
+//     // var dataToSave = new {
+//     //     ediMessage,
+//     // };
+//     // Serializar a JSON
+//     string jsonOutput = JsonConvert.SerializeObject(ediMessage, Formatting.Indented);
+    
+//     string jsonFilePath = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\outputImportPP.json";
+//     // string jsonFilePath = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\outputExportSinDGS.json";
+//     File.WriteAllText(jsonFilePath, jsonOutput);
+// }
+// catch (Exception ex)
+// {
+//     Console.WriteLine($"Error: {ex.Message}");
+//     if (ex.InnerException != null)
+//     {
+//         Console.WriteLine($"Detalles: {ex.InnerException.Message}");
 //     }
 // }
-
-//         string outputPath = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\COARRI_JSON.json";
-//  try
-//         {
-//             // Leer y deserializar
-//             string json = File.ReadAllText(filePath);
-//             var data = JsonConvert.DeserializeObject(json);
-            
-//             // Serializar con formato
-//             string newJson = JsonConvert.SerializeObject(data, Formatting.Indented);
-            
-//             // Guardar
-//             File.WriteAllText(outputPath, newJson);
-            
-//             Console.WriteLine("Proceso completado con éxito!");
-//         }
-//         catch (Exception ex)
-//         {
-//             Console.WriteLine($"Error: {ex.Message}");
-//         }

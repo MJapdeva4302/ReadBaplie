@@ -9,12 +9,12 @@ namespace ReadEDIFACT.Models.Coarri
     public class Seal
     {
         [JsonPropertyName("SealNumber")]
-        public string SealNumber { get; set; }
+        public string? SealNumber { get; set; }
 
         [JsonPropertyName("SealType")]
-        public string SealType { get; set; }
+        public string? SealType { get; set; }
 
         [JsonPropertyName("SealPartyNameCode")]
-        public string SealPartyNameCode { get; set; }
+        public string? SealPartyNameCode { get; set; }
     }
 }

@@ -10,8 +10,8 @@ namespace ReadEDIFACT.Models.Coarri
 {
     public class COARRIMessageBuilder
     {
-        private List<Equipment> _equipments;
-        private ArrivalData _arrivalData;
+        private List<Equipment>? _equipments;
+        private ArrivalData? _arrivalData;
 
         public COARRIMessageBuilder(ArrivalData arrivalData, List<Equipment> equipments)
         {
@@ -31,29 +31,34 @@ namespace ReadEDIFACT.Models.Coarri
         //     return result;
         // }
 
-        public static RootData LoadJson(string filePath)
-    {
-        try
+        public static RootData? LoadJson(string filePath)
         {
-            string json = File.ReadAllText(filePath);
-            var options = new JsonSerializerOptions
+            try
             {
-                PropertyNameCaseInsensitive = true // Opcional: para ignorar mayúsculas/minúsculas
-            };
-            
-            return System.Text.Json.JsonSerializer.Deserialize<RootData>(json, options);
+                string json = File.ReadAllText(filePath);
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true // Opcional: para ignorar mayúsculas/minúsculas
+                };
+
+                var result = System.Text.Json.JsonSerializer.Deserialize<RootData>(json, options);
+                if (result == null)
+                {
+                    throw new InvalidOperationException("Failed to deserialize JSON to RootData.");
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al cargar el JSON: {ex.Message}");
+                return null; // Explicitly returning null for nullable RootData
+            }
         }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error al cargar el JSON: {ex.Message}");
-            return null;
-        }
-    }
 
         // Método para mapear el JSON a la estructura de la clase ArrivalData
         public static ArrivalData MapArrivalDataFromJson(RootData jsonData)
         {
-             var arrivalData = jsonData.ArrivalData;
+            var arrivalData = jsonData.ArrivalData;
 
             var result = new ArrivalData
             {
@@ -83,7 +88,7 @@ namespace ReadEDIFACT.Models.Coarri
                 // Beginning of Message (BGM) LISTO
                 BeginningOfMessage = new BGM
                 {
-                    DocumentName = arrivalData.DocNameCode.ToString(), // Código del documento
+                    DocumentName = arrivalData?.DocNameCode.ToString(), // Código del documento
                     DocumentNumber = "", // Número de arribo
                     MessageFunction = "9" // 9 = original
                 },
@@ -96,26 +101,26 @@ namespace ReadEDIFACT.Models.Coarri
                     TransportModeName = "1", // 1 = marítimo
                     CarrierIdentifier = "",
                     CodeListIdentification = "172",
-                    CarrierName = arrivalData.ShipName,
-                    TransportMeanIdentification = arrivalData.IMO.ToString(),
-                    TransportIDName = arrivalData.ShipName
+                    CarrierName = arrivalData?.ShipName,
+                    TransportMeanIdentification = arrivalData?.IMO.ToString(),
+                    TransportIDName = arrivalData?.ShipName
                 },
 
                 // Reference (RFF) - CallSign LISTO
                 Reference = new RFF
                 {
                     ReferenceQualifier = "VM", // Código para CallSign
-                    ReferenceIdentifier = arrivalData.CallSign ?? ""
+                    ReferenceIdentifier = arrivalData?.CallSign ?? ""
                 },
 
                 // Locations (LOC) LISTO
                 Location1 = new LOC
                 {
-                    LocationQualifier = arrivalData.LocFunctionCode.ToString(), // 41 = función del lugar (carga/descarga)
+                    LocationQualifier = arrivalData?.LocFunctionCode.ToString(), // 41 = función del lugar (carga/descarga)
                     LocationCode = "",
                     BGM = new BGM
                     {
-                        DocumentName = arrivalData.DocNameCode.ToString()
+                        DocumentName = arrivalData?.DocNameCode.ToString()
                     }
                 },
 
@@ -123,23 +128,23 @@ namespace ReadEDIFACT.Models.Coarri
                 Location2 = new LOC
                 {
                     LocationQualifier = "9",
-                    LocationCode = arrivalData.LoadingPortCode,
-                    LocationName = arrivalData.LoadingPortName,
+                    LocationCode = arrivalData?.LoadingPortCode,
+                    LocationName = arrivalData?.LoadingPortName,
                     BGM = new BGM
                     {
-                        DocumentName = arrivalData.DocNameCode.ToString()
+                        DocumentName = arrivalData?.DocNameCode.ToString()
                     }
                 },
-                
+
                 // Locations (LOC) LISTO
                 Location3 = new LOC
                 {
                     LocationQualifier = "94",
-                    LocationCode = arrivalData.OriginPort,
-                    LocationName = arrivalData.OriginPortName,
+                    LocationCode = arrivalData?.OriginPort,
+                    LocationName = arrivalData?.OriginPortName,
                     BGM = new BGM
                     {
-                        DocumentName = arrivalData.DocNameCode.ToString()
+                        DocumentName = arrivalData?.DocNameCode.ToString()
                     }
                 },
 
@@ -147,11 +152,11 @@ namespace ReadEDIFACT.Models.Coarri
                 Location4 = new LOC
                 {
                     LocationQualifier = "11",
-                    LocationCode = arrivalData.DischargePortCode,
-                    LocationName = arrivalData.DischargePortName,
+                    LocationCode = arrivalData?.DischargePortCode,
+                    LocationName = arrivalData?.DischargePortName,
                     BGM = new BGM
                     {
-                        DocumentName = arrivalData.DocNameCode.ToString()
+                        DocumentName = arrivalData?.DocNameCode.ToString()
                     }
                 },
 
@@ -159,11 +164,11 @@ namespace ReadEDIFACT.Models.Coarri
                 Location5 = new LOC
                 {
                     LocationQualifier = "61",
-                    LocationCode = arrivalData.DestinationPort,
-                    LocationName = arrivalData.DestinationPortName,
+                    LocationCode = arrivalData?.DestinationPort,
+                    LocationName = arrivalData?.DestinationPortName,
                     BGM = new BGM
                     {
-                        DocumentName = arrivalData.DocNameCode.ToString()
+                        DocumentName = arrivalData?.DocNameCode.ToString()
                     }
                 },
 
@@ -171,27 +176,27 @@ namespace ReadEDIFACT.Models.Coarri
                 Date1 = new DTM
                 {
                     DateOrTimeQualifier = "132",
-                    DateOrTime = arrivalData.ETA,
+                    DateOrTime = arrivalData?.ETA,
                     DateOrTimeFormatQualifier = "203",
                     BGM = new BGM
                     {
-                        DocumentName = arrivalData.DocNameCode.ToString()
+                        DocumentName = arrivalData?.DocNameCode.ToString()
                     }
                 },
                 // Date/Time (DTM) LISTO
                 Date2 = new DTM
                 {
                     DateOrTimeQualifier = "133",
-                    DateOrTime = arrivalData.ETD,
+                    DateOrTime = arrivalData?.ETD,
                     DateOrTimeFormatQualifier = "203",
                     BGM = new BGM
                     {
-                        DocumentName = arrivalData.DocNameCode.ToString()
+                        DocumentName = arrivalData?.DocNameCode.ToString()
                     }
                 },
 
                 // Parties (NAD) - Shipping Line LISTO
-                Parties = new NAD 
+                Parties = new NAD
                 {
                     PartyQualifier = "", // Código para línea naviera
                     PartyIdentifier = "",
@@ -209,7 +214,7 @@ namespace ReadEDIFACT.Models.Coarri
         {
             var equipments = new List<Equipment>();
 
-            foreach (var jsonEquipment in jsonData.Equipments)
+            foreach (var jsonEquipment in jsonData?.Equipments ?? new List<EquipmentData>())
             {
                 var equipment = new Equipment
                 {
@@ -279,28 +284,28 @@ namespace ReadEDIFACT.Models.Coarri
                         TemperatureUnit = jsonEquipment.TemperatureUnit
                     },
 
-                    Seals = jsonEquipment.Seals.Select(seal => new SEL
+                    Seals = jsonEquipment?.Seals?.Select(seal => new SEL
                     {
                         SealNumber = seal.SealNumber,
                         SealPartyNameCode = seal.SealPartyNameCode,
                         SealType = seal.SealType
                     }).ToList(),
 
-                    DangerousGoods = jsonEquipment.HazardousCode != 0 ? new DGS
+                    DangerousGoods = jsonEquipment?.HazardousCode != 0 ? new DGS
                     {
                         DangerousGoodsCode = "",
-                        HazardIdentificationCode = jsonEquipment.HazardousCode.ToString(),
+                        HazardIdentificationCode = jsonEquipment?.HazardousCode.ToString(),
                         DangerousGoodsClassificationCode = ""
                     } : null,
 
-                    FreeText = jsonEquipment.HazardousCode != 0 ? new FTX
+                    FreeText = jsonEquipment?.HazardousCode != 0 ? new FTX
                     {
                         TextSubjectCode = "AAD",
                         TextValue = "",
                         DGS = new DGS
                         {
                             DangerousGoodsCode = "",
-                            HazardIdentificationCode = jsonEquipment.HazardousCode.ToString(),
+                            HazardIdentificationCode = jsonEquipment?.HazardousCode.ToString(),
                             DangerousGoodsClassificationCode = ""
                         }
                     } : null,
@@ -308,7 +313,7 @@ namespace ReadEDIFACT.Models.Coarri
                     Parties = new NAD
                     {
                         PartyQualifier = "CF",
-                        PartyIdentifier = jsonEquipment.CarrierIdentification,
+                        PartyIdentifier = jsonEquipment?.CarrierIdentification,
                         CodeListIdentification = "",
                         CodeListResponsibleAgency = ""
                     }
@@ -325,167 +330,183 @@ namespace ReadEDIFACT.Models.Coarri
 
             StringBuilder coarriMessage = new StringBuilder();
             int segmentCount = 0;
+            int equipmentCount = 0;
 
             // Encabezado del intercambio (UNB) - Usando datos del JSON LISTO
             var unb = new UNB
             {
-                SyntaxIdentifier = _arrivalData.InterchangeHeader.SyntaxIdentifier,
-                SyntaxVersion = _arrivalData.InterchangeHeader.SyntaxVersion,
-                SenderIdentification = _arrivalData.InterchangeHeader.SenderIdentification,
-                ReceiverIdentification = _arrivalData.InterchangeHeader.ReceiverIdentification,
-                Date = _arrivalData.InterchangeHeader.Date,
-                Time = _arrivalData.InterchangeHeader.Time,
-                InterchangeRef = _arrivalData.InterchangeHeader.InterchangeRef
+                SyntaxIdentifier = _arrivalData?.InterchangeHeader?.SyntaxIdentifier ?? "",
+                SyntaxVersion = _arrivalData?.InterchangeHeader?.SyntaxVersion ?? "",
+                SenderIdentification = _arrivalData?.InterchangeHeader?.SenderIdentification ?? "",
+                ReceiverIdentification = _arrivalData?.InterchangeHeader?.ReceiverIdentification ?? "",
+                Date = _arrivalData?.InterchangeHeader?.Date ?? "",
+                Time = _arrivalData?.InterchangeHeader?.Time ?? "",
+                InterchangeRef = _arrivalData?.InterchangeHeader?.InterchangeRef ?? ""
             };
-            coarriMessage.Append(unb.ToEDIString());
+            coarriMessage.AppendLine(unb.ToEDIString());
 
             // Message Header (UNH) - Usando datos del JSON LISTO
             var unh = new UNH
             {
-                MessageRefNumber = _arrivalData.MessageHeader.MessageRefNumber,
-                MessageTypeId = _arrivalData.MessageHeader.MessageTypeId,
-                MessageTypeVersion = _arrivalData.MessageHeader.MessageTypeVersion,
-                MessageTypeRelease = _arrivalData.MessageHeader.MessageTypeRelease,
-                ControllingAgency = _arrivalData.MessageHeader.ControllingAgency,
-                AssociationAssigned = _arrivalData.MessageHeader.AssociationAssigned
+                MessageRefNumber = _arrivalData?.MessageHeader?.MessageRefNumber ?? "",
+                MessageTypeId = _arrivalData?.MessageHeader?.MessageTypeId ?? "",
+                MessageTypeVersion = _arrivalData?.MessageHeader?.MessageTypeVersion ?? "",
+                MessageTypeRelease = _arrivalData?.MessageHeader?.MessageTypeRelease ?? "",
+                ControllingAgency = _arrivalData?.MessageHeader?.ControllingAgency ?? "",
+                AssociationAssigned = _arrivalData?.MessageHeader?.AssociationAssigned ?? "",
             };
-            coarriMessage.Append(unh.ToEDIString());
+            coarriMessage.AppendLine(unh.ToEDIString());
             segmentCount++;
 
             // Beginning of Message (BGM) LISTO
             var bgm = new BGM
             {
-                DocumentName = _arrivalData.BeginningOfMessage.DocumentName,
-                DocumentNumber = _arrivalData.BeginningOfMessage.DocumentNumber,
-                MessageFunction = _arrivalData.BeginningOfMessage.MessageFunction
+                DocumentName = _arrivalData?.BeginningOfMessage?.DocumentName,
+                DocumentNumber = _arrivalData?.BeginningOfMessage?.DocumentNumber,
+                MessageFunction = _arrivalData?.BeginningOfMessage?.MessageFunction
             };
-            coarriMessage.Append(bgm.ToEDIString());
+            coarriMessage.AppendLine(bgm.ToEDIString());
             segmentCount++;
 
             // Transport Information (TDT) LISTO
             var tdt = new TDT
             {
-                TransportStage = _arrivalData.TransportInformation.TransportStage,
-                TransportMeansJourney = _arrivalData.TransportInformation.TransportMeansJourney,
-                TransportModeName = _arrivalData.TransportInformation.TransportModeName,
-                CarrierIdentifier = _arrivalData.TransportInformation.CarrierIdentifier,
-                CodeListIdentification = _arrivalData.TransportInformation.CodeListIdentification,
-                CarrierName = _arrivalData.TransportInformation.CarrierName,
-                TransportMeanIdentification = _arrivalData.TransportInformation.TransportMeanIdentification,
-                TransportIDName = _arrivalData.TransportInformation.TransportIDName
+                TransportStage = _arrivalData?.TransportInformation?.TransportStage,
+                TransportMeansJourney = _arrivalData?.TransportInformation?.TransportMeansJourney,
+                TransportModeName = _arrivalData?.TransportInformation?.TransportModeName,
+                CarrierIdentifier = _arrivalData?.TransportInformation?.CarrierIdentifier,
+                CodeListIdentification = _arrivalData?.TransportInformation?.CodeListIdentification,
+                CarrierName = _arrivalData?.TransportInformation?.CarrierName,
+                TransportMeanIdentification = _arrivalData?.TransportInformation?.TransportMeanIdentification,
+                TransportIDName = _arrivalData?.TransportInformation?.TransportIDName
             };
-            coarriMessage.Append(tdt.ToEDIString());
+            coarriMessage.AppendLine(tdt.ToEDIString());
             segmentCount++;
 
             // Reference (RFF) - CallSign LISTO
             var rff = new RFF
             {
-                ReferenceQualifier = _arrivalData.Reference.ReferenceQualifier,
-                ReferenceIdentifier = _arrivalData.Reference.ReferenceIdentifier
+                ReferenceQualifier = _arrivalData?.Reference?.ReferenceQualifier,
+                ReferenceIdentifier = _arrivalData?.Reference?.ReferenceIdentifier
             };
-            coarriMessage.Append(rff.ReturnFormat("VM", _arrivalData.Reference.ReferenceIdentifier));
+            coarriMessage.AppendLine(rff.ReturnFormat("VM", _arrivalData?.Reference?.ReferenceIdentifier ?? ""));
             segmentCount++;
 
             // Locations (LOC) LISTO
-            coarriMessage.Append(_arrivalData.Location1.ToEDIString());
+            coarriMessage.AppendLine(_arrivalData?.Location1?.ToEDIString());
             segmentCount++;
-            coarriMessage.Append(_arrivalData.Location2.ToCustomEDI());
+            coarriMessage.AppendLine(_arrivalData?.Location2?.ToCustomEDI());
             segmentCount++;
-            coarriMessage.Append(_arrivalData.Location3.ToCustomEDI());
+            coarriMessage.AppendLine(_arrivalData?.Location3?.ToCustomEDI());
             segmentCount++;
-            coarriMessage.Append(_arrivalData.Location4.ToCustomEDI());
+            coarriMessage.Append(_arrivalData?.Location4?.ToCustomEDI());
             segmentCount++;
-            coarriMessage.Append(_arrivalData.Location5.ToCustomEDI());
+            coarriMessage.AppendLine(_arrivalData?.Location5?.ToCustomEDI());
             segmentCount++;
 
             // Date/Time (DTM)
-            coarriMessage.Append(_arrivalData.Date1.ReturnFormat(_arrivalData.Date1.DateOrTimeQualifier,_arrivalData.Date1.DateOrTime));
+            coarriMessage.AppendLine(_arrivalData?.Date1?.ReturnFormat(_arrivalData.Date1.DateOrTimeQualifier ?? "", _arrivalData.Date1.DateOrTime ?? ""));
             segmentCount++;
-            coarriMessage.Append(_arrivalData.Date2.ReturnFormat(_arrivalData.Date2.DateOrTimeQualifier, _arrivalData.Date2.DateOrTime));
+            coarriMessage.AppendLine(_arrivalData?.Date2?.ReturnFormat(_arrivalData.Date2.DateOrTimeQualifier ?? "", _arrivalData.Date2.DateOrTime ?? ""));
             segmentCount++;
 
             // Parties (NAD) - Shipping Line
             var nad = new NAD
             {
-                PartyQualifier = _arrivalData.Parties.PartyQualifier,
-                PartyIdentifier = _arrivalData.Parties.PartyIdentifier,
-                CodeListIdentification = _arrivalData.Parties.CodeListIdentification,
-                CodeListResponsibleAgency = _arrivalData.Parties.CodeListResponsibleAgency,
-                PartyName = _arrivalData.Parties.PartyName
+                PartyQualifier = _arrivalData?.Parties?.PartyQualifier,
+                PartyIdentifier = _arrivalData?.Parties?.PartyIdentifier,
+                CodeListIdentification = _arrivalData?.Parties?.CodeListIdentification,
+                CodeListResponsibleAgency = _arrivalData?.Parties?.CodeListResponsibleAgency,
+                PartyName = _arrivalData?.Parties?.PartyName
             };
-            coarriMessage.Append(nad.ToEDIString());
+            coarriMessage.AppendLine(nad.ToEDIString());
             segmentCount++;
 
             // Generación de cada contenedor (Equipment)
-            foreach (var equipment in _equipments)
+            foreach (var equipment in _equipments ?? new List<Equipment>())
             {
                 // Equipment Details (EQD) LISTO
-                coarriMessage.Append(equipment.EquipmentDetails.ToEDIString());
+                coarriMessage.AppendLine(equipment.EquipmentDetails?.ToEDIString());
                 segmentCount++;
+                equipmentCount++;
 
                 // References (RFF) LISTO
-                coarriMessage.Append(equipment.Reference1.ReturnFormat(equipment.Reference1.ReferenceQualifier, equipment.Reference1.ReferenceIdentifier));
+                coarriMessage.AppendLine(equipment.Reference1?.ReturnFormat(equipment.Reference1.ReferenceQualifier ?? "", equipment.Reference1.ReferenceIdentifier ?? ""));
                 segmentCount++;
-                coarriMessage.Append(equipment.Reference2.ReturnFormat(equipment.Reference2.ReferenceQualifier, equipment.Reference2.ReferenceIdentifier));
+                coarriMessage.AppendLine(equipment.Reference2?.ReturnFormat(equipment.Reference2.ReferenceQualifier ?? "", equipment.Reference2.ReferenceIdentifier ?? ""));
                 segmentCount++;
 
                 // Date (DTM)
-                coarriMessage.Append(equipment.Date.DateOperation(equipment.Date.DateOrTime));
+                coarriMessage.AppendLine(equipment.Date?.DateOperation(equipment.Date.DateOrTime ?? ""));
                 segmentCount++;
 
                 // Locations (LOC)
-                coarriMessage.Append(equipment.Location1.Location("147", equipment.Location1.LocationCode, "", ""));
+                coarriMessage.AppendLine(equipment.Location1?.Location("147", equipment.Location1.LocationCode ?? "", "", ""));
                 segmentCount++;
-                coarriMessage.Append(equipment.Location2.Location("9", equipment.Location2.LocationCode, "", ""));
+                coarriMessage.AppendLine(equipment.Location2?.Location("9", equipment.Location2.LocationCode ?? "", "", ""));
                 segmentCount++;
-                coarriMessage.Append(equipment.Location3.Location("11", equipment.Location3.LocationCode, "", ""));
+                coarriMessage.AppendLine(equipment.Location3?.Location("11", equipment.Location3.LocationCode ?? "", "", ""));
                 segmentCount++;
 
                 // Measurements (MEA)
-                coarriMessage.Append(equipment.Measurements.ToEDIString());
+                coarriMessage.AppendLine(equipment.Measurements?.ToEDIString());
                 segmentCount++;
 
                 // Temperature (TMP)
                 if (equipment.Temperature != null)
                 {
-                    coarriMessage.Append(equipment.Temperature.ToEDIString());
+                    coarriMessage.AppendLine(equipment.Temperature.ToEDIString());
                     segmentCount++;
                 }
+
 
                 // Seals (SEL)
-                foreach (var seal in equipment.Seals)
+                foreach (var seal in equipment?.Seals ?? new List<SEL>())
                 {
-                    coarriMessage.Append(seal.ToEDIString());
+                    coarriMessage.AppendLine(seal.ToEDIString()); // Elimina espacios al final
+                    // coarriMessage.AppendLine(); // Agrega solo el salto de línea necesario
                     segmentCount++;
                 }
 
+
                 // Dangerous Goods (DGS) - Solo si existe
-                if (equipment.DangerousGoods != null)
+                if (equipment?.DangerousGoods != null || equipment?.DangerousGoods?.ToString() != "0")
                 {
-                    coarriMessage.Append(equipment.DangerousGoods.ToCustomEDI());
+                    coarriMessage.AppendLine(equipment?.DangerousGoods?.ToCustomEDI());
+                    // coarriMessage.Append(equipment?.DangerousGoods?.ToEDIString());
                     segmentCount++;
 
                     // Free Text (FTX) - Relacionado con Dangerous Goods
-                    if (equipment.DangerousGoods != null)
+                    if (equipment?.DangerousGoods != null)
                     {
-                        coarriMessage.Append(equipment.FreeText.ToEDIString());
+                        coarriMessage.AppendLine(equipment.FreeText?.ToEDIString());
                         segmentCount++;
                     }
                 }
 
-                // Parties (NAD)
-                coarriMessage.Append(equipment.Parties.ToCustomEDI());
+                // Elimina espacios/lineas vacías al final
+                while (coarriMessage.Length > 0 &&
+                       (coarriMessage[coarriMessage.Length - 1] == '\n' ||
+                        coarriMessage[coarriMessage.Length - 1] == '\r'))
+                {
+                    coarriMessage.Length--;
+
+                }
+                coarriMessage.AppendLine();
+                coarriMessage.AppendLine(equipment?.Parties?.ToCustomEDI());
                 segmentCount++;
+
+
             }
 
             // Control Total (CNT)
-            var cnt = new CNT { ControlTotalQualifier = "16", ControlTotalValue = "1" };
-            coarriMessage.Append(cnt.ToEDIString());
+            var cnt = new CNT { ControlTotalQualifier = "16", ControlTotalValue = equipmentCount.ToString() };
+            coarriMessage.AppendLine(cnt.ToEDIString());
             segmentCount++;
 
             // Message Trailer (UNT)
             var unt = new UNT { SegmentCount = segmentCount.ToString("D6"), MessageRef = unh.MessageRefNumber };
-            coarriMessage.Append(unt.ToEDIString());
+            coarriMessage.AppendLine(unt.ToEDIString());
 
             // Interchange Trailer (UNZ)
             var unz = new UNZ { InterchangeControlCount = "1", MessageRef = unb.InterchangeRef };

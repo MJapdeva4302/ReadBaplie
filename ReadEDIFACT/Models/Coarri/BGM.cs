@@ -7,9 +7,9 @@ namespace ReadEDIFACT.Models.Coarri
 {
     public class BGM: EDISegment
     {
-        public string DocumentName { get; set; }
-        public string DocumentNumber { get; set; }
-        public string MessageFunction { get; set; }
+        public string? DocumentName { get; set; }
+        public string? DocumentNumber { get; set; }
+        public string? MessageFunction { get; set; }
 
         public override string ToEDIString()
         {

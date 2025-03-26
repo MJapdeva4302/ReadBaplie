@@ -9,11 +9,11 @@ namespace ReadEDIFACT.Models.Coarri
     public class TMP:EDISegment
     {
         // 2 = Temperatura del contenedor
-        public string TemperatureQualifier { get; set; }
+        public string? TemperatureQualifier { get; set; }
         // 1.4 = valor de la temperatura
         public double TemperatureValue { get; set; }
         // CEL = Celsius; FAH = Fahrenheit
-        public string TemperatureUnit { get; set; }
+        public string? TemperatureUnit { get; set; }
 
         public override string ToEDIString()
         {

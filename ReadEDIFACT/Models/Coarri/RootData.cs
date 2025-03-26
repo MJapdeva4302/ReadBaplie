@@ -12,9 +12,9 @@ namespace ReadEDIFACT.Models.Coarri
         // public List<Equipment> Equipments { get; set; } 
 
         [JsonPropertyName("ArrivalData")]
-        public ArrivalDataJson ArrivalData { get; set; }
+        public ArrivalDataJson? ArrivalData { get; set; }
 
         [JsonPropertyName("Equipments")]
-        public List<EquipmentData> Equipments { get; set; }
+        public List<EquipmentData>? Equipments { get; set; }
     }
 }

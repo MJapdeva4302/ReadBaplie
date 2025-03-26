@@ -9,10 +9,10 @@ namespace ReadEDIFACT.Models.Coarri
     public class EquipmentData
     {
         [JsonPropertyName("ContainerNumber")]
-        public string ContainerNumber { get; set; }
+        public string? ContainerNumber { get; set; }
 
         [JsonPropertyName("BillOfLading")]
-        public string BillOfLading { get; set; }
+        public string? BillOfLading { get; set; }
 
         [JsonPropertyName("OperationType")]
         public int OperationType { get; set; }
@@ -21,31 +21,31 @@ namespace ReadEDIFACT.Models.Coarri
         public int Condition { get; set; }
 
         [JsonPropertyName("Dua")]
-        public string Dua { get; set; }
+        public string? Dua { get; set; }
 
         [JsonPropertyName("LoadingUnloadingDate")]
-        public string LoadingUnloadingDate { get; set; }
+        public string? LoadingUnloadingDate { get; set; }
 
         [JsonPropertyName("StowagePosition")]
         public int StowagePosition { get; set; }
 
         [JsonPropertyName("LoadingPort")]
-        public string LoadingPort { get; set; }
+        public string? LoadingPort { get; set; }
 
         [JsonPropertyName("DischargePort")]
-        public string DischargePort { get; set; }
+        public string? DischargePort { get; set; }
 
         [JsonPropertyName("VerifyGrossMass")]
-        public int VerifyGrossMass { get; set; }
+        public double VerifyGrossMass { get; set; }
 
         [JsonPropertyName("Weight")]
-        public int Weight { get; set; }
+        public double Weight { get; set; }
 
         [JsonPropertyName("Temperature")]
-        public string Temperature { get; set; }
+        public string? Temperature { get; set; }
 
         [JsonPropertyName("TemperatureUnit")]
-        public string TemperatureUnit { get; set; }
+        public string? TemperatureUnit { get; set; }
 
         [JsonPropertyName("HazardousCode")]
         public int HazardousCode { get; set; }
@@ -54,17 +54,17 @@ namespace ReadEDIFACT.Models.Coarri
         public int TransportStageCode { get; set; }
 
         [JsonPropertyName("WarehouseDestiny")]
-        public string WarehouseDestiny { get; set; }
+        public string? WarehouseDestiny { get; set; }
 
         [JsonPropertyName("CarrierIdentification")]
-        public string CarrierIdentification { get; set; }
+        public string? CarrierIdentification { get; set; }
 
         [JsonPropertyName("LocationFunctionPortCode")]
         public int LocationFunctionPortCode { get; set; }
 
         [JsonPropertyName("Seals")]
-        public List<Seal> Seals { get; set; }
+        public List<Seal>? Seals { get; set; }
 
-        public List<Equipment> Equipments { get; set; }
+        public List<Equipment>? Equipments { get; set; }
     }
 }

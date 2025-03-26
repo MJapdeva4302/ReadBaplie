@@ -18,52 +18,52 @@ namespace ReadEDIFACT.Models.Coarri
         public int IMO { get; set; }
 
         [JsonPropertyName("ShipName")]
-        public string ShipName { get; set; }
+        public string? ShipName { get; set; }
 
         [JsonPropertyName("CallSign")]
-        public string CallSign { get; set; }
+        public string? CallSign { get; set; }
 
         [JsonPropertyName("ETA")]
-        public string ETA { get; set; }
+        public string? ETA { get; set; }
 
         [JsonPropertyName("ETD")]
-        public string ETD { get; set; }
+        public string? ETD { get; set; }
 
         [JsonPropertyName("LoadingPortCode")]
-        public string LoadingPortCode { get; set; }
+        public string? LoadingPortCode { get; set; }
 
         [JsonPropertyName("LoadingPortName")]
-        public string LoadingPortName { get; set; }
+        public string? LoadingPortName { get; set; }
 
         [JsonPropertyName("DischargePortCode")]
-        public string DischargePortCode { get; set; }
+        public string? DischargePortCode { get; set; }
 
         [JsonPropertyName("DischargePortName")]
-        public string DischargePortName { get; set; }
+        public string? DischargePortName { get; set; }
 
         [JsonPropertyName("OriginPort")]
-        public string OriginPort { get; set; }
+        public string? OriginPort { get; set; }
 
         [JsonPropertyName("OriginPortName")]
-        public string OriginPortName { get; set; }
+        public string? OriginPortName { get; set; }
 
         [JsonPropertyName("DestinationPort")]
-        public string DestinationPort { get; set; }
+        public string? DestinationPort { get; set; }
 
         [JsonPropertyName("DestinationPortName")]
-        public string DestinationPortName { get; set; }
+        public string? DestinationPortName { get; set; }
 
         [JsonPropertyName("ShippingLine")]
-        public string ShippingLine { get; set; }
+        public string? ShippingLine { get; set; }
 
         [JsonPropertyName("ShippingLineIdentification")]
-        public string ShippingLineIdentification { get; set; }
+        public string? ShippingLineIdentification { get; set; }
 
         [JsonPropertyName("ShippingLineAddress")]
-        public string ShippingLineAddress { get; set; }
+        public string? ShippingLineAddress { get; set; }
 
         [JsonPropertyName("ShippingLineMail")]
-        public string ShippingLineMail { get; set; }
+        public string? ShippingLineMail { get; set; }
 
         [JsonPropertyName("DocNameCode")]
         public int DocNameCode { get; set; }
@@ -71,6 +71,6 @@ namespace ReadEDIFACT.Models.Coarri
         [JsonPropertyName("LocFunctionCode")]
         public int LocFunctionCode { get; set; }
 
-        public ArrivalData arrivalData { get; set; }
+        public ArrivalData? arrivalData { get; set; }
     }
 }

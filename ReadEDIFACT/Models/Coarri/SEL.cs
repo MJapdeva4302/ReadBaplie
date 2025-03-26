@@ -8,11 +8,11 @@ namespace ReadEDIFACT.Models.Coarri
     public class SEL: EDISegment
     {
         // Número de sello; Ejemplo: 123456
-        public string SealNumber { get; set; }
+        public string? SealNumber { get; set; }
         // Tipo de sello; Ejemplo: CA; AA = consolidador AB = desconocido AC = Agencia cuarentenaria CA = Naviera CU = Aduanas SH = Exportador TO = Operador portuario
-        public string SealPartyNameCode { get; set; }
+        public string? SealPartyNameCode { get; set; }
         // Cantidad de sellos; Ejemplo: 1   
-        public string SealType { get; set; }
+        public string? SealType { get; set; }
 
         public override string ToEDIString()
         {

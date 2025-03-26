@@ -9,7 +9,7 @@ namespace ReadEDIFACT
     public class DataElement : Element
     {
         public DataType DataType { get; set; }
-        public object Precision { get; set; }
+        public object? Precision { get; set; }
 
         public override string ToString()
         {

@@ -9,10 +9,10 @@ namespace ReadEDIFACT
     public class Parser
     {
         public string subject = string.Empty;
-        private string[] _lines = null;
-        private char segmentSeparator = '\'';
-        private char elementSeparator = '+';
-        private char dataElementSeparator = ':';
+        private string[] _lines = Array.Empty<string>();
+        private char? segmentSeparator = '\'';
+        private char? elementSeparator = '+';
+        private char? dataElementSeparator = ':';
         
         public string[] Lines {
             get

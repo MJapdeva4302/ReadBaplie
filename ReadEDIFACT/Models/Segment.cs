@@ -7,8 +7,8 @@ namespace ReadEDIFACT
 {
     public abstract class Segment
     {
-        public String SegmentID { get; set; }
-        public String Name { get; set; }
+        public String? SegmentID { get; set; }
+        public String? Name { get; set; }
         public int Position { get; set; }
         public RuleUsage Usage { get; set; }        
         public RuleUsage DirUsage { get; set; }

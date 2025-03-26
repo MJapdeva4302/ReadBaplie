@@ -8,11 +8,11 @@ namespace ReadEDIFACT.Models.Coarri
     public class DGS:EDISegment
     {
         // Código de la mercancía peligrosa; IMD = IMO  Codigo IMDG
-        public string DangerousGoodsCode { get; set; }
+        public string? DangerousGoodsCode { get; set; }
         // Descripción de la mercancía peligrosa; Ejemplo: 3.1 NOTA: Clase 3 Líquidos inflamables
-        public string HazardIdentificationCode { get; set; }
+        public string? HazardIdentificationCode { get; set; }
         // Información UNDG: Número ONU.
-        public string DangerousGoodsClassificationCode { get; set; }
+        public string? DangerousGoodsClassificationCode { get; set; }
         public override string ToCustomEDI()
         {
             return $"DGS+{(string.IsNullOrEmpty(DangerousGoodsCode) ? "IMD" : DangerousGoodsCode)}+{HazardIdentificationCode}+{(string.IsNullOrEmpty(DangerousGoodsClassificationCode) ? "9999" : DangerousGoodsClassificationCode)}'";

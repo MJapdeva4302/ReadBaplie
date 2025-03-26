@@ -2,7 +2,7 @@
 
 public class CompositeElement : Element
     {
-        public IEnumerable<Element> DataElements { get; set; }
+        public IEnumerable<Element>? DataElements { get; set; }
 
         public override string ToString()
         {

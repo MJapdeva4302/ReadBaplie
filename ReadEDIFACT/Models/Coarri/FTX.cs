@@ -8,10 +8,10 @@ namespace ReadEDIFACT.Models.Coarri
     public class FTX : EDISegment
     {
         // AAD = Descripción de mercancía peligrosa
-        public string TextSubjectCode { get; set; }
+        public string? TextSubjectCode { get; set; }
         // Descripción de la mercancía peligrosa
-        public string TextValue { get; set; }
-        public DGS DGS { get; set; }
+        public string? TextValue { get; set; }
+        public DGS? DGS { get; set; }
         public override string ToEDIString()
         {
             if (DGS != null)

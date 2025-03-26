@@ -8,7 +8,7 @@ namespace ReadEDIFACT
     public class FileDefinition
     {
         public string Name { get; set; }
-        public Version Version { get; set; }
+        public Version? Version { get; set; }
         public char SegmentSeparator { get; set; }
         public char ElementSeparator { get; set; }
         public char DataElementSeparator { get; set; }
@@ -19,13 +19,15 @@ namespace ReadEDIFACT
         public FileDefinition(string name)
         {
             Name = name;
+            Segments = new List<Segment>();
         }
-
         public FileDefinition(string name, Version version)
         {
             Name = name;
             Version = version;
+            Segments = new List<Segment>();
         }
+        
 
         public override string ToString()
         {

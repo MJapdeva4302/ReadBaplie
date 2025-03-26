@@ -9,11 +9,11 @@ namespace ReadEDIFACT.Models.Coarri
     public class MEA: EDISegment
     {
         // AAE = MEASUREMENT
-        public string MeasurementQualifier { get; set; }
+        public string? MeasurementQualifier { get; set; }
         // VGM = Verified Gross Mass = Peso verificado y certificado del contenedor; G = Gross Weight
-        public string MeasurementAttribute { get; set; }
+        public string? MeasurementAttribute { get; set; }
         // KGM = Kilogram; LBR = Pound
-        public string WeightUnitCode { get; set; }
+        public string? WeightUnitCode { get; set; }
         // 10000 = 10,00; el valor solo debe pemritir dos decimales; Peso bruto del contenedor, embalaje y mercancía. Dos decimales. 
         public double  MeasurementValue { get; set; }
 

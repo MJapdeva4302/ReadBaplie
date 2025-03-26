@@ -8,29 +8,29 @@ namespace ReadEDIFACT.Models.Coarri
     public class TDT: EDISegment
     {
         // 20
-        public string TransportStage { get; set; }
+        public string? TransportStage { get; set; }
         // Means of transport journey identifier = 133
-        public string TransportMeansJourney { get; set; }
+        public string? TransportMeansJourney { get; set; }
         // Transport mode name code = 1
-        public string TransportModeName { get; set; }
+        public string? TransportModeName { get; set; }
         // ACA VA UN ESPACIO VACIO
 
         // Carrier identification = CHQ
-        public string CarrierIdentifier { get; set; }
+        public string? CarrierIdentifier { get; set; }
         // CODE LIST IDENTIFICATION CODE = 172
-        public string CodeListIdentification { get; set; }
+        public string? CodeListIdentification { get; set; }
         // Code list responsible agency code = ZZZ, 166, 87, 20
-        public string CodeListAgency { get; set; }
+        public string? CodeListAgency { get; set; }
         // Carrier name = CHIQUITA
-        public string CarrierName { get; set; }
+        public string? CarrierName { get; set; }
         // Transport means identification name = IMO = 9347279
-        public string TransportMeanIdentification { get; set; }
+        public string? TransportMeanIdentification { get; set; }
         // CODE LIST IDENTIFICATION CODE = 146
-        public string CodeListIdentificationTwo { get; set; }
+        public string? CodeListIdentificationTwo { get; set; }
         // Code list responsible agency code = 11
-        public string CodeListResponsibleAgency { get; set; }
+        public string? CodeListResponsibleAgency { get; set; }
         // Transport ID. Function code qualifier = OKEE HENRI
-        public string TransportIDName { get; set; }
+        public string? TransportIDName { get; set; }
 
         public override string ToEDIString()
         {

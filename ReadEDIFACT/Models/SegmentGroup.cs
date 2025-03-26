@@ -8,7 +8,7 @@ namespace ReadEDIFACT
     public class SegmentGroup : Segment
     {
         public int? GroupRepeat { get; set; }
-        public IEnumerable<Segment> Segments { get; set; }
+        public IEnumerable<Segment>? Segments { get; set; }
     }
 
 }

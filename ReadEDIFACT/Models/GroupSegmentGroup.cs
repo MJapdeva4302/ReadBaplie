@@ -8,6 +8,6 @@ namespace ReadEDIFACT.Models
     public class GroupSegmentGroup: SegmentGroup
     {
         public int? GroupRepeat { get; set; }
-        public IEnumerable<SegmentGroup> GroupSegments { get; set; }
+        public IEnumerable<SegmentGroup>? GroupSegments { get; set; }
     }
 }

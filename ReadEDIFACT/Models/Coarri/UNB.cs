@@ -17,6 +17,12 @@ namespace ReadEDIFACT.Models.Coarri
 
         public UNB()
         {
+            SyntaxIdentifier = "UNOA";
+            SyntaxVersion = "2";
+            SenderIdentification = "JAPDEVACRMOB";
+            ReceiverIdentification = "CRCUSTOMS01";
+            Date = DateTime.UtcNow.ToString("yyMMdd");
+            Time = DateTime.UtcNow.ToString("HHmm");
             InterchangeRef = GenerateInterchangeRef();
         }
         public override string ToEDIString()
