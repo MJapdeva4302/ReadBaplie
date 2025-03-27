@@ -473,7 +473,7 @@ namespace ReadEDIFACT.Models
 
         private Segment FindSegmentDefinition(string segmentId, string[] ediElements, IEnumerable<Segment> segments)
         {
-            Console.WriteLine($"SegmentID: {segmentId} --- EdiElements: {ediElements} --- Segments: {segments}");
+            // Console.WriteLine($"SegmentID: {segmentId} --- EdiElements: {ediElements} --- Segments: {segments}");
             foreach (var segment in segments)
             {
                 if (segment is SegmentData segmentData && segmentData.SegmentID == segmentId)

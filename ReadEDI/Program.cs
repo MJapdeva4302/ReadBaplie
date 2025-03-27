@@ -4,44 +4,28 @@ using System.Reflection.Metadata.Ecma335;
 using Newtonsoft.Json;
 using ReadEDIFACT;
 using ReadEDIFACT.Models;
-using ReadEDIFACT.Models.Coarri; // Add this line if ParserEDI is in the Parsers namespace
+using ReadEDIFACT.Models.Coarri;
 
 
-// Lee el archivo EDI
-string filePathBAPLIE = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\BAPLIE_Export.EDI";
-// string filePathMOVINS = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\MOVINS DMR V09.edi";
-// string filePath = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\DEPARTURE BAPLIE FINAL - DEL MONTE ROSE - 25360187.edi";
 // string filePath = @"C:\Users\mbermudez\OneDrive - JAPDEVA\Proyecto PortLogistics\EDI BAPLEY\Ejemplos\BAPLIE\CRMOB DEP DMG V42.edi";
 
-// string outputFilePathMOVINS = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\MOVINS DMR V09.json";
+// string filePath = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\DEPARTURE BAPLIE FINAL - DEL MONTE ROSE - 25360187.edi";
 // string outputFilePath = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\DEPARTURE BAPLIE FINAL - DEL MONTE ROSE - 25360187.json";
-string outputFilePathBAPLIE = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\BAPLIE_Export_NEW.json";
-// try
-// {
-//     var parser = new ParserEDI("", definitionBAPLIE);
-//     // Leer el contenido del archivo JSON
-//             string jsonContent = File.ReadAllText(outputFilePathBAPLIE);
-//             Console.WriteLine("Contenido del JSON:");
-//             Console.WriteLine(jsonContent);
 
-//             // Generar el archivo EDI a partir del JSON
-//             string ediContent = parser.GenerateEDIFromJson(jsonContent);
-//             Console.WriteLine($"EDI GENERADO:: {ediContent}");
-// }
-// catch (System.Exception)
-// {
-    
-//     throw;
-// }
+// Prueba de lectura de archivo BAPLIE para export y generación de archivo JSON y despues apartir del json volver a generar el archivo EDI
+// string filePathBAPLIE = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\BAPLIE_Export.EDI";
+// string outputFilePathBAPLIE = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\BAPLIE_VERSION2_Export_NEW.json";
+
+// var baplieVersion2 = new BaplieVersion2();
 
 // using (var reader = new StreamReader(filePathBAPLIE))
 // {
 //     try
 //     {
-//         var parser = new ParserEDI(reader, definitionBAPLIE);
+//         var parser = new ParserEDI(reader, baplieVersion2);
 
 //         // Validar el archivo EDI
-//         var validationErrors = parser.ValidateFullEDI(definitionBAPLIE.Name);
+//         var validationErrors = parser.ValidateFullEDI(baplieVersion2.Name);
 //         // Console.WriteLine($"validationErrors: {validationErrors}");
 //         if (validationErrors.Any())
 //         {
@@ -59,11 +43,12 @@ string outputFilePathBAPLIE = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIF
 //             // Leer el contenido del archivo JSON
 //             string jsonContent = File.ReadAllText(outputFilePathBAPLIE);
 //             Console.WriteLine("Contenido del JSON:");
-//             Console.WriteLine(jsonContent);
+//             // Console.WriteLine(jsonContent);
 
 //             // Generar el archivo EDI a partir del JSON
 //             string ediContent = parser.GenerateEDIFromJson(jsonContent);
-//             Console.WriteLine($"EDI GENERADO:: {ediContent}");
+//             File.WriteAllText(@"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT/BAPLIE_VERSION2_EXPORT_NEW.edi", ediContent);
+//             // Console.WriteLine($"EDI GENERADO:: {ediContent}");
             
 //         }
 //     }
@@ -73,70 +58,26 @@ string outputFilePathBAPLIE = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIF
 //     }
 // }
 
-// using (var sw = new StreamWriter(string.Format(@"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\{0}Output.txt", definitionBAPLIE.Name)))
+// using (var sw = new StreamWriter(string.Format(@"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\{0}Output.txt", baplieVersion2.Name)))
 // {
-//     sw.Write(definitionBAPLIE);
+//     sw.Write(baplieVersion2);
 // }
 
-// using (var reader = new StreamReader(filePathMOVINS))
-// {
-//     try
-//     {
-//         var parser = new ParserEDI(reader, definitionMOVINS);
 
-//         // Validar el archivo EDI
-//         var validationErrors = parser.ValidateFullEDI(definitionMOVINS.Name);
-//         // Console.WriteLine($"validationErrors: {validationErrors}");
-//         if (validationErrors.Any())
-//         {
-//             Console.WriteLine("Errores de validación:");
-//             foreach (var error in validationErrors)
-//             {
-//                 Console.WriteLine(error);
-//             }
-//         }
-//         else
-//         {
-//             // Guarda el JSON en un archivo
-//             parser.SaveJsonToFile(outputFilePathMOVINS);
-//             Console.WriteLine("Archivo JSON guardado en: " + outputFilePathMOVINS);
-//             // Leer el contenido del archivo JSON
-//             string jsonContent = File.ReadAllText(outputFilePathMOVINS);
-//             Console.WriteLine("Contenido del JSON:");
-//             Console.WriteLine(jsonContent);
+// Prueba de lectura de archivo BAPLIE para export y generación de archivo JSON y despues apartir del json volver a generar el archivo EDI
+string filePathMOVINS = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\MOVINS DMR V09.edi";
+string outputFilePathMOVINS = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\MOVINS DMR V09_NEW.json";
 
-//             // Generar el archivo EDI a partir del JSON
-//             string ediContent = parser.GenerateEDIFromJson(jsonContent);
-//             Console.WriteLine($"EDI GENERADO:: {ediContent}");
-            
-//         }
-//     }
-//     catch (Exception ex)
-//     {
-//         Console.WriteLine($"Error al procesar el archivo EDI: {ex.Message}");
-//     }
-// }
+var movinsVersion2 = new MovinsVersion2();
 
-// using (var sw = new StreamWriter(string.Format(@"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\{0}Output.txt", definitionMOVINS.Name)))
-// {
-//     sw.Write(definitionMOVINS);
-// }
-
-// Console.WriteLine();
-// Console.WriteLine("Press any key to exit...");
-
-// Console.ReadKey();
-// var baplie = new BaplieVersion3();
-var baplie = new BaplieVersion2();
-
-using (var reader = new StreamReader(filePathBAPLIE))
+using (var reader = new StreamReader(filePathMOVINS))
 {
     try
     {
-        var parser = new ParserEDI(reader, baplie);
+        var parser = new ParserEDI(reader, movinsVersion2);
 
         // Validar el archivo EDI
-        var validationErrors = parser.ValidateFullEDI(baplie.Name);
+        var validationErrors = parser.ValidateFullEDI(movinsVersion2.Name);
         // Console.WriteLine($"validationErrors: {validationErrors}");
         if (validationErrors.Any())
         {
@@ -149,16 +90,17 @@ using (var reader = new StreamReader(filePathBAPLIE))
         else
         {
             // Guarda el JSON en un archivo
-            parser.SaveJsonToFile(outputFilePathBAPLIE);
-            Console.WriteLine("Archivo JSON guardado en: " + outputFilePathBAPLIE);
+            parser.SaveJsonToFile(outputFilePathMOVINS);
+            Console.WriteLine("Archivo JSON guardado en: " + outputFilePathMOVINS);
             // Leer el contenido del archivo JSON
-            string jsonContent = File.ReadAllText(outputFilePathBAPLIE);
+            string jsonContent = File.ReadAllText(outputFilePathMOVINS);
             Console.WriteLine("Contenido del JSON:");
-            Console.WriteLine(jsonContent);
+            // Console.WriteLine(jsonContent);
 
             // Generar el archivo EDI a partir del JSON
             string ediContent = parser.GenerateEDIFromJson(jsonContent);
-            Console.WriteLine($"EDI GENERADO:: {ediContent}");
+            File.WriteAllText(@"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT/MOVINS_VERSION2_NEW.edi", ediContent);
+            // Console.WriteLine($"EDI GENERADO:: {ediContent}");
             
         }
     }
@@ -167,12 +109,11 @@ using (var reader = new StreamReader(filePathBAPLIE))
         Console.WriteLine($"Error al procesar el archivo EDI: {ex.Message}");
     }
 }
-// Console.WriteLine($"BAPLIE VERSION 3.1.1 {baplie}");
 
-// using (var sw = new StreamWriter(string.Format(@"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\{0}Output.txt", baplie.Name)))
-// {
-//     sw.Write(baplie);
-// }
+using (var sw = new StreamWriter(string.Format(@"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\{0}Output.txt", movinsVersion2.Name)))
+{
+    sw.Write(movinsVersion2);
+}
 
 // Probando los segmentos de COARRI
 // var unb = new UNB();
@@ -285,8 +226,7 @@ using (var reader = new StreamReader(filePathBAPLIE))
     
 //     var equipments = COARRIMessageBuilder.MapEquipmentFromJson(rootData);
     
-//     // 4. Construir el mensaje EDI (necesitarías modificar tu clase para aceptar arrivalData)
-//     var builder = new COARRIMessageBuilder(arrivalData, equipments); // <-- Necesitarás este constructor
+//     var builder = new COARRIMessageBuilder(arrivalData, equipments); 
 //     string ediMessage = builder.BuildMessage();
     
 //     // 5. Mostrar resultados
