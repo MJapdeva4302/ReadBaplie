@@ -210,48 +210,48 @@ using (var sw = new StreamWriter(string.Format(@"C:\Users\mbermudez\Documents\Re
 
 // Leer un json y convertirlo a EDI COARRI de carga y descarga
 // string filePath = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT/Json COARRI Export Ejemplo.JSON";
-// // string filePath = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT/Json COARRI Import Ejemplo.json";
+string filePath = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT/Json COARRI Import Ejemplo.json";
 
-// try
-// {
-//     // 2. Cargar y parsear el JSON
-//     var rootData = COARRIMessageBuilder.LoadJson(filePath);
+try
+{
+    // 2. Cargar y parsear el JSON
+    var rootData = COARRIMessageBuilder.LoadJson(filePath);
     
-//     // 3. Mapear los datos a las estructuras EDI
-//     if (rootData == null)
-//     {
-//         throw new ArgumentNullException(nameof(rootData), "RootData cannot be null.");
-//     }
-//     var arrivalData = COARRIMessageBuilder.MapArrivalDataFromJson(rootData);
+    // 3. Mapear los datos a las estructuras EDI
+    if (rootData == null)
+    {
+        throw new ArgumentNullException(nameof(rootData), "RootData cannot be null.");
+    }
+    var arrivalData = COARRIMessageBuilder.MapArrivalDataFromJson(rootData);
     
-//     var equipments = COARRIMessageBuilder.MapEquipmentFromJson(rootData);
+    var equipments = COARRIMessageBuilder.MapEquipmentFromJson(rootData);
     
-//     var builder = new COARRIMessageBuilder(arrivalData, equipments); 
-//     string ediMessage = builder.BuildMessage();
+    var builder = new COARRIMessageBuilder(arrivalData, equipments); 
+    string ediMessage = builder.BuildMessage();
     
-//     // 5. Mostrar resultados
-//     Console.WriteLine("=== Mensaje EDI Generado ===");
-//     // Console.WriteLine(ediMessage);
+    // 5. Mostrar resultados
+    Console.WriteLine("=== Mensaje EDI Generado ===");
+    // Console.WriteLine(ediMessage);
     
-//     File.WriteAllText(@"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT/outputImportSinPPP.edi", ediMessage);
-//     // File.WriteAllText(@"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT/outputExportSinDGS.edi", ediMessage);
-//     Console.WriteLine("\nMensaje guardado");
+    File.WriteAllText(@"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT/outputImportSinPPP.edi", ediMessage);
+    // File.WriteAllText(@"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT/outputExportSinDGS.edi", ediMessage);
+    Console.WriteLine("\nMensaje guardado");
 
-//     // var dataToSave = new {
-//     //     ediMessage,
-//     // };
-//     // Serializar a JSON
-//     string jsonOutput = JsonConvert.SerializeObject(ediMessage, Formatting.Indented);
+    // var dataToSave = new {
+    //     ediMessage,
+    // };
+    // Serializar a JSON
+    string jsonOutput = JsonConvert.SerializeObject(ediMessage, Formatting.Indented);
     
-//     string jsonFilePath = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\outputImportPP.json";
-//     // string jsonFilePath = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\outputExportSinDGS.json";
-//     File.WriteAllText(jsonFilePath, jsonOutput);
-// }
-// catch (Exception ex)
-// {
-//     Console.WriteLine($"Error: {ex.Message}");
-//     if (ex.InnerException != null)
-//     {
-//         Console.WriteLine($"Detalles: {ex.InnerException.Message}");
-//     }
-// }
+    string jsonFilePath = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\outputImportPP.json";
+    // string jsonFilePath = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\outputExportSinDGS.json";
+    File.WriteAllText(jsonFilePath, jsonOutput);
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"Error: {ex.Message}");
+    if (ex.InnerException != null)
+    {
+        Console.WriteLine($"Detalles: {ex.InnerException.Message}");
+    }
+}
