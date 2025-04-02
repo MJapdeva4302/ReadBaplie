@@ -16,7 +16,7 @@ namespace ReadEDIFACT.Models
 
             Segments = new Segment[]
             {
-                //SON LOS SEGMENTOS QUE COMPONEN EL ARCHIVO COMO POR EJEMPLO: UNB+UNOA:1+SEACOS+PUBLIC+241013:1441+31039624+++++UNKNOWN'
+                //SON LOS SEGMENTOS QUE COMPONEN EL ARCHIVO COMO POR EJEMPLO: UNB+UNOA:1+SEACOS+PUBLIC+241013:1441+31039624+++++UNKNOWN' LISTO
                 new SegmentData()
                 {
                     SegmentID = "UNB",
@@ -108,6 +108,7 @@ namespace ReadEDIFACT.Models
                     }
                 }, // ACA FINALIZA EL SEGMENTO UNB
 
+                // UNH LISTO
                 new SegmentData()
                 {
                     SegmentID = "UNH",
@@ -180,6 +181,7 @@ namespace ReadEDIFACT.Models
                     }
                 },// ACA FINALIZA EL SEGMENTO UNH
 
+                // BGM LISTO
                 new SegmentData()
                 {
                     SegmentID = "BGM",
@@ -217,68 +219,58 @@ namespace ReadEDIFACT.Models
                     }
                 },// ACA FINALIZA EL SEGMENTO BGM 
 
-                new SegmentData()
-                {
-                    SegmentID = "DTM",
-                    Name = "Date - Time - Period",
-                    Usage = RuleUsage.Mandatory,
-                    DataElements = new Element[]
-                    {
-                        new CompositeElement()
-                        {
-                            Name = "Date Time",
-                            DataElements = new DataElement[]
-                            {
+                // PENDIENTE YA QUE EN LA DOCUMENTACION NO ESTA ESTE SEGMENTO
+                // new SegmentData()
+                // {
+                //     SegmentID = "DTM",
+                //     Name = "Date - Time - Period",
+                //     Usage = RuleUsage.Mandatory,
+                //     DataElements = new Element[]
+                //     {
+                //         new CompositeElement()
+                //         {
+                //             Name = "Date Time",
+                //             DataElements = new DataElement[]
+                //             {
 
-                                new DataElement()
-                                {
-                                    Name = "Date/Time/Period Qualifier",
-                                    Description = @"Code ""137"" (Document/Message Date/Time)",
-                                    Usage = RuleUsage.Mandatory,
-                                    DataType = DataType.Alphanumeric,
-                                    Precision = new[] { 1, 3 }
-                                },
+                //                 new DataElement()
+                //                 {
+                //                     Name = "Date/Time/Period Qualifier",
+                //                     Description = @"Code ""137"" (Document/Message Date/Time)",
+                //                     Usage = RuleUsage.Mandatory,
+                //                     DataType = DataType.Alphanumeric,
+                //                     Precision = new[] { 1, 3 }
+                //                 },
 
-                                new DataElement()
-                                {
-                                    Name = "Date/Time/Period",
-                                    Description = "Date or date/time of compiling the message",
-                                    Usage = RuleUsage.Required,
-                                    DataType = DataType.Alphanumeric,
-                                    Precision = new[] { 1, 35 }
-                                },
+                //                 new DataElement()
+                //                 {
+                //                     Name = "Date/Time/Period",
+                //                     Description = "Date or date/time of compiling the message",
+                //                     Usage = RuleUsage.Required,
+                //                     DataType = DataType.Alphanumeric,
+                //                     Precision = new[] { 1, 35 }
+                //                 },
 
-                                new DataElement()
-                                {
-                                    Name = "Date/Time/Period Format Qualifier",
-                                    Description = @"Allowed qualifiers: ""101"" = YYMMDD ""201"" = YYMMDDHHMM""301"" = YYMMDDHHMMZZZ(""ZZZ"" = Time zone, e.g. ""GMT"" or other)",
-                                    Usage = RuleUsage.Required,
-                                    DataType = DataType.Alphanumeric,
-                                    Precision = new[] { 1, 3 }
-                                }
+                //                 new DataElement()
+                //                 {
+                //                     Name = "Date/Time/Period Format Qualifier",
+                //                     Description = @"Allowed qualifiers: ""101"" = YYMMDD ""201"" = YYMMDDHHMM""301"" = YYMMDDHHMMZZZ(""ZZZ"" = Time zone, e.g. ""GMT"" or other)",
+                //                     Usage = RuleUsage.Required,
+                //                     DataType = DataType.Alphanumeric,
+                //                     Precision = new[] { 1, 3 }
+                //                 }
 
-                            }
-                        }
-                    }
-                },// ACA FINALIZA EL SEGMENTO DTM
-
-                // GRUPO 1
-                new SegmentGroup()
-                {
-                    GroupRepeat = 1,
-                    Segments = new Segment[]
-                    {
-
-
-                    },
-
-                },// ACA FINALIZA EL GRUPO 1
+                //             }
+                //         }
+                //     }
+                // },// ACA FINALIZA EL SEGMENTO DTM
 
                 // GRUPO 2
                 new SegmentGroup(){
                     GroupRepeat = 9,
                     Segments = new Segment[]
                     {
+                        // TDT LISTO
                         new SegmentData()
                         {
                             SegmentID = "TDT",
@@ -426,7 +418,9 @@ namespace ReadEDIFACT.Models
                             }
                         },// ACA FINALIZA EL SEGMENTO TDT DEL GRUPO 2
 
+                        // RFF LISTO
                         new SegmentData(){
+
                             SegmentID = "RFF",
                             Name = "REFERENCE (grp2)",
                             Notes = "2",
@@ -459,230 +453,6 @@ namespace ReadEDIFACT.Models
                             }
                         }, // ACA FINALIZA EL SEGMENTO RFF DEL GRUPO 2
 
-                        new SegmentData(){
-                            SegmentID = "GDS",
-                            Name = "NATURE OF CARGO (grp2)",
-                            Notes = "2",
-                            DataElements = new Element[]{
-                                new DataElement(){
-                                    Name = "Nature of cargo",
-                                    Description = @"Nature of cargo, coded. Codes to be agreed between partners",
-                                    Usage = RuleUsage.Mandatory,
-                                    DataType = DataType.Alphanumeric,
-                                    Precision = new[] { 1, 3 }
-                                }
-                            }
-                        }, // ACA FINALIZA EL SEGMENTO GDS DEL GRUPO 2
-
-                        new SegmentData(){
-                            SegmentID = "FTX",
-                            Name = "FREE TEXT (grp2)",
-                            Notes = "2",
-                            DataElements = new Element[]{
-                                new DataElement(){
-                                    Name = "Text Subject Qualifier",
-                                    Description = @"Allowed qualifiers: ""AAA"" = Description of Goods""HAN"" = Handling Instructions""CLR"" = Container Loading Remarks""SIN"" = Special instructions""AAI"" = General information""AAY"" = Certification statements""ZZZ"" = Mutually defined use",
-                                    Usage = RuleUsage.Mandatory,
-                                    DataType = DataType.Alphanumeric,
-                                    Precision = new[] { 1, 3 }
-                                },
-
-                                new EmptyElement(),
-
-                                new DataElement(){
-                                    Name = "Text reference",
-                                    Description = @"In case of e4451 = AAY used for specification of data transmitted in c108. Use codes defined in SMDG codelist VGM.",
-                                    Usage = RuleUsage.Optional,
-                                    DataType = DataType.Alphanumeric,
-                                    Precision = new[] { 1, 3 }
-                                },
-
-                                new CompositeElement(){
-                                    Name = "Description/Instructions/Remarks",
-                                    DataElements = new Element[]{
-                                        new DataElement(){
-                                            Name = "Free Text",
-                                            Description = @"Description/Instructions/Remarks in plain language or coded, for specific cargo/equipment. Codes, etc. to be agreed between partners.",
-                                            Usage = RuleUsage.Mandatory,
-                                            DataType = DataType.Alphanumeric,
-                                            Precision = new[] { 1, 70 }
-                                        },
-
-                                        new DataElement(){
-                                            Name = "Free Text 1",
-                                            Description = @"Information about VGM according to code specified in c107.4441. (For details see page 42.)",
-                                            Usage = RuleUsage.Optional,
-                                            DataType = DataType.Alphanumeric,
-                                            Precision = new[] { 1, 70 }
-                                        },
-
-                                        new DataElement(){
-                                            Name = "Free Text 2",
-                                            Description = @"Information about VGM according to code specified in c107.4441. (For details see page 42.)",
-                                            Usage = RuleUsage.Optional,
-                                            DataType = DataType.Alphanumeric,
-                                            Precision = new[] { 1, 70 }
-                                        },
-
-                                        new DataElement(){
-                                            Name = "Free Text 3",
-                                            Description = @"Information about VGM according to code specified in c107.4441. (For details see page 42.)",
-                                            Usage = RuleUsage.Optional,
-                                            DataType = DataType.Alphanumeric,
-                                            Precision = new[] { 1, 70 }
-                                        },
-
-                                        new DataElement(){
-                                            Name = "Free Text 4",
-                                            Description = @"Information about VGM according to code specified in c107.4441. (For details see page 42.)",
-                                            Usage = RuleUsage.Optional,
-                                            DataType = DataType.Alphanumeric,
-                                            Precision = new[] { 1, 70 }
-                                        }
-                                    }
-                                }
-                            }
-                        }, // ACA FINALIZA EL SEGMENTO FTX DEL GRUPO 2
-
-                        new SegmentData(){
-                            SegmentID = "MEA",
-                            Name = "MEASUREMENTS (grp2)",
-                            Notes = "2",
-                            DataElements = new Element[]{
-                                new DataElement(){
-                                    Name = "Measurement Application Qualifier",
-                                    Description = @"Allowed qualifiers: ""WT"" (gross weight / gross mass) – not confirmed as verified ""VGM"" (verified gross mass) – specified weight is verified[code VGM has been introduced in D.15B for data element 6313]",
-                                    Usage = RuleUsage.Mandatory,
-                                    DataType = DataType.Alphanumeric,
-                                    Precision = new[] { 1, 3 }
-                                },
-
-                                new EmptyElement(),
-
-                               new CompositeElement(){
-                                    Name = "Measure Unit",
-                                    DataElements = new Element[]{
-                                        new DataElement(){
-                                            Name = "Measure Unit Qualifier",
-                                            Description = @"Allowed qualifiers: ""KGM"" = kilogram = preferred ""LBR"" = pounds",
-                                            Usage = RuleUsage.Mandatory,
-                                            DataType = DataType.Alphanumeric,
-                                            Precision = new[] { 1, 3 }
-                                        },
-
-                                        new DataElement(){
-                                            Name = "Measurement Value",
-                                            Description = @"The gross mass of the transport equipment including cargo in kilograms or pounds, as qualified (no decimals)",
-                                            Usage = RuleUsage.Required,
-                                            DataType = DataType.Numeric,
-                                            Precision = new []{1, 18}
-                                            // Precision = 18 //LONGITUD EXACTA SI O SI TIENE QUE TENER UNA LOGITUD DE 18
-                                            
-                                        }
-                                    }
-                               }
-                            }
-                        },
-
-                        new SegmentData()
-                        {
-                            SegmentID = "DIM",
-                            Name = "DIMENSIONS (grp2)",
-                            Notes = "2",
-                            DataElements = new Element[]
-                            {
-                                new DataElement()
-                                {
-                                    Name = "Dimension Qualifier",
-                                    Description = @"Code ""1"" = Gross dimensions (break-bulk) Code ""5"" = Off-standard dims. (over-length front)Code ""6"" = Off-standard dims. (over-length back)Code ""7"" = Off-standard dims. (over-width right)Code ""8"" = Off-standard dims. (over-width left)Code ""9"" = Off-standard dims. (over-height)Code ""10"" = external equipment dimensions (Non-ISO equipment)Basically allowed qualifier ""1"" for break-bulk cargo and from ""5"" to ""9"" for odd-sized-cargo. However allowed from ""5"" to ""9"" for break-bulk cargo as additional information, if required.",
-                                    Usage = RuleUsage.Mandatory,
-                                    DataType = DataType.Alphanumeric,
-                                    Precision = new[] { 1, 3 }
-                                },
-
-                                new CompositeElement(){
-                                    Name = "Measure Unit",
-                                    DataElements = new Element[]{
-                                new DataElement()
-                                {
-                                    Name = "Measure Unit Qualifier",
-                                    Description = @"Allowed qualifiers: ""CMT"" = Centimeters = preferred ""INH"" = Inches",
-                                    Usage = RuleUsage.Mandatory,
-                                    DataType = DataType.Alphanumeric,
-                                    Precision = new[]{ 1, 3 }
-                                },
-
-                                new DataElement()
-                                {
-                                    Name = "Length Dimension",
-                                    Description = @"Break-bulk length or over-length for containers, as qualified.",
-                                    Usage = RuleUsage.Dependent,
-                                    DataType = DataType.Numeric,
-                                    Precision = 15
-                                },
-
-                                new DataElement()
-                                {
-                                    Name = "Width Dimension",
-                                    Description = @"Break-bulk width or over-width for containers, as qualified.",
-                                    Usage = RuleUsage.Dependent,
-                                    DataType = DataType.Numeric,
-                                    Precision = 15
-                                },
-
-                                new DataElement()
-                                {
-                                    Name = "Height Dimension",
-                                    Description = @" Break-bulk height or over-height for containers, as qualified",
-                                    Usage = RuleUsage.Dependent,
-                                    DataType = DataType.Numeric,
-                                    Precision = 15
-                                }
-                                }
-                            }
-                        }
-                        }, // ACA FINALIZA EL SEGMENTO DEL GRUPO 2 
-
-                        new SegmentData()
-                        {
-                            SegmentID = "TMP",
-                            Name = "TEMPERATURE (grp2)",
-                            Notes = "2",
-                            DataElements = new Element[]
-                            {
-                                new DataElement()
-                                {
-                                    Name = "Temperature Qualifier",
-                                    Description = @" ""2"" = Transport Temperature",
-                                    Usage = RuleUsage.Mandatory,
-                                    DataType = DataType.Alphanumeric,
-                                    Precision = new[] { 1, 3 }
-                                },
-
-                                new CompositeElement(){
-                                    Name = "Temperature Setting",
-                                    DataElements = new Element[]{
-                                new DataElement()
-                                {
-                                    Name = "Temperature Setting",
-                                    Description = "Actual temperature according to Reefer List (no deviation allowed) at which the cargo is to be transported. For field format see remarks below.",
-                                    Usage = RuleUsage.Required,
-                                    DataType = DataType.Decimal,
-                                    Precision = 3
-                                },
-                                new DataElement()
-                                {
-                                    Name = "Measure Unit Qualifier",
-                                    Description = @"Allowed qualifiers: ""CEL"" = Celsius, ""FAH"" = Fahrenheit",
-                                    Usage = RuleUsage.Required,
-                                    DataType = DataType.Alphanumeric,
-                                    Precision = new[] { 1, 3 }
-                                }
-                            }
-                            }
-                            }
-                        }, // ACA FINALIZA EL SEGMENTO TMP DEL GRUPO 2
-
                     }, // ACA FINALIZA LOS SEGMENTOS GRUPO 2
                     
                 }, //ACA FINALIZA EL GRUPO 2
@@ -703,6 +473,7 @@ namespace ReadEDIFACT.Models
                                 BGM+122+APM2351463+9' 
                                 LOC+42+0002' (aduanas de salida en un reporte de carga)
                             */
+                            // LISTO
                             new SegmentData(){
                             SegmentID = "LOC",
                             Name = "PLACE/LOCATION IDENTIFICATION (grp3)",
@@ -739,6 +510,7 @@ namespace ReadEDIFACT.Models
                             LOC+9+ECGYE:ZZZ:98:GUAYAQUIL' (discharge report)
                             LOC+9+CRMOB:ZZZ:98: MOIN TERMINAL DE CONTENEDORES+0002' (Loading report)
                         */
+                        // LISTO
                         new SegmentData(){
                             SegmentID = "LOC",
                             Name = "PLACE/LOCATION IDENTIFICATION (grp3)",
@@ -815,6 +587,7 @@ namespace ReadEDIFACT.Models
                         /*Ejemplos: 
                           LOC+94+KRKAN:ZZZ:98:GWAYNGYANG'
                         */
+                        // LISTO
                         new SegmentData(){
                             SegmentID = "LOC",
                             Name = "PLACE/LOCATION IDENTIFICATION (grp3)",
@@ -885,6 +658,7 @@ namespace ReadEDIFACT.Models
                         cuatro dígitos de la lista utilizada por la Autoridad Aduanera.
                         */
                         // Ejemplo: BGM+119++9' LOC+12+CRMOB:ZZZ:98:MOIN TERMINAL DE CONTENEDORES+0002'
+                        // LISTO
                         new SegmentData(){
                             SegmentID = "LOC",
                             Name = "PLACE/LOCATION IDENTIFICATION (grp3)",
@@ -966,6 +740,7 @@ namespace ReadEDIFACT.Models
                             LOC+61+CRCAL:ZZZ:98:CALDERA PORT+0001'
                             LOC+61+COCTG:ZZZ:98:CARTAGENA'
                         */
+                        // LISTO
                         new SegmentData(){
                             SegmentID = "LOC",
                             Name = "PLACE/LOCATION IDENTIFICATION (grp3)",
@@ -1042,6 +817,7 @@ namespace ReadEDIFACT.Models
                             BGM+119++9'
                             DTM+178:20140125:102'
                         */
+                        // LISTO
                         new SegmentData(){
 
                             SegmentID = "DTM",
@@ -1088,33 +864,6 @@ namespace ReadEDIFACT.Models
                             }
                         }, // ACA FINALIZA EL SEGMENTO DTM (grp3)
 
-                            new SegmentData(){
-                                SegmentID = "EQA",
-                                Name = "EQUIPMENT ATTACHED (grp3)",
-                                Notes = "3",
-                                DataElements = new Element[]
-                                {
-                                   new DataElement()
-                                {
-                                    Name = "Equipment Qualifier: Allowed qualifiers",
-                                    Description = @" ""RG"" = Reefer Generator ""CN"" = Container ""CH"" = Chassis",
-                                    Usage = RuleUsage.Mandatory,
-                                    DataType = DataType.Alphanumeric,
-                                    Precision = new []{ 1, 3}
-                                },
-
-                                new DataElement()
-                                {
-                                    Name = @"Equipment Identification Number",
-                                    Description = @"The unit number",
-                                    Usage = RuleUsage.Required,
-                                    DataType = DataType.Alphanumeric,
-                                    Precision = new []{ 1, 17 }
-                                }
-
-                                }
-                            }, // ACA FINALIZA EL SEGMENTO EQA DEL GRUPO 3
-
                         }
                     }, // ACA FINALIZA EL GRUPO 3
 
@@ -1123,6 +872,7 @@ namespace ReadEDIFACT.Models
                         GroupRepeat = 9999,
                         Segments = new Segment[]
                         {
+                            // LISTO
                             new SegmentData(){
                             SegmentID = "NAD",
                             Name = "NAME AND ADDRESS (grp4)",
@@ -1179,217 +929,7 @@ namespace ReadEDIFACT.Models
                                     Precision = new []{ 1, 35 }
                                 }
                             }
-                        }, // ACA FINALIZA EL SEGMENTO NAD DEL GRUPO 3
-
-                            new SegmentData(){
-                                SegmentID = "DGS",
-                                Name = "DANGEROUS GOODS (grp4)",
-                                Notes = "4",
-                                DataElements = new Element[]
-                                {
-                                   new DataElement()
-                                {
-                                    Name = "Dangerous Goods Regulations",
-                                    Description = @"Code ""IMD"" (IMO IMDG Code)",
-                                    Usage = RuleUsage.Required,
-                                    DataType = DataType.Alphanumeric,
-                                    Precision = new []{ 1, 3}
-                                },
-
-                                new CompositeElement(){
-                                    Name = "Hazard Code Identification (grp4)",
-                                    DataElements = new Element[]{
-                                new DataElement()
-                                {
-                                    Name = "Hazard Code Identification",
-                                    Description = @"IMDG Code, e.g. ""1.2"" or ""8""",
-                                    Usage = RuleUsage.Mandatory,
-                                    DataType = DataType.Alphanumeric,
-                                    Precision = new []{ 1, 7}
-                                },
-
-                                new DataElement()
-                                {
-                                    Name = @"Hazard Substance/item/page number",
-                                    Description = @"The IMDG code page number (English version).",
-                                    Usage = RuleUsage.Optional,
-                                    DataType = DataType.Alphanumeric,
-                                    Precision = new []{ 1, 7 }
-                                }
-                            }
-                            },
-
-                            new DataElement()
-                            {
-                                Name = @"UNDG Number",
-                                Description = @"UN number of respective dangerous cargo transported (4 digits)",
-                                Usage = RuleUsage.Optional,
-                                DataType = DataType.Numeric,
-                                Precision = 4
-                            },
-
-                            new CompositeElement(){
-                                    Name = "Shipment Flashpoint (grp4)",
-                                    DataElements = new Element[]{
-                                new DataElement()
-                                {
-                                    Name = "Shipment Flashpoint",
-                                    Description = @"the actual flashpoint in degrees Celsius or Fahrenheit. For inserting temperatures below zero or tenth degrees please refer to remarks under TMP-segment respectively to ISO 9735. If different dangerous goods with different flashpoints within one load to be transported, only the lowest flashpoint should be inserted",
-                                    Usage = RuleUsage.Optional,
-                                    DataType = DataType.Numeric,
-                                    Precision = 3
-                                },
-
-                                new DataElement()
-                                {
-                                    Name = @"Measure Unit Qualifier",
-                                    Description = @"Allowed qualifiers: ""CEL"" (degrees Celsius) = Preferred ""FAH"" (degrees Fahrenheit)",
-                                    Usage = RuleUsage.Optional,
-                                    DataType = DataType.Decimal,
-                                    Precision = 3
-                                }
-                            }
-                            },
-
-                            new DataElement()
-                            {
-                                Name = @"Packing group, coded",
-                                Description = @"The packing group code of the hazardous goods.",
-                                Usage = RuleUsage.Optional,
-                                DataType = DataType.Alphanumeric,
-                                Precision = 3
-                            },
-
-                            new DataElement()
-                            {
-                                Name = @"EMS number",
-                                Description = @"Emergency schedule number.",
-                                Usage = RuleUsage.Optional,
-                                DataType = DataType.Alphanumeric,
-                                Precision = 6
-                            },
-
-                            new DataElement()
-                            {
-                                Name = @"MFAG",
-                                Description = @"Medical First Aid Guide number",
-                                Usage = RuleUsage.Optional,
-                                DataType = DataType.Alphanumeric,
-                                Precision = 4
-                            },
-
-                            new EmptyElement(),
-
-                            new CompositeElement(){
-                                    Name = "Hazard Identification number, upper part (grp4)",
-                                    DataElements = new Element[]{
-                                new DataElement()
-                                {
-                                    Name = "Hazard Identification number",
-                                    Description = @"Hazard Identification number, upper part",
-                                    Usage = RuleUsage.Optional,
-                                    DataType = DataType.Alphanumeric,
-                                    Precision = 4
-                                },
-
-                                new DataElement()
-                                {
-                                    Name = @"Substance Identification number",
-                                    Description = @"Substance Identification number, lower part",
-                                    Usage = RuleUsage.Optional,
-                                    DataType = DataType.Alphanumeric,
-                                    Precision = 4
-                                }
-                            }
-                            },
-
-                            new CompositeElement(){
-                                    Name = "Dangerous Goods Label Marking (grp4)",
-                                    DataElements = new Element[]{
-                                new DataElement()
-                                {
-                                    Name = "Dangerous Goods Label Marking (1)",
-                                    Description = @"See below for possible use of this data element",
-                                    Usage = RuleUsage.Optional,
-                                    DataType = DataType.Alphanumeric,
-                                    Precision = 4
-                                },
-
-                                new DataElement()
-                                {
-                                    Name = @"Dangerous Goods Label Marking (2)",
-                                    Description = @"Dangerous Goods Label Marking (2)",
-                                    Usage = RuleUsage.Optional,
-                                    DataType = DataType.Alphanumeric,
-                                    Precision = 4
-                                },
-
-                                new DataElement()
-                                {
-                                    Name = @"Dangerous Goods Label Marking (3)",
-                                    Description = @"Dangerous Goods Label Marking (3)",
-                                    Usage = RuleUsage.Optional,
-                                    DataType = DataType.Alphanumeric,
-                                    Precision = 4
-                                }
-                            }
-                            }
-
-                            }
-                        }, // ACA FINALIZA EL SEGMENTO DGS DEL GRUPO 4
-
-                            new SegmentData(){
-                                SegmentID = "FTX",
-                                Name = "FREE TEXT (grp4)",
-                                Notes = "4",
-                                DataElements = new Element[]
-                                {
-                                   new DataElement()
-                                {
-                                    Name = "Text Subject Qualifier.",
-                                    Description = @" ""AAC"" = Dangerous goods additional information ""AAD"" = Dangerous goods, technical name, proper shipping name.",
-                                    Usage = RuleUsage.Mandatory,
-                                    DataType = DataType.Alphanumeric,
-                                    Precision = new []{ 1, 3}
-                                },
-
-                                new EmptyElement(),
-                                new EmptyElement(),
-
-                                new CompositeElement(){
-                                    Name = "Free text (grp4)",
-                                    DataElements = new Element[]{
-                                new DataElement()
-                                {
-                                    Name = "Free text",
-                                    Description = @"Description of hazard material in plain language. One element of maximum 70 characters to be given only for the description. Transmit the text ""NIL"", if no description is available and one or both of the following data elements must be transmitted.",
-                                    Usage = RuleUsage.Mandatory,
-                                    DataType = DataType.Alphanumeric,
-                                    Precision = new [] {1, 70}
-                                },
-
-                                new DataElement()
-                                {
-                                    Name = @"Free text 2: (grp4)",
-                                    Description = @"The net weight in kilos of the hazardous material to be transmitted here.",
-                                    Usage = RuleUsage.Optional,
-                                    DataType = DataType.Alphanumeric,
-                                    Precision = new []{1, 70}
-                                },
-
-                                new DataElement()
-                                {
-                                    Name = @"Free text 3: (grp4)",
-                                    Description = @"The DG-reference number as allocated by the central planner, if known.",
-                                    Usage = RuleUsage.Optional,
-                                    DataType = DataType.Alphanumeric,
-                                    Precision = new []{1, 70}
-                                }
-                            }
-                            }
-
-                                }
-                            }, // ACA FINALIZA EL SEGMENTO FTX DEL GRUPO 4
+                        }, // ACA FINALIZA EL SEGMENTO NAD DEL GRUPO 4
 
                         }
                     }, // ACA FINALIZA EL GRUPO 4
@@ -1399,6 +939,7 @@ namespace ReadEDIFACT.Models
                         GroupRepeat = 99,
                         Segments = new Segment[]
                         {
+                            // LISTO
                             new SegmentData(){
                                 SegmentID = "EQD",
                                 Name = "EQUIPMENT DETAILS (grp6)",
@@ -1485,7 +1026,7 @@ namespace ReadEDIFACT.Models
                                 }
                             }, // ACA FINALIZA EL SEGMENTO EQD DEL GRUPO 6
 
-                            // PRIMERA REFERENCIA
+                            // PRIMERA REFERENCIA LISTO
                             new SegmentData(){
                             SegmentID = "RFF",
                             Name = "REFERENCE (grp6)",
@@ -1519,7 +1060,7 @@ namespace ReadEDIFACT.Models
                             }
                         }, // ACA FINALIZA EL SEGMENTO RFF DEL GRUPO 6
 
-                        // SEGUNDA REFERENCIA
+                        // SEGUNDA REFERENCIA LISTO
                         new SegmentData(){
                             SegmentID = "RFF",
                             Name = "REFERENCE (grp6)",
@@ -1557,7 +1098,7 @@ namespace ReadEDIFACT.Models
                             Ejemplo: 
                             RFF+ABT:DE245678369'
                         */
-                        // TERCERA REFERENCIA
+                        // TERCERA REFERENCIA LISTO
                         new SegmentData(){
                             SegmentID = "RFF",
                             Name = "REFERENCE (grp6)",
@@ -1596,6 +1137,7 @@ namespace ReadEDIFACT.Models
                             Ejemplo
                             DTM+203:201401251450:203
                         */ 
+                        // LISTO
                         new SegmentData()
                         {
                             SegmentID = "DTM",
@@ -1639,28 +1181,213 @@ namespace ReadEDIFACT.Models
                             }
                         }
                     }
-                },// ACA FINALIZA EL SEGMENTO DTM
+                },// ACA FINALIZA EL SEGMENTO DTM DEL GRUPO 6
+
+                    // LISTO
+                    new SegmentData(){
+                            SegmentID = "MEA",
+                            Name = "MEASUREMENTS (grp6)",
+                            Notes = "6",
+                            DataElements = new Element[]{
+
+                                new DataElement(){
+                                    Name = "Measurement Application Qualifier",
+                                    Description = @"AAE Medida",
+                                    Usage = RuleUsage.Mandatory,
+                                    DataType = DataType.Alphanumeric,
+                                    Precision = new[] { 1, 3 }
+                                },
+
+                                new DataElement(){
+                                    Name = "Measurement Application Qualifier",
+                                    Description = @"VGM = Peso verificado y certificado del contenedor.",
+                                    Usage = RuleUsage.Mandatory,
+                                    DataType = DataType.Alphanumeric,
+                                    Precision = new[] { 1, 3 }
+                                },
+
+                               new CompositeElement(){
+                                    Name = "Measure Unit",
+                                    DataElements = new Element[]{
+                                        new DataElement(){
+                                            Name = "Measure Unit Qualifier",
+                                            Description = @"Allowed qualifiers: ""KGM"" = kilogram = preferred ""LBR"" = pounds",
+                                            Usage = RuleUsage.Mandatory,
+                                            DataType = DataType.Alphanumeric,
+                                            Precision = new[] { 1, 3 }
+                                        },
+
+                                        new DataElement(){
+                                            Name = "Measurement Value",
+                                            Description = @"Peso bruto del contenedor, embalaje y mercancía. Dos decimales",
+                                            Usage = RuleUsage.Required,
+                                            DataType = DataType.Numeric,
+                                            Precision = new []{1, 18}
+                                            // Precision = 18 //LONGITUD EXACTA SI O SI TIENE QUE TENER UNA LOGITUD DE 18  
+                                        }
+                                    }
+                               }
+                            }
+                        },// ACA FINALIZA EL SEGMENTO MEA DEL GRUPO 6
+
+                        // LISTO
+                        new SegmentData()
+                        {
+                            SegmentID = "TMP",
+                            Name = "TEMPERATURE (grp6)",
+                            Notes = "6",
+                            DataElements = new Element[]
+                            {
+                                new DataElement()
+                                {
+                                    Name = "Temperature Qualifier",
+                                    Description = @" ""2"" = Transport Temperature",
+                                    Usage = RuleUsage.Mandatory,
+                                    DataType = DataType.Alphanumeric,
+                                    Precision = new[] { 1, 3 }
+                                },
+
+                                new CompositeElement(){
+                                    Name = "Temperature Setting",
+                                    DataElements = new Element[]{
+                                new DataElement()
+                                {
+                                    Name = "Temperature value",
+                                    Description = "Actual temperature according to Reefer List (no deviation allowed) at which the cargo is to be transported. For field format see remarks below.",
+                                    Usage = RuleUsage.Required,
+                                    DataType = DataType.Decimal,
+                                    Precision = new []{1, 15}
+                                },
+                                new DataElement()
+                                {
+                                    Name = "Measure Unit Qualifier",
+                                    Description = @"Allowed qualifiers: ""CEL"" = Celsius, ""FAH"" = Fahrenheit",
+                                    Usage = RuleUsage.Required,
+                                    DataType = DataType.Alphanumeric,
+                                    Precision = new[] { 1, 3 }
+                                }
+                            }
+                            }
+                            }
+                        }, // ACA FINALIZA EL SEGMENTO TMP DEL GRUPO 6
+
+                        // LISTO
+                        new SegmentData()
+                        {
+                            SegmentID = "SEL",
+                            Name = "SEAL NUMBER (grp6)",
+                            Notes = "6",
+                            DataElements = new Element[]
+                            {
+                                new DataElement()
+                                {
+                                    Name = "Seal identifier",
+                                    Description = @"número de Sello",
+                                    Usage = RuleUsage.Required,
+                                    DataType = DataType.Alphanumeric,
+                                    Precision = new[] { 1, 35 }
+                                },
+
+                                new CompositeElement(){
+                                    Name = "Seal issuer",
+                                    DataElements = new Element[]{
+                                new DataElement()
+                                {
+                                    Name = "Sealing party name code",
+                                    Description = "AA consolidador AB desconocido  AC Agencia cuarentenaria CA Naviera  CU Aduanas SH Exportador TO Operador portuario",
+                                    Usage = RuleUsage.Required,
+                                    DataType = DataType.Decimal,
+                                    Precision = new []{1, 3}
+                                },
+                                new DataElement()
+                                {
+                                    Name = "SEAL TYPE CODE",
+                                    Description = @"1 = MECHANICAL, 2 = ELECTRONIC, 3 = AIR FRESH VENT",
+                                    Usage = RuleUsage.Required,
+                                    DataType = DataType.Alphanumeric,
+                                    Precision = new[] { 1, 3 }
+                                }
+                            }
+                            }
+                            }
+                        }, // ACA FINALIZA EL SEGMENTO TMP DEL GRUPO 6
+
+                        // LISTO
+                        new SegmentData(){
+                            SegmentID = "NAD",
+                            Name = "NAME AND ADDRESS (grp6)",
+                            Notes = "6",
+                            DataElements = new Element[]
+                            {
+                                new DataElement()
+                                {
+                                    Name = @"Party Qualifier",
+                                    Description = @"CF Naviera o agencia Naviera responsible del contenedor",
+                                    Usage = RuleUsage.Mandatory,
+                                    DataType = DataType.Alphanumeric,
+                                    Precision = new []{ 1, 3 }
+                                },
+
+                                new CompositeElement(){
+                                    Name = "PARTY IDENTIFICATION DETAILS (grp6)",
+                                    DataElements = new Element[]{
+                                new DataElement()
+                                {
+                                    Name = "Party Id Identification",
+                                    Description = @"Code specifying the identity of a party.",
+                                    Usage = RuleUsage.Mandatory,
+                                    DataType = DataType.Alphanumeric,
+                                    Precision = new []{ 1, 35}
+                                },
+
+                                new DataElement()
+                                {
+                                    Name = @"Code List Qualifier",
+                                    Description = @"Code identifying a user or association maintained code list. 160",
+                                    Usage = RuleUsage.Required,
+                                    DataType = DataType.Alphanumeric,
+                                    Precision = new []{ 1, 3 }
+                                },
+
+                                new DataElement()
+                                {
+                                    Name = @"Code List Responsible Agency, coded. Allowed codes",
+                                    Description = @"""20"" = BIC (Bureau International des Containeurs) ""166"" = US National Motor Freight Classification Association (SCAC) ""ZZZ"" = Mutually agreed",
+                                    Usage = RuleUsage.Required,
+                                    DataType = DataType.Alphanumeric,
+                                    Precision = new []{ 1, 3 }
+                                }
+                            }
+                            }
+                            }
+                        }, // ACA FINALIZA EL SEGMENTO NAD DEL GRUPO 6
 
                         }
-                    },
+                    }, // ACA FINALIZA EL GRUPO 6
 
                     // GRUPO 7
                     new SegmentGroup(){
                         GroupRepeat = 9999,
                         Segments = new Segment[]
                         {
+                            // PRIMER LOC QUE LE PERTENECE A CADA CONTENEDOR
+                            /*
+                                Ejemplos: 
+                                LOC+147+0060382:139:5' 
+                            */
+                            // LISTO
                             new SegmentData(){
                             SegmentID = "LOC",
                             Name = "PLACE/LOCATION IDENTIFICATION (grp7)",
-                            Notes = "3",
+                            Notes = "7",
                             Position = 1,
                             DataElements = new Element[]
                             {
-                                // 9
+                                // 147 Localización de estiba.
                                 new DataElement()
                                 {
                                     Name = "Place/Location Qualifier",
-                                    Description = @"Code identifying the function of a location.",
+                                    Description = @"147 Localización de estiba.",
                                     Usage = RuleUsage.Mandatory,
                                     DataType = DataType.Alphanumeric,
                                     Precision = new[] { 1, 3 }
@@ -1697,32 +1424,210 @@ namespace ReadEDIFACT.Models
                                             DataType = DataType.Alphanumeric,
                                             Precision = new[] { 1, 3 }
                                         },
-
-                                        new DataElement()
-                                        {
-                                            Name = "Location name",
-                                            Description = @"Nombre del Puerto de salida",
-                                            Usage = RuleUsage.Required,
-                                            DataType = DataType.Alphanumeric,
-                                            Precision = new[] { 1, 3 }
-                                        }
                                     }
                                 },
 
-                                // crmob= 0002 CRCLIO = 0001
-                                new DataElement()
-                                        {
-                                            Name = " First related location name code",
-                                            Description = @"Si el Puerto es costarricense, se debe incluir el Código de 4 dígitos IMO-GISIS. ",
-                                            Usage = RuleUsage.Dependent,
-                                            DataType = DataType.Alphanumeric,
-                                            Precision = new[] { 1, 4 }
-                                        }
                             }
                         }, // ACA FINALIZA EL SEGMENTO LOC (grp7)
-                        }
-                        },
 
+                        // SEGUNDO LOC QUE LE PERTENECE A CADA CONTENEDOR
+                        /*
+                            Corresponde al último Puerto de carga previo a su llegada a Costa Rica. 
+                            LOC+9+COCTG'
+                        */
+                        // LISTO
+                            new SegmentData(){
+                            SegmentID = "LOC",
+                            Name = "PLACE/LOCATION IDENTIFICATION (grp7)",
+                            Notes = "7",
+                            Position = 1,
+                            DataElements = new Element[]
+                            {
+                                // 9
+                                new DataElement()
+                                {
+                                    Name = "Place/Location Qualifier",
+                                    Description = @"9 Lugar de procedencia / carga",
+                                    Usage = RuleUsage.Mandatory,
+                                    DataType = DataType.Alphanumeric,
+                                    Precision = new[] { 1, 3 }
+                                },
+
+                                new DataElement()
+                                {
+                                    Name = "Location name code",
+                                    Description = @"Código LOCODE",
+                                    Usage = RuleUsage.Required,
+                                    DataType = DataType.Alphanumeric,
+                                    Precision = new[] { 1, 25 }
+                                },
+
+                            }
+                        }, // ACA FINALIZA EL SEGMENTO LOC (grp7)
+
+                        // TERCER LOC QUE LE PERTENECE A CADA CONTENEDOR
+                        /*
+                            Siguiente Puerto de descarga del contenedor. Opcional para vacíos en reportes de descarga.
+                            Ejemplos: 
+                            LOC+9+COCTG'
+                        */
+                        // LISTO
+                            new SegmentData(){
+                            SegmentID = "LOC",
+                            Name = "PLACE/LOCATION IDENTIFICATION (grp7)",
+                            Notes = "7",
+                            Position = 1,
+                            DataElements = new Element[]
+                            {
+                                // 9
+                                new DataElement()
+                                {
+                                    Name = "Place/Location Qualifier",
+                                    Description = @"11 Lugar de descarga.",
+                                    Usage = RuleUsage.Mandatory,
+                                    DataType = DataType.Alphanumeric,
+                                    Precision = new[] { 1, 3 }
+                                },
+
+                                new DataElement()
+                                {
+                                    Name = "Location name code",
+                                    Description = @"Código LOCODE",
+                                    Usage = RuleUsage.Required,
+                                    DataType = DataType.Alphanumeric,
+                                    Precision = new[] { 1, 25 }
+                                },
+
+                            }
+                        }, // ACA FINALIZA EL SEGMENTO LOC (grp7)
+
+                        }
+                        }, // ACA FINALIZA EL GRUPO 7
+
+                        // GRUPO 9 ESTO VA SIEMPRE Y CUANDO UN CONTENEDOR TRAIGA CARGA PELIGROSA
+                        new SegmentGroup(){
+                            GroupRepeat = 9999,
+                            Segments = new Segment[]{
+                                // LISTO
+                                new SegmentData(){
+                                SegmentID = "DGS",
+                                Name = "DANGEROUS GOODS (grp9)",
+                                Notes = "9",
+                                DataElements = new Element[]
+                                {
+                                   new DataElement()
+                                {
+                                    Name = "Dangerous Goods Regulations",
+                                    Description = @"Code ""IMD"" (IMO IMDG Code)",
+                                    Usage = RuleUsage.Required,
+                                    DataType = DataType.Alphanumeric,
+                                    Precision = new []{ 1, 3}
+                                },
+
+                                new CompositeElement(){
+                                    Name = "Hazard Code Identification (grp9)",
+                                    DataElements = new Element[]{
+                                new DataElement()
+                                {
+                                    Name = "Hazard Code Identification",
+                                    Description = @"IMDG Code, e.g. ""1.2"" or ""8""",
+                                    Usage = RuleUsage.Mandatory,
+                                    DataType = DataType.Alphanumeric,
+                                    Precision = new []{ 1, 7}
+                                },
+                            }
+                            },
+
+                            new CompositeElement(){
+                                    Name = "United Nations Dangerous Goods (UNDG) identifier",
+                                    DataElements = new Element[]{
+                                new DataElement()
+                                {
+                                    Name = "United Nations Dangerous Goods",
+                                    Description = @"Información UNDG: Número ONU.",
+                                    Usage = RuleUsage.Optional,
+                                    DataType = DataType.Numeric,
+                                    Precision = 3
+                                },
+                               
+                            }
+                            },
+
+                            }
+                        }, // ACA FINALIZA EL SEGMENTO DGS DEL GRUPO 9
+
+                        // LISTO
+                        new SegmentData(){
+                                SegmentID = "FTX",
+                                Name = "FREE TEXT (grp9)",
+                                Notes = "9",
+                                DataElements = new Element[]
+                                {
+                                   new DataElement()
+                                {
+                                    Name = "Text Subject Qualifier.",
+                                    Description = @" ""AAC"" = Dangerous goods additional information ""AAD"" = Dangerous goods, technical name, proper shipping name.",
+                                    Usage = RuleUsage.Mandatory,
+                                    DataType = DataType.Alphanumeric,
+                                    Precision = new []{ 1, 3}
+                                },
+
+                                new EmptyElement(),
+                                new EmptyElement(),
+
+                                new CompositeElement(){
+                                    Name = "Free text (grp9)",
+                                    DataElements = new Element[]{
+                                new DataElement()
+                                {
+                                    Name = "Free text",
+                                    Description = @"Descripción o nombre técnico de la carga peligrosa (en español o inglés.)",
+                                    Usage = RuleUsage.Mandatory,
+                                    DataType = DataType.Alphanumeric,
+                                    Precision = new [] {1, 512}
+                                }
+                            }
+                            }
+
+                                }
+                            }, // ACA FINALIZA EL SEGMENTO FTX DEL GRUPO 9
+                            }
+                        }, // ACA FINALIZA EL GRUPO 9
+
+                        // SEGMENTO CNT LISTO
+                        new SegmentData(){
+                                SegmentID = "CNT",
+                                Name = "CONTROL TOTAL",
+                                Notes = "",
+                                DataElements = new Element[]
+                                {
+                                    new CompositeElement(){
+                                        Name = "CONTROL",
+                                    DataElements = new Element[]{
+                                    new DataElement()
+                                    {
+                                        Name = "Control total type code qualifier",
+                                        Description = @"16 Número total de contenedores",
+                                        Usage = RuleUsage.Mandatory,
+                                        DataType = DataType.Alphanumeric,
+                                        Precision = new []{ 1, 3}
+                                    },
+
+                                    new DataElement()
+                                    {
+                                        Name = @"Control total value",
+                                        Description = @"Número total de contenedores",
+                                        Usage = RuleUsage.Mandatory,
+                                        DataType = DataType.Alphanumeric,
+                                        Precision = new []{ 1, 18 }
+                                    }
+                                    }
+                                    }
+                                   
+                                }
+                            }, // ACA FINALIZA EL SEGMENTO CNT
+
+                    // LISTO
                     new SegmentData(){
                             SegmentID = "UNT",
                             Name = "MESSAGE TRAILER",
@@ -1732,7 +1637,7 @@ namespace ReadEDIFACT.Models
                                 new DataElement()
                                 {
                                     Name = @"Number of segments in the message",
-                                    Description = @"Number of segments in the message, including UNH and UNT segments, but excluding UNA, UNB and UNZ segments.",
+                                    Description = @"Número de segmentos dentro del mensaje, excluyendo los segmentos UnA, UNB y UNZ e incluyendo UNH y UNT",
                                     Usage = RuleUsage.Mandatory,
                                     DataType = DataType.Numeric,
                                     Precision = new []{1, 6}
@@ -1741,7 +1646,7 @@ namespace ReadEDIFACT.Models
                                 new DataElement()
                                 {
                                     Name = "Message reference number",
-                                    Description = @"This reference must be identical to the reference in the UNH-segment (e0062).",
+                                    Description = @"Número de referencia del mensaje. Debe ser idéntico al número en el capo 0062 del segment UNH.",
                                     Usage = RuleUsage.Mandatory,
                                     DataType = DataType.Alphanumeric,
                                     Precision = new []{ 1, 14}
@@ -1750,6 +1655,7 @@ namespace ReadEDIFACT.Models
                             }
                         }, // ACA FINALIZA EL SEGMENTO UNT
 
+                        // LISTO
                         new SegmentData(){
                             SegmentID = "UNZ",
                             Name = "INTERCHANGE TRAILER",
@@ -1758,7 +1664,7 @@ namespace ReadEDIFACT.Models
                                 new DataElement()
                                 {
                                     Name = @"Interchange Control Count",
-                                    Description = @"The number of messages in the interchange.",
+                                    Description = @"Conteo de control de intercambio: Número de mensajes en el intercambio.",
                                     Usage = RuleUsage.Mandatory,
                                     DataType = DataType.Numeric,
                                     Precision = new []{1, 6}
@@ -1767,7 +1673,7 @@ namespace ReadEDIFACT.Models
                                 new DataElement()
                                 {
                                     Name = "Interchange Control Reference",
-                                    Description = @"This reference must be identical to the reference in the UNB-segment (e0020).",
+                                    Description = @"Referencia de control de intercambio: esta referencia debe ser idéntica a la que se encuentra en UNB campo 0020.",
                                     Usage = RuleUsage.Mandatory,
                                     DataType = DataType.Alphanumeric,
                                     Precision = new []{ 1, 14}

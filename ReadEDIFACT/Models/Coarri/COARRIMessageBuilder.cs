@@ -393,13 +393,13 @@ namespace ReadEDIFACT.Models.Coarri
             segmentCount++;
 
             // Locations (LOC) LISTO
-            coarriMessage.AppendLine(_arrivalData?.Location1?.ToEDIString());
+            coarriMessage.Append(_arrivalData?.Location1?.ToEDIString());
             segmentCount++;
             coarriMessage.AppendLine(_arrivalData?.Location2?.ToCustomEDI());
             segmentCount++;
             coarriMessage.AppendLine(_arrivalData?.Location3?.ToCustomEDI());
             segmentCount++;
-            coarriMessage.Append(_arrivalData?.Location4?.ToCustomEDI());
+            coarriMessage.AppendLine(_arrivalData?.Location4?.ToCustomEDI());
             segmentCount++;
             coarriMessage.AppendLine(_arrivalData?.Location5?.ToCustomEDI());
             segmentCount++;

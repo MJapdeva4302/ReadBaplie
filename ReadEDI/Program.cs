@@ -65,55 +65,55 @@ using ReadEDIFACT.Models.Coarri;
 
 
 // Prueba de lectura de archivo BAPLIE para export y generación de archivo JSON y despues apartir del json volver a generar el archivo EDI
-string filePathMOVINS = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\MOVINS DMR V09.edi";
-string outputFilePathMOVINS = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\MOVINS DMR V09_NEW.json";
+// string filePathMOVINS = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\MOVINS DMR V09.edi";
+// string outputFilePathMOVINS = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\MOVINS DMR V09_NEW.json";
 
-var movinsVersion2 = new MovinsVersion2();
+// var movinsVersion2 = new MovinsVersion2();
 
-using (var reader = new StreamReader(filePathMOVINS))
-{
-    try
-    {
-        var parser = new ParserEDI(reader, movinsVersion2);
+// using (var reader = new StreamReader(filePathMOVINS))
+// {
+//     try
+//     {
+//         var parser = new ParserEDI(reader, movinsVersion2);
 
-        // Validar el archivo EDI
-        var validationErrors = parser.ValidateFullEDI(movinsVersion2.Name);
-        // Console.WriteLine($"validationErrors: {validationErrors}");
-        if (validationErrors.Any())
-        {
-            Console.WriteLine("Errores de validación:");
-            foreach (var error in validationErrors)
-            {
-                Console.WriteLine(error);
-            }
-        }
-        else
-        {
-            // Guarda el JSON en un archivo
-            parser.SaveJsonToFile(outputFilePathMOVINS);
-            Console.WriteLine("Archivo JSON guardado en: " + outputFilePathMOVINS);
-            // Leer el contenido del archivo JSON
-            string jsonContent = File.ReadAllText(outputFilePathMOVINS);
-            Console.WriteLine("Contenido del JSON:");
-            // Console.WriteLine(jsonContent);
+//         // Validar el archivo EDI
+//         var validationErrors = parser.ValidateFullEDI(movinsVersion2.Name);
+//         // Console.WriteLine($"validationErrors: {validationErrors}");
+//         if (validationErrors.Any())
+//         {
+//             Console.WriteLine("Errores de validación:");
+//             foreach (var error in validationErrors)
+//             {
+//                 Console.WriteLine(error);
+//             }
+//         }
+//         else
+//         {
+//             // Guarda el JSON en un archivo
+//             parser.SaveJsonToFile(outputFilePathMOVINS);
+//             Console.WriteLine("Archivo JSON guardado en: " + outputFilePathMOVINS);
+//             // Leer el contenido del archivo JSON
+//             string jsonContent = File.ReadAllText(outputFilePathMOVINS);
+//             Console.WriteLine("Contenido del JSON:");
+//             // Console.WriteLine(jsonContent);
 
-            // Generar el archivo EDI a partir del JSON
-            string ediContent = parser.GenerateEDIFromJson(jsonContent);
-            File.WriteAllText(@"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT/MOVINS_VERSION2_NEW.edi", ediContent);
-            // Console.WriteLine($"EDI GENERADO:: {ediContent}");
+//             // Generar el archivo EDI a partir del JSON
+//             string ediContent = parser.GenerateEDIFromJson(jsonContent);
+//             File.WriteAllText(@"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT/MOVINS_VERSION2_NEW.edi", ediContent);
+//             // Console.WriteLine($"EDI GENERADO:: {ediContent}");
             
-        }
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine($"Error al procesar el archivo EDI: {ex.Message}");
-    }
-}
+//         }
+//     }
+//     catch (Exception ex)
+//     {
+//         Console.WriteLine($"Error al procesar el archivo EDI: {ex.Message}");
+//     }
+// }
 
-using (var sw = new StreamWriter(string.Format(@"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\{0}Output.txt", movinsVersion2.Name)))
-{
-    sw.Write(movinsVersion2);
-}
+// using (var sw = new StreamWriter(string.Format(@"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\{0}Output.txt", movinsVersion2.Name)))
+// {
+//     sw.Write(movinsVersion2);
+// }
 
 // Probando los segmentos de COARRI
 // var unb = new UNB();
@@ -228,12 +228,13 @@ try
     
     var builder = new COARRIMessageBuilder(arrivalData, equipments); 
     string ediMessage = builder.BuildMessage();
+    ediMessage = ediMessage.Replace("\r\n", "").Replace("\n", "").Replace("\r", "");
     
     // 5. Mostrar resultados
     Console.WriteLine("=== Mensaje EDI Generado ===");
     // Console.WriteLine(ediMessage);
     
-    File.WriteAllText(@"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT/outputImportSinPPP.edi", ediMessage);
+    File.WriteAllText(@"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT/COARRI.edi", ediMessage);
     // File.WriteAllText(@"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT/outputExportSinDGS.edi", ediMessage);
     Console.WriteLine("\nMensaje guardado");
 
@@ -241,9 +242,11 @@ try
     //     ediMessage,
     // };
     // Serializar a JSON
-    string jsonOutput = JsonConvert.SerializeObject(ediMessage, Formatting.Indented);
+    string jsonOutput = JsonConvert.SerializeObject(ediMessage, Formatting.None);
+    jsonOutput = jsonOutput.Replace("\\r\\n", "");
+    // Console.WriteLine(jsonOutput);
     
-    string jsonFilePath = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\outputImportPP.json";
+    string jsonFilePath = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\COARRI.json";
     // string jsonFilePath = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\outputExportSinDGS.json";
     File.WriteAllText(jsonFilePath, jsonOutput);
 }
