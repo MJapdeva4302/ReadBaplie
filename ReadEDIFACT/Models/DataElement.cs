@@ -10,6 +10,7 @@ namespace ReadEDIFACT
     {
         public DataType DataType { get; set; }
         public object? Precision { get; set; }
+        public string JsonProperty { get; set; } = default!;
 
         public override string ToString()
         {

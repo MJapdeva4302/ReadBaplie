@@ -37,7 +37,8 @@ namespace ReadEDIFACT.Models
                                     Notes = @"Always ""UNOA"", indicating the user of level ""A"" character set.",
                                     Usage = RuleUsage.Mandatory,
                                     DataType = DataType.Alphabetic,
-                                    Precision = 4
+                                    Precision = 4,
+                                    JsonProperty = "ArrivalData.ArrivalNumber"
                                 },
 
                                 new DataElement()
@@ -82,7 +83,8 @@ namespace ReadEDIFACT.Models
                                     Description = "Preparation date of the interchange (message)",
                                     Usage = RuleUsage.Mandatory,
                                     DataType = DataType.Numeric,
-                                    Precision = 6
+                                    Precision = 6,
+                                    JsonProperty = "FileDefinition.Date"
                                 },
                                 new DataElement()
                                 {

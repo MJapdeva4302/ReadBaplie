@@ -13,5 +13,6 @@ namespace ReadEDIFACT
         public string? Description { get; set; }
         public string? Notes { get; set; }
         public RuleUsage Usage { get; set; }
+        public string? Value { get; set; }
     }
 }
