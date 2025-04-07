@@ -94,7 +94,52 @@ namespace ReadEDIFACT.Models
                 errors.Add($"El archivo no es un {name}. Tipo de mensaje encontrado: {messageTypeIdentifier}");
             }
 
+            var versionCode = messageIdentifierParts[4]; // SMDG22, ITG10, etc.
+
+            // 6. Extraer versión numérica (2.2.0 para SMDG22, 1.0.0 para ITG10)
+            var (success, parsedVersion) = ParseVersionFromCode(versionCode);
+            if (!success)
+            {
+                errors.Add($"Formato de versión inválido: {versionCode}");
+                return errors;
+            }
+
+            // 7. Comparar solo Major y Minor version
+            if (Definition.Version != null)
+            {
+                if (parsedVersion.Major != Definition.Version.Major ||
+                    parsedVersion.Minor != Definition.Version.Minor)
+                {
+                    errors.Add($"Versión incorrecta. Esperado: {Definition.Version.ToString(2)}, " +
+                              $"Encontrado: {parsedVersion.ToString(2)} ({versionCode})");
+                }
+            }
+
             return errors;
+        }
+
+        // Método auxiliar para extraer la versión numérica de un código de versión
+        // Ejemplo: SMDG22 → 2.2.0, ITG10 → 1.0.0
+        private (bool success, Version version) ParseVersionFromCode(string versionCode)
+        {
+            if (string.IsNullOrEmpty(versionCode) || versionCode.Length < 5)
+                return (false, null);
+
+            try
+            {
+                // Extraer los dos últimos dígitos (SMDG22 → 22, ITG10 → 10)
+                var versionDigits = versionCode.Substring(versionCode.Length - 2);
+
+                // Convertir a números (22 → 2.2.0, 10 → 1.0.0)
+                var major = int.Parse(versionDigits[0].ToString());
+                var minor = int.Parse(versionDigits[1].ToString());
+
+                return (true, new Version(major, minor, 0));
+            }
+            catch
+            {
+                return (false, null);
+            }
         }
 
 
