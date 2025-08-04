@@ -12,7 +12,128 @@ using ReadEDIFACT.Models.Coarri;
 // string filePath = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\DEPARTURE BAPLIE FINAL - DEL MONTE ROSE - 25360187.edi";
 // string outputFilePath = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\DEPARTURE BAPLIE FINAL - DEL MONTE ROSE - 25360187.json";
 
-// Prueba de lectura de archivo BAPLIE para export y generación de archivo JSON y despues apartir del json volver a generar el archivo EDI
+// Ejemplo de uso de los diferentes parsers para generar archivos EDI
+// 1. Para BAPLIE Version 2
+string jsonPathBaplieV2 = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\BAPLIE_Export.json";
+try 
+{
+    var baplieV2Parser = new ParserBaplieV2();
+    var vesselInfo = new VesselInfo 
+    { 
+        VesselName = "TEST VESSEL",
+        VoyageNumber = "VOY001",
+        VesselOperator = "TEST"
+    };
+
+    var containers = new List<ContainerInfo>
+    {
+        new ContainerInfo 
+        {
+            ContainerNumber = "CONT123456",
+            Location = "0010382",
+            Type = "22G1",
+            Size = "22G1",
+            Weight = "20000",
+            PortOfDischarge = "CRCAL",
+            PortOfLoading = "CRCAL"
+        }
+    };
+
+    string baplieV2Edi = baplieV2Parser.GenerateEDI(
+        "SENDERTEST",
+        "RECVRTEST",
+        containers,
+        vesselInfo
+    );
+
+    File.WriteAllText(@"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\output_baplie_v2.edi", baplieV2Edi);
+    Console.WriteLine("Archivo BAPLIE V2 EDI generado exitosamente");
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"Error generando BAPLIE V2: {ex.Message}");
+}
+
+// 2. Para BAPLIE Version 3
+try
+{
+    var baplieV3Parser = new ParserBaplieV3();
+    var vesselInfo = new VesselInfo 
+    { 
+        VesselName = "TEST VESSEL",
+        VoyageNumber = "VOY001",
+        VesselOperator = "TEST"
+    };
+
+    var containers = new List<ContainerInfo>
+    {
+        new ContainerInfo 
+        {
+            ContainerNumber = "CONT123456",
+            Location = "0010382",
+            Type = "22G1",
+            Size = "22G1",
+            Weight = "20000",
+            PortOfDischarge = "CRCAL",
+            PortOfLoading = "CRCAL"
+        }
+    };
+
+    string baplieV3Edi = baplieV3Parser.GenerateEDI(
+        "SENDERTEST",
+        "RECVRTEST",
+        containers,
+        vesselInfo
+    );
+
+    File.WriteAllText(@"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\output_baplie_v3.edi", baplieV3Edi);
+    Console.WriteLine("Archivo BAPLIE V3 EDI generado exitosamente");
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"Error generando BAPLIE V3: {ex.Message}");
+}
+
+// 3. Para MOVINS Version 2
+try
+{
+    var movinsV2Parser = new ParserMovinsV2();
+    var vesselInfo = new VesselInfo 
+    { 
+        VesselName = "TEST VESSEL",
+        VoyageNumber = "VOY001",
+        VesselOperator = "TEST"
+    };
+
+    var containers = new List<ContainerInfo>
+    {
+        new ContainerInfo 
+        {
+            ContainerNumber = "CONT123456",
+            Location = "0010382",
+            Type = "22G1",
+            Size = "22G1",
+            Status = "AV",
+            Weight = "20000"
+        }
+    };
+
+    string movinsV2Edi = movinsV2Parser.GenerateEDI(
+        "SENDERTEST",
+        "RECVRTEST",
+        containers,
+        vesselInfo
+    );
+
+    File.WriteAllText(@"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\output_movins_v2.edi", movinsV2Edi);
+    Console.WriteLine("Archivo MOVINS V2 EDI generado exitosamente");
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"Error generando MOVINS V2: {ex.Message}");
+}
+
+// Original código BAPLIE
 string filePathBAPLIE = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\BAPLIE_Export.EDI";
 string outputFilePathBAPLIE = @"C:\Users\mbermudez\Documents\ReadBaplie\ReadEDIFACT\BAPLIE_VERSION2_Export_NEW.json";
 
